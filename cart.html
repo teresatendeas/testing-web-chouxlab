@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>ChouxLab - Your Box</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "mocha": "#3D2B1F",
+                        "dark-chocolate": "#2A1D15",
+                        "dark-brown": "#32211D",
+                        "cream": "#FDFBF7",
+                        "cream-bg": "#FCF9F2",
+                        "warm-beige": "#F5F0E8",
+                        "soft-cocoa": "#8B7E74",
+                        "accent-tan": "#C7B7A3",
+                        "tan-light": "#f2e4cf",
+                        "nude": "#E7C0A5",
+                        "beige": "#EBC2A4",
+                        "tan": "#D1B28C",
+                        "warm-grey": "#8E7366",
+                        "primary": "#36211c",
+                        "background-light": "#fffcf5",
+                        "background-dark": "#1a1210",
+                    },
+                    fontFamily: {
+                        "roca": ["Crimson Pro", "serif"],
+                        "cooper": ["Fraunces", "serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        .font-roca { font-family: 'Crimson Pro', serif; }
+        .font-cooper { font-family: 'Fraunces', serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .fill-1 { font-variation-settings: 'FILL' 1; }
+    </style>
+</head>
+<body class="bg-cream-bg">
+
+    <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
+        <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md">
+            <div class="flex items-center px-6 py-8 justify-between">
+                <button class="flex items-center justify-center text-mocha" onclick="navigateTo('menu')">
+                    <span class="material-symbols-outlined text-xl">arrow_back_ios</span>
+                </button>
+                <h1 class="text-3xl font-roca font-bold tracking-tight">Your Cart</h1>
+                <div class="w-8"></div>
+            </div>
+            <div class="flex items-center justify-center gap-12 pb-6">
+                <div class="flex flex-col items-center gap-2">
+                    <div class="h-1.5 w-1.5 rounded-full bg-mocha"></div>
+                    <span class="text-[9px] uppercase tracking-widest font-bold">Cart</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 opacity-30">
+                    <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                    <span class="text-[9px] uppercase tracking-widest font-medium">Ship</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 opacity-30">
+                    <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                    <span class="text-[9px] uppercase tracking-widest font-medium">Pay</span>
+                </div>
+            </div>
+        </header>
+        
+        <main class="flex-1 overflow-y-auto no-scrollbar px-6 pb-48" id="cart-items-container">
+            <!-- Cart items populated by JS -->
+        </main>
+        
+        <div class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] z-50">
+            <div class="px-6 pt-4 pb-0 bg-cream/95 backdrop-blur-xl border-t border-accent-tan/10 mx-4 mb-[88px] rounded-t-2xl">
+                <button onclick="navigateTo('shipping')" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-transform active:scale-[0.98]">
+                    Continue to Shipping
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </button>
+                <div class="flex items-center justify-center gap-2 mt-4 opacity-40 pb-4">
+                    <span class="material-symbols-outlined text-[14px]">lock</span>
+                    <p class="text-[9px] uppercase tracking-[0.2em]">Secure Artisan Checkout</p>
+                </div>
+            </div>
+            
+            <nav class="bottom-nav-directory">
+                <div class="flex justify-between items-center max-w-md mx-auto">
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+                        <span class="material-symbols-outlined nav-icon">home</span>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+                        <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+                        <span class="nav-label">Menu</span>
+                    </button>
+                    <button class="nav-item active text-mocha" onclick="navigateTo('cart')">
+                        <span class="material-symbols-outlined nav-icon fill-1">shopping_bag</span>
+                        <span class="nav-label">Cart</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+                        <span class="material-symbols-outlined nav-icon">person</span>
+                        <span class="nav-label">Profile</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Product catalog (must match menu.html)
+        const products = {
+            vanilla: { 
+                id: 'vanilla', 
+                name: 'Vanilla', 
+                price: 65000, 
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-3sZuNZ0QdzsW-tpH_fCQRhECch6sIy5r6A53Mz9d5GcZqbejtxvAM7tpdje6ZqiCrZjT-KFU7wriliD2eX1aNbpFm2Kw1knlFPgGycB_9veYcqxRhvVRgfZoHPl0ZKLOImi_QdcHIlic2qUm7oOMiiX4y2lktKim97R8XGJcXELOp-6opkamS92O1m83Kr54GXO_iUZu7Gfq5rOA4hC9V6Ho-sZWMJR8RpteK9afC1-CqvW-Y_Za2oCyPnqHOvz58puJiaf44cY' 
+            },
+            chocolate: { 
+                id: 'chocolate', 
+                name: 'Chocolate', 
+                price: 65000, 
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI' 
+            },
+            pistachio: { 
+                id: 'pistachio', 
+                name: 'Pistachio & Rose', 
+                price: 85000, 
+                image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYPIicpfGyw9rPQiV4aiwqTzQzp-WALZgrVBf_oMB9RIqkQ24Ye9V9VNwwt0YgKhqd7aqTz52OLyF84j6Y7YSlAkazmZ9yjvMe2nyQ9OgjpJBbn5WcK-vRtqdVjnKs4Ekn-yJkBaLbrF9BNK2rJgPKPKcJa3HPRwOkOS3swsJpCb530s-iI_tP97sgfUWLrd3E4PAg8uzSMBqlw26WktnVPDZ4p9R6maQlMth1rlIr4LKgucIdDhqUKIdeejQvUzWLR_525Y2b_8E' 
+            }
+        };
+        
+        // Cart stored as {vanilla: 2, chocolate: 1} from menu.html
+        let cartCounts = {};
+        try {
+            const stored = JSON.parse(localStorage.getItem('chouxlab_cart'));
+            // Validate it's an object (not array) and has expected structure
+            if (stored && typeof stored === 'object' && !Array.isArray(stored)) {
+                cartCounts = stored;
+            } else if (stored && Array.isArray(stored)) {
+                // Auto-clear old array format
+                console.log('Clearing old cart format');
+                localStorage.removeItem('chouxlab_cart');
+            }
+        } catch (e) {
+            cartCounts = {};
+        }
+        
+        function navigateTo(screenName) {
+            if (screenName === 'menu') {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = screenName + '.html';
+            }
+        }
+        
+        function saveCart() {
+            localStorage.setItem('chouxlab_cart', JSON.stringify(cartCounts));
+        }
+        
+        function renderCart() {
+            const container = document.getElementById('cart-items-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            let subtotal = 0;
+            let totalQty = 0;  // Track total item count
+            let hasItems = false;
+            
+            // Convert cartCounts object to array for rendering
+            const cartItems = [];
+            for (const [productId, qty] of Object.entries(cartCounts)) {
+                if (qty > 0 && products[productId]) {
+                    cartItems.push({
+                        ...products[productId],
+                        qty: qty
+                    });
+                }
+            }
+            
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-center">
+                        <span class="material-symbols-outlined text-6xl text-soft-cocoa/30 mb-4">shopping_bag</span>
+                        <h3 class="font-roca text-xl text-dark-chocolate font-bold mb-2">Your cart is empty</h3>
+                        <p class="text-soft-cocoa font-cooper text-sm mb-6">Add some delicious choux to get started</p>
+                        <button onclick="navigateTo('menu')" class="bg-dark-chocolate text-cream px-8 py-3 rounded-full font-bold text-xs uppercase tracking-widest">
+                            Browse Menu
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            cartItems.forEach((item, idx) => {
+                subtotal += item.price * item.qty;
+                totalQty += item.qty;  // Count items for packaging calculation
+                hasItems = true;
+                
+                container.innerHTML += `
+                    <div class="flex items-center gap-4 mb-8">
+                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-2xl size-24 shadow-sm" style='background-image: url("${item.image}");'></div>
+                        <div class="flex-1 flex flex-col gap-2">
+                            <div>
+                                <p class="font-roca text-lg font-bold leading-tight text-dark-chocolate">${item.name}</p>
+                                <p class="font-cooper text-xs text-soft-cocoa mt-0.5">Rp ${item.price.toLocaleString('id-ID')}</p>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 bg-warm-beige px-3 py-1.5 rounded-full">
+                                    <button class="text-mocha/60 hover:text-mocha flex items-center p-1" onclick="updateCartQty('${item.id}', -1)">
+                                        <span class="material-symbols-outlined text-sm">remove</span>
+                                    </button>
+                                    <span class="font-cooper text-sm font-bold w-4 text-center">${item.qty}</span>
+                                    <button class="text-mocha/60 hover:text-mocha flex items-center p-1" onclick="updateCartQty('${item.id}', 1)">
+                                        <span class="material-symbols-outlined text-sm font-bold">add</span>
+                                    </button>
+                                </div>
+                                <p class="font-cooper text-sm font-bold text-dark-chocolate">Rp ${(item.price * item.qty).toLocaleString('id-ID')}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            // Calculate packaging: Rp 1,500 per item
+            const packaging = totalQty * 1500;
+            const total = subtotal + packaging;
+            
+            container.innerHTML += `
+                <div class="py-12 flex justify-start">
+                    <button class="font-cooper text-[11px] tracking-[0.2em] text-dark-chocolate hover:opacity-70 transition-opacity font-bold" onclick="navigateTo('menu')">
+                        + ADD MORE ITEMS
+                    </button>
+                </div>
+                
+                <div class="mt-12 mb-32 pt-8 border-t border-accent-tan/20">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-dark-chocolate text-sm font-semibold">Box Subtotal</span>
+                            <span class="font-cooper text-sm font-bold text-dark-chocolate">Rp ${subtotal.toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="flex justify-between items-baseline">
+                            <span class="text-dark-chocolate text-sm font-semibold">Packaging (${totalQty} × Rp 1,500)</span>
+                            <span class="font-cooper text-sm font-bold text-dark-chocolate">Rp ${packaging.toLocaleString('id-ID')}</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-4 border-t border-accent-tan/10">
+                            <span class="font-roca text-xl font-bold text-dark-chocolate">Total</span>
+                            <span class="font-cooper text-2xl font-bold text-dark-chocolate">Rp ${total.toLocaleString('id-ID')}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateCartQty(productId, change) {
+            if (!cartCounts[productId]) cartCounts[productId] = 0;
+            cartCounts[productId] += change;
+            
+            if (cartCounts[productId] <= 0) {
+                delete cartCounts[productId];
+            }
+            
+            saveCart();
+            renderCart();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+    </script>
+</body>
+</html>
