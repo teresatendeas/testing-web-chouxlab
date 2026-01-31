@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>ChouxLab - Payment</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "mocha": "#3D2B1F",
+                        "dark-chocolate": "#2A1D15",
+                        "dark-brown": "#32211D",
+                        "cream": "#FDFBF7",
+                        "cream-bg": "#FCF9F2",
+                        "warm-beige": "#F5F0E8",
+                        "soft-cocoa": "#8B7E74",
+                        "accent-tan": "#C7B7A3",
+                        "tan-light": "#f2e4cf",
+                        "nude": "#E7C0A5",
+                        "beige": "#EBC2A4",
+                        "tan": "#D1B28C",
+                        "warm-grey": "#8E7366",
+                        "primary": "#36211c",
+                        "background-light": "#fffcf5",
+                        "background-dark": "#1a1210",
+                    },
+                    fontFamily: {
+                        "roca": ["Crimson Pro", "serif"],
+                        "cooper": ["Fraunces", "serif"],
+                        "display": ["Fraunces", "serif"],
+                        "accent": ["Alice", "serif"],
+                        "body": ["Work Sans", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-cream text-dark-chocolate antialiased;
+                font-family: 'Fraunces', serif;
+                min-height: 100dvh;
+                overflow-x: hidden;
+            }
+        }
+        
+        .font-roca { font-family: 'Crimson Pro', serif; }
+        .font-cooper { font-family: 'Fraunces', serif; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        .screen {
+            min-height: 100dvh;
+            background-color: #FDFBF7;
+        }
+        
+        .bottom-nav-directory {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(199, 183, 163, 0.2);
+            padding: 12px 24px 28px 24px;
+            max-width: 430px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:active {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Fraunces', serif;
+        }
+        
+        .nav-item.active .nav-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .nav-item.active .nav-label {
+            font-weight: 700;
+        }
+        
+        .screen-content {
+            padding-bottom: 88px;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Modal Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .modal-animate {
+            animation: fadeIn 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-cream-bg">
+
+    <!-- AUTH MODAL: Login or Guest -->
+    <div id="auth-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-dark-chocolate/60 backdrop-blur-sm p-4">
+        <div class="w-full max-w-sm bg-cream rounded-[32px] p-8 shadow-2xl modal-animate border border-accent-tan/20">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-roca text-dark-chocolate mb-2">Welcome</h2>
+                <p class="text-sm text-soft-cocoa font-cooper italic">Secure checkout requires authentication</p>
+            </div>
+            
+            <!-- Choice View -->
+            <div id="auth-choice" class="space-y-4">
+                <button onclick="showLoginForm()" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase transition-transform active:scale-[0.98] shadow-lg flex items-center justify-center gap-3">
+                    <span class="material-symbols-outlined text-lg">login</span>
+                    Log In
+                </button>
+                
+                <div class="relative flex py-2 items-center">
+                    <div class="flex-grow border-t border-accent-tan/30"></div>
+                    <span class="flex-shrink-0 mx-4 text-soft-cocoa text-xs uppercase tracking-widest">or</span>
+                    <div class="flex-grow border-t border-accent-tan/30"></div>
+                </div>
+                
+                <button onclick="continueAsGuest()" class="w-full bg-transparent border-2 border-dark-chocolate/20 text-dark-chocolate py-5 rounded-full font-roca font-semibold text-sm tracking-widest uppercase transition-transform active:scale-[0.98] hover:bg-warm-beige/30">
+                    Continue as Guest
+                </button>
+            </div>
+            
+            <!-- Login Form View -->
+            <div id="login-form-view" class="hidden space-y-6">
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="font-cooper text-[10px] uppercase tracking-[0.2em] text-soft-cocoa font-semibold">Phone Number</label>
+                        <input type="tel" id="login-phone" class="w-full bg-warm-beige/40 rounded-2xl px-5 py-4 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/60 focus:outline-none focus:ring-2 focus:ring-mocha/20 border-0" placeholder="+62 812 3456 7890"/>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="font-cooper text-[10px] uppercase tracking-[0.2em] text-soft-cocoa font-semibold">Password</label>
+                        <input type="password" id="login-password" class="w-full bg-warm-beige/40 rounded-2xl px-5 py-4 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/60 focus:outline-none focus:ring-2 focus:ring-mocha/20 border-0" placeholder="••••••••"/>
+                    </div>
+                </div>
+                
+                <div class="pt-2 space-y-3">
+                    <button onclick="handleLogin()" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase transition-transform active:scale-[0.98] shadow-lg">
+                        Sign In
+                    </button>
+                    <button onclick="showAuthChoice()" class="w-full text-soft-cocoa text-xs uppercase tracking-[0.2em] font-medium py-2 hover:text-dark-chocolate transition-colors">
+                        ← Back to options
+                    </button>
+                </div>
+                
+                <div class="text-center">
+                    <a href="#" class="text-[10px] text-mocha underline hover:text-dark-chocolate">Forgot password?</a>
+                </div>
+            </div>
+            
+            <!-- Guest View -->
+            <div id="guest-view" class="hidden space-y-4">
+                <p class="text-center text-soft-cocoa text-sm font-cooper italic mb-4">
+                    You can complete your order without an account, but you won't be able to track history or earn points.
+                </p>
+                <button onclick="proceedAsGuest()" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase transition-transform active:scale-[0.98]">
+                    Proceed to Payment
+                </button>
+                <button onclick="showAuthChoice()" class="w-full text-soft-cocoa text-xs uppercase tracking-widest font-medium py-2">
+                    Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCREEN 5: PAYMENT -->
+    <div id="screen-payment" class="screen active">
+        <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
+            <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md">
+                <div class="flex items-center px-6 py-8 justify-between">
+                    <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('shipping')">
+                        <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+                    </button>
+                    <h1 class="text-3xl font-roca font-semibold tracking-tight">Payment</h1>
+                    <div class="w-8"></div>
+                </div>
+                <div class="flex items-center justify-center gap-12 pb-6">
+                    <div class="flex flex-col items-center gap-2 opacity-30">
+                        <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-medium text-soft-cocoa">Cart</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 opacity-30">
+                        <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-medium text-soft-cocoa">Ship</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="h-1.5 w-1.5 rounded-full bg-dark-chocolate"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-bold text-dark-chocolate">Pay</span>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="screen-content overflow-y-auto no-scrollbar px-6">
+                <div class="py-4">
+                    <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-soft-cocoa mb-6">Select Method</h3>
+                    <div class="space-y-4">
+                        <label class="relative block group cursor-pointer">
+                            <input checked class="peer hidden" name="payment_method" type="radio"/>
+                            <div class="flex items-center justify-between p-5 rounded-2xl border border-mocha bg-warm-beige transition-all duration-300 peer-checked:border-dark-chocolate peer-checked:bg-warm-beige">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                                        <span class="material-symbols-outlined text-mocha text-2xl">account_balance</span>
+                                    </div>
+                                    <div>
+                                        <p class="font-roca text-lg font-semibold text-dark-chocolate">Bank Transfer</p>
+                                        <p class="font-cooper text-xs text-soft-cocoa italic">Virtual Account (BCA, Mandiri, BNI)</p>
+                                    </div>
+                                </div>
+                                <div class="w-4 h-4 rounded-full border-2 border-mocha flex items-center justify-center peer-checked:border-dark-chocolate">
+                                    <div class="w-2 h-2 rounded-full bg-mocha peer-checked:bg-dark-chocolate"></div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-soft-cocoa mb-6">Payment Confirmation</h3>
+                        <div class="space-y-4">
+                            <p class="font-cooper text-sm text-soft-cocoa italic leading-relaxed text-center px-4">
+                                Please upload your payment receipt for immediate processing.
+                            </p>
+                            <div class="relative group cursor-pointer" onclick="document.getElementById('receipt-upload').click()">
+                                <input accept="image/*" class="hidden" id="receipt-upload" type="file" onchange="handleReceiptUpload(event)"/>
+                                <label class="flex flex-col items-center justify-center w-full min-h-[180px] rounded-3xl border-2 border-dashed border-accent-tan/40 bg-warm-beige/20 p-8 transition-colors hover:bg-warm-beige/30 hover:border-accent-tan/60 active:scale-[0.99] cursor-pointer">
+                                    <div id="receipt-preview" class="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-sm mb-4 overflow-hidden">
+                                        <span class="material-symbols-outlined text-mocha text-2xl" id="receipt-icon">add_a_photo</span>
+                                        <img id="receipt-image" class="hidden w-full h-full object-cover"/>
+                                    </div>
+                                    <span class="font-roca text-base font-semibold text-dark-chocolate" id="receipt-text">Upload Receipt</span>
+                                    <span class="text-[11px] uppercase tracking-widest text-soft-cocoa mt-2 font-medium">(Upload Bukti)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 p-6 rounded-3xl bg-warm-beige/20 border border-accent-tan/10">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="material-symbols-outlined text-mocha text-sm">info</span>
+                            <p class="text-[10px] uppercase tracking-widest font-medium text-soft-cocoa">Payment Information</p>
+                        </div>
+                        <p class="font-cooper text-xs leading-relaxed text-soft-cocoa italic">
+                            All transactions are encrypted and secure. Your order will be automatically verified once the receipt is successfully uploaded.
+                        </p>
+                    </div>
+                </div>
+            </main>
+            
+            <footer class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-cream/95 backdrop-blur-xl border-t border-accent-tan/10 z-40 pb-[88px]">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6 px-1">
+                        <span class="text-soft-cocoa text-sm font-light">Order Total</span>
+                        <span class="font-roca text-xl font-semibold">Rp 210.000</span>
+                    </div>
+                    <button onclick="placeOrder()" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-transform active:scale-[0.98]">
+                        <span class="material-symbols-outlined text-lg">lock</span>
+                        Place Order Rp 210.000
+                    </button>
+                    <div class="flex items-center justify-center gap-2 mt-4 opacity-40">
+                        <span class="material-symbols-outlined text-[14px]">verified_user</span>
+                        <p class="text-[9px] uppercase tracking-[0.2em]">AES-256 Encrypted Security</p>
+                    </div>
+                </div>
+            </footer>
+            
+            <nav class="bottom-nav-directory">
+                <div class="flex justify-between items-center max-w-md mx-auto">
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+                        <span class="material-symbols-outlined nav-icon">home</span>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+                        <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+                        <span class="nav-label">Menu</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+                        <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+                        <span class="nav-label">Cart</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+                        <span class="material-symbols-outlined nav-icon">person</span>
+                        <span class="nav-label">Profile</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Check auth status on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const authStatus = localStorage.getItem('chouxlab_auth');
+            if (!authStatus) {
+                document.getElementById('auth-modal').classList.remove('hidden');
+            }
+        });
+        
+        // Auth Modal Functions
+        function showLoginForm() {
+            document.getElementById('auth-choice').classList.add('hidden');
+            document.getElementById('login-form-view').classList.remove('hidden');
+            document.getElementById('guest-view').classList.add('hidden');
+        }
+        
+        function showAuthChoice() {
+            document.getElementById('auth-choice').classList.remove('hidden');
+            document.getElementById('login-form-view').classList.add('hidden');
+            document.getElementById('guest-view').classList.add('hidden');
+        }
+        
+        function continueAsGuest() {
+            document.getElementById('auth-choice').classList.add('hidden');
+            document.getElementById('guest-view').classList.remove('hidden');
+        }
+        
+        function proceedAsGuest() {
+            localStorage.setItem('chouxlab_auth', 'guest');
+            closeAuthModal();
+        }
+        
+        function handleLogin() {
+            const phone = document.getElementById('login-phone').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!phone || !password) {
+                alert('Please enter both phone number and password');
+                return;
+            }
+            
+            // Simulate login success
+            localStorage.setItem('chouxlab_auth', 'user');
+            localStorage.setItem('chouxlab_user_phone', phone);
+            closeAuthModal();
+        }
+        
+        function closeAuthModal() {
+            document.getElementById('auth-modal').classList.add('hidden');
+        }
+        
+        // Navigation
+        function navigateTo(screenName) {
+            if (screenName === 'menu') {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = screenName + '.html';
+            }
+        }
+        
+        function handleReceiptUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('receipt-image');
+                    const icon = document.getElementById('receipt-icon');
+                    const text = document.getElementById('receipt-text');
+                    
+                    img.src = e.target.result;
+                    img.classList.remove('hidden');
+                    icon.classList.add('hidden');
+                    text.textContent = 'Receipt Uploaded';
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function placeOrder() {
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">refresh</span> Processing';
+            
+            setTimeout(() => {
+                navigateTo('success');
+                btn.innerHTML = originalText;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>

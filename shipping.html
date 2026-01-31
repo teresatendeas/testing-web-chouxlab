@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>ChouxLab - Shipping</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms ,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "mocha": "#3D2B1F",
+                        "dark-chocolate": "#2A1D15",
+                        "dark-brown": "#32211D",
+                        "cream": "#FDFBF7",
+                        "cream-bg": "#FCF9F2",
+                        "warm-beige": "#F5F0E8",
+                        "soft-cocoa": "#8B7E74",
+                        "accent-tan": "#C7B7A3",
+                        "tan-light": "#f2e4cf",
+                        "nude": "#E7C0A5",
+                        "beige": "#EBC2A4",
+                        "tan": "#D1B28C",
+                        "warm-grey": "#8E7366",
+                        "primary": "#36211c",
+                        "background-light": "#fffcf5",
+                        "background-dark": "#1a1210",
+                    },
+                    fontFamily: {
+                        "roca": ["Crimson Pro", "serif"],
+                        "cooper": ["Fraunces", "serif"],
+                        "display": ["Fraunces", "serif"],
+                        "accent": ["Alice", "serif"],
+                        "body": ["Work Sans", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-cream text-dark-chocolate antialiased;
+                font-family: 'Fraunces', serif;
+                min-height: 100dvh;
+                overflow-x: hidden;
+            }
+        }
+        
+        .font-roca { font-family: 'Crimson Pro', serif; }
+        .font-cooper { font-family: 'Fraunces', serif; }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Screen Transitions */
+        .screen {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            min-height: 100dvh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow-y: auto;
+            background-color: #FDFBF7;
+        }
+        
+        .screen.active {
+            display: block;
+            opacity: 1;
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Standardized Bottom Navigation */
+        .bottom-nav-directory {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(199, 183, 163, 0.2);
+            padding: 12px 24px 28px 24px;
+            max-width: 430px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:active {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Fraunces', serif;
+        }
+        
+        .nav-item.active .nav-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .nav-item.active .nav-label {
+            font-weight: 700;
+        }
+        
+        /* Screen specific padding for bottom nav */
+        .screen-content {
+            padding-bottom: 88px;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .modal-backdrop {
+            background: rgba(45, 27, 20, 0.2);
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-cream-bg">
+
+    <!-- SCREEN 4: SHIPPING -->
+    <div id="screen-shipping" class="screen active">
+        <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
+            <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md">
+                <div class="flex items-center px-6 py-8 justify-between">
+                    <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('cart')">
+                        <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+                    </button>
+                    <h1 class="text-3xl font-roca font-semibold tracking-tight">Shipping</h1>
+                    <div class="w-8"></div>
+                </div>
+                <div class="flex items-center justify-center gap-12 pb-6">
+                    <div class="flex flex-col items-center gap-2 opacity-30">
+                        <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-medium">Cart</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <div class="h-1.5 w-1.5 rounded-full bg-dark-chocolate"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-bold">Ship</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2 opacity-30">
+                        <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
+                        <span class="text-[9px] uppercase tracking-widest font-medium">Pay</span>
+                    </div>
+                </div>
+            </header>
+            
+            <main class="screen-content overflow-y-auto no-scrollbar px-6">
+                <div class="py-4">
+                    <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-3xl mb-8">Delivery Details</h3>
+                    <form class="space-y-8" id="shipping-form">
+                        <div class="space-y-8">
+                            <div class="space-y-2 border-b border-accent-tan/30 pb-2">
+                                <label class="font-cooper text-[11px] uppercase tracking-wider text-dark-chocolate">Your Name</label>
+                                <input class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/50 focus:ring-0 focus:border-dark-chocolate" placeholder="e.g. Adeline Vanya" type="text"/>
+                            </div>
+                            <div class="space-y-2 border-b border-accent-tan/30 pb-2">
+                                <label class="font-cooper text-[11px] uppercase tracking-wider text-dark-chocolate">Your Phone Number</label>
+                                <input class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/50 focus:ring-0" placeholder="+62 812 3456 7890" type="tel"/>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-3 pt-2">
+                            <input type="checkbox" id="same-as-recipient" class="rounded border-accent-tan text-mocha focus:ring-0 focus:ring-offset-0 h-4 w-4" onchange="toggleRecipientFields()">
+                            <label class="font-cooper text-[13px] text-soft-cocoa select-none" for="same-as-recipient">I am the recipient</label>
+                        </div>
+                        
+                        <div id="recipient-fields" class="space-y-8 transition-all duration-300">
+                            <div class="space-y-2 border-b border-accent-tan/30 pb-2">
+                                <label class="font-cooper text-[11px] uppercase tracking-wider text-dark-chocolate">Recipient Name</label>
+                                <input class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/50 focus:ring-0" placeholder="e.g. Gift for Vanya" type="text"/>
+                            </div>
+                            <div class="space-y-2 border-b border-accent-tan/30 pb-2">
+                                <label class="font-cooper text-[11px] uppercase tracking-wider text-dark-chocolate">Recipient Phone Number</label>
+                                <input class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/50 focus:ring-0" placeholder="+62 811 0000 0000" type="tel"/>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-2 border-b border-accent-tan/30 pb-2 pt-2">
+                            <label class="font-cooper text-[11px] uppercase tracking-wider text-dark-chocolate">Detailed Address</label>
+                            <textarea class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-accent-tan/50 focus:ring-0 resize-none" placeholder="Street name, building, floor or unit number..." rows="2"></textarea>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="mt-12">
+                    <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-soft-cocoa mb-6">Delivery Method</h3>
+                    <div class="space-y-4">
+                        <label class="relative block cursor-pointer">
+                            <input checked class="hidden peer" name="delivery" type="radio"/>
+                            <div class="block p-5 rounded-2xl border border-accent-tan/20 bg-warm-beige/30 peer-checked:bg-warm-beige peer-checked:border-mocha transition-all duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <p class="font-roca text-lg font-semibold text-dark-chocolate">GoSend</p>
+                                        <p class="font-cooper text-xs text-soft-cocoa mt-1 italic">Fast local delivery</p>
+                                    </div>
+                                    <p class="font-cooper text-sm font-medium text-dark-chocolate">Rp 15.000</p>
+                                </div>
+                            </div>
+                        </label>
+                        
+                        <label class="relative block cursor-pointer">
+                            <input class="hidden peer" name="delivery" type="radio"/>
+                            <div class="block p-5 rounded-2xl border border-accent-tan/20 bg-warm-beige/30 peer-checked:bg-warm-beige peer-checked:border-mocha transition-all duration-300">
+                                <div class="flex justify-between items-start">
+                                    <div class="flex gap-3">
+                                        <div>
+                                            <p class="font-roca text-lg font-semibold text-dark-chocolate flex items-center gap-2">
+                                                Other methods
+                                                <span class="material-symbols-outlined text-[16px] text-mocha">more_horiz</span>
+                                            </p>
+                                            <p class="font-cooper text-xs text-soft-cocoa mt-1 italic">Self-pickup or custom courier</p>
+                                        </div>
+                                    </div>
+                                    <p class="font-cooper text-sm font-medium text-dark-chocolate">Rp 35.000</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="mt-10 mb-32">
+                    <div class="flex items-center gap-2 text-soft-cocoa cursor-pointer" onclick="toggleNoteField()">
+                        <span class="material-symbols-outlined text-[18px]">edit_note</span>
+                        <span class="text-[10px] uppercase tracking-widest font-medium">Add a note for the kitchen</span>
+                    </div>
+                    <textarea id="kitchen-note" class="hidden mt-4 w-full bg-warm-beige/30 rounded-xl p-4 text-sm font-cooper resize-none focus:ring-0 border-0" rows="2" placeholder="Any special instructions..."></textarea>
+                </div>
+            </main>
+            
+            <!-- Standardized Footer -->
+            <footer class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-cream/95 backdrop-blur-xl border-t border-accent-tan/10 z-40 pb-[88px]">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6 px-1">
+                        <span class="text-soft-cocoa text-sm font-light">Est. Total</span>
+                        <span class="font-roca text-xl font-semibold" id="shipping-total">Rp 210.000</span>
+                    </div>
+                    <button onclick="navigateTo('payment')" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-transform active:scale-[0.98]">
+                        Continue to Payment
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </button>
+                    <div class="flex items-center justify-center gap-2 mt-4 opacity-40">
+                        <span class="material-symbols-outlined text-[14px]">shield_lock</span>
+                        <p class="text-[9px] uppercase tracking-[0.2em]">Secure Checkout Protected</p>
+                    </div>
+                </div>
+            </footer>
+            
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav-directory">
+                <div class="flex justify-between items-center max-w-md mx-auto">
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+                        <span class="material-symbols-outlined nav-icon">home</span>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+                        <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+                        <span class="nav-label">Menu</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+                        <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+                        <span class="nav-label">Cart</span>
+                    </button>
+                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+                        <span class="material-symbols-outlined nav-icon">person</span>
+                        <span class="nav-label">Profile</span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Navigation Router
+        function navigateTo(screenName) {
+            if (screenName === 'menu') {
+                window.location.href = 'index.html';
+            } else {
+                window.location.href = screenName + '.html';
+            }
+        }
+        
+        // Shipping Functions
+        function toggleRecipientFields() {
+            const checkbox = document.getElementById('same-as-recipient');
+            const fields = document.getElementById('recipient-fields');
+            
+            if (checkbox.checked) {
+                fields.style.opacity = '0.4';
+                fields.style.pointerEvents = 'none';
+                fields.style.filter = 'grayscale(1)';
+            } else {
+                fields.style.opacity = '1';
+                fields.style.pointerEvents = 'all';
+                fields.style.filter = 'none';
+            }
+        }
+        
+        function toggleNoteField() {
+            const note = document.getElementById('kitchen-note');
+            note.classList.toggle('hidden');
+            if (!note.classList.contains('hidden')) {
+                note.focus();
+            }
+        }
+    </script>
+</body>
+</html>
