@@ -219,20 +219,22 @@
         </div>
     </div>
 
-    <script>
-        // Clear cart on success page load
-        document.addEventListener('DOMContentLoaded', () => {
-            localStorage.removeItem('chouxlab_cart');
+    <script type="module">
+        import { clearCart } from "./firebase.js";
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await clearCart();
         });
-        
-        // Navigation Router
+
         function navigateTo(screenName) {
-            if (screenName === 'menu') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = screenName + '.html';
-            }
+            if (screenName === 'menu') window.location.href = 'index.html';
+            else window.location.href = screenName + '.html';
         }
+        
+        window.navigateTo = navigateTo;
+        window.setFilter = setFilter;
+        window.toggleItemQty = toggleItemQty;
+        window.updateItemQty = updateItemQty;
     </script>
 </body>
 </html>

@@ -34,49 +34,150 @@
                     fontFamily: {
                         "roca": ["Crimson Pro", "serif"],
                         "cooper": ["Fraunces", "serif"],
+                        "display": ["Fraunces", "serif"],
+                        "accent": ["Alice", "serif"],
+                        "body": ["Work Sans", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
                     },
                 },
             },
         }
     </script>
     
-    <style>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply bg-cream text-dark-chocolate antialiased;
+                font-family: 'Fraunces', serif;
+                min-height: 100dvh;
+                overflow-x: hidden;
+            }
+        }
+        
         .font-roca { font-family: 'Crimson Pro', serif; }
         .font-cooper { font-family: 'Fraunces', serif; }
+        
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
-        .fill-1 { font-variation-settings: 'FILL' 1; }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .fill-1 {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        .screen {
+            min-height: 100dvh;
+            background-color: #FDFBF7;
+        }
+        
+        .bottom-nav-directory {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(199, 183, 163, 0.2);
+            padding: 12px 24px 28px 24px;
+            max-width: 430px;
+            margin: 0 auto;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-item:active {
+            opacity: 0.6;
+            transform: scale(0.95);
+        }
+        
+        .nav-icon {
+            font-size: 24px;
+            line-height: 1;
+        }
+        
+        .nav-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-family: 'Fraunces', serif;
+        }
+        
+        .nav-item.active .nav-icon {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .nav-item.active .nav-label {
+            font-weight: 700;
+        }
+        
+        .screen-content {
+            padding-bottom: 120px;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        /* Custom date input styling */
+        input[type="date"], input[type="time"] {
+            background-color: transparent;
+            color: #2A1D15;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .map-placeholder {
+            background: linear-gradient(135deg, #F5F0E8 0%, #EBC2A4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-grid {
+            background-image: 
+                linear-gradient(rgba(54, 33, 28, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(54, 33, 28, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
     </style>
 </head>
 <body class="bg-cream-bg">
-
     <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
-        <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md">
-            <div class="flex items-center px-6 py-8 justify-between">
-                <button class="flex items-center justify-center text-mocha" onclick="navigateTo('menu')">
-                    <span class="material-symbols-outlined text-xl">arrow_back_ios</span>
+        <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-accent-tan/10">
+            <div class="flex items-center px-6 py-6 justify-between">
+                <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('menu')">
+                    <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
                 </button>
-                <h1 class="text-3xl font-roca font-bold tracking-tight">Your Cart</h1>
+                <h1 class="text-2xl font-roca font-bold tracking-tight text-dark-chocolate">Cart</h1>
                 <div class="w-8"></div>
             </div>
-            <div class="flex items-center justify-center gap-12 pb-6">
+            <div class="flex items-center justify-center gap-12 pb-4">
                 <div class="flex flex-col items-center gap-2">
-                    <div class="h-1.5 w-1.5 rounded-full bg-mocha"></div>
-                    <span class="text-[9px] uppercase tracking-widest font-bold">Cart</span>
+                    <div class="h-2 w-2 rounded-full bg-dark-chocolate"></div>
+                    <span class="text-[10px] uppercase tracking-widest font-bold text-dark-chocolate">Cart</span>
                 </div>
-                <div class="flex flex-col items-center gap-2 opacity-30">
-                    <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
-                    <span class="text-[9px] uppercase tracking-widest font-medium">Ship</span>
+                <div class="flex flex-col items-center gap-2 opacity-40">
+                    <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
+                    <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Ship</span>
                 </div>
-                <div class="flex flex-col items-center gap-2 opacity-30">
-                    <div class="h-1.5 w-1.5 rounded-full bg-soft-cocoa"></div>
-                    <span class="text-[9px] uppercase tracking-widest font-medium">Pay</span>
+                <div class="flex flex-col items-center gap-2 opacity-40">
+                    <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
+                    <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Pay</span>
                 </div>
             </div>
         </header>
         
-        <main class="flex-1 overflow-y-auto no-scrollbar px-6 pb-48" id="cart-items-container">
+        <main class="flex-1 overflow-y-auto no-scrollbar px-6 pt-6 pb-48" id="cart-items-container">
             <!-- Cart items populated by JS -->
         </main>
         
@@ -115,7 +216,9 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initSession, getCart, setCart } from "./firebase.js";
+        
         // Product catalog (must match menu.html)
         const products = {
             vanilla: { 
@@ -138,32 +241,23 @@
             }
         };
         
-        // Cart stored as {vanilla: 2, chocolate: 1} from menu.html
+        // Cart stored as {vanilla: 2, chocolate: 1}
         let cartCounts = {};
-        try {
-            const stored = JSON.parse(localStorage.getItem('chouxlab_cart'));
-            // Validate it's an object (not array) and has expected structure
-            if (stored && typeof stored === 'object' && !Array.isArray(stored)) {
-                cartCounts = stored;
-            } else if (stored && Array.isArray(stored)) {
-                // Auto-clear old array format
-                console.log('Clearing old cart format');
-                localStorage.removeItem('chouxlab_cart');
-            }
-        } catch (e) {
-            cartCounts = {};
-        }
-        
+
+        await initSession();
+        cartCounts = await getCart();
+
         function navigateTo(screenName) {
-            if (screenName === 'menu') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = screenName + '.html';
-            }
+            if (screenName === 'menu') window.location.href = 'index.html';
+            else window.location.href = screenName + '.html';
         }
-        
-        function saveCart() {
-            localStorage.setItem('chouxlab_cart', JSON.stringify(cartCounts));
+
+        async function saveCart() {
+            try {
+                await setCart(cartCounts);
+            } catch (e) {
+                console.error("setCart failed:", e);
+            }
         }
         
         function renderCart() {
@@ -231,12 +325,12 @@
                 `;
             });
             
-            // Calculate packaging: Rp 1,500 per item
-            const packaging = totalQty * 1500;
+            // Calculate packaging: Rp 900 per item
+            const packaging = totalQty * 900;
             const total = subtotal + packaging;
             
             container.innerHTML += `
-                <div class="py-12 flex justify-start">
+                <div class="py-1 flex justify-start">
                     <button class="font-cooper text-[11px] tracking-[0.2em] text-dark-chocolate hover:opacity-70 transition-opacity font-bold" onclick="navigateTo('menu')">
                         + ADD MORE ITEMS
                     </button>
@@ -249,7 +343,7 @@
                             <span class="font-cooper text-sm font-bold text-dark-chocolate">Rp ${subtotal.toLocaleString('id-ID')}</span>
                         </div>
                         <div class="flex justify-between items-baseline">
-                            <span class="text-dark-chocolate text-sm font-semibold">Packaging (${totalQty} × Rp 1,500)</span>
+                            <span class="text-dark-chocolate text-sm font-semibold">Packaging (${totalQty} box × Rp 900)</span>
                             <span class="font-cooper text-sm font-bold text-dark-chocolate">Rp ${packaging.toLocaleString('id-ID')}</span>
                         </div>
                         <div class="flex justify-between items-center pt-4 border-t border-accent-tan/10">
@@ -261,22 +355,32 @@
             `;
         }
         
-        function updateCartQty(productId, change) {
+        async function updateCartQty(productId, change) {
             if (!cartCounts[productId]) cartCounts[productId] = 0;
             cartCounts[productId] += change;
-            
-            if (cartCounts[productId] <= 0) {
-                delete cartCounts[productId];
-            }
-            
-            saveCart();
+
+            if (cartCounts[productId] <= 0) delete cartCounts[productId];
+
+            await saveCart();
             renderCart();
         }
+
         
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        // Initialize safely (works even if DOMContentLoaded already fired)
+        function initUI() {
             renderCart();
-        });
+        }
+
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initUI);
+        } else {
+            initUI();
+        }
+
+        // Expose only functions that are used by inline onclick=""
+        window.navigateTo = navigateTo;
+        window.updateCartQty = updateCartQty;
+
     </script>
 </body>
 </html>

@@ -158,7 +158,7 @@
             
             <main class="screen-content max-w-screen-md mx-auto w-full">
                 <!-- Filter Tabs -->
-                <div class="flex gap-3 px-6 py-4 overflow-x-auto no-scrollbar" id="filter-container">
+                <div class="flex gap-3 px-6 py-3 overflow-x-auto no-scrollbar" id="filter-container">
                     <button onclick="setFilter('all')" class="filter-btn filter-active flex h-11 shrink-0 items-center justify-center px-6 rounded-full bg-dark-brown text-cream-bg border border-transparent transition-all" data-filter="all">
                         <p class="text-sm font-bold tracking-wide">All</p>
                     </button>
@@ -173,7 +173,7 @@
                     </button>
                 </div>
                 
-                <div class="px-6 pt-10 pb-6" id="signature-header">
+                <div class="px-6 pt-4 pb-6" id="signature-header">
                     <h2 class="text-3xl font-roca text-dark-brown font-bold">Signature Choux</h2>
                     <p class="text-base text-dark-chocolate mt-2 font-cooper font-medium">Box of 10 • Light, crisp, and filled to order.</p>
                 </div>
@@ -185,8 +185,8 @@
                             <div class="absolute inset-0 bg-dark-brown/5"></div>
                         </div>
                         <div class="flex flex-col flex-1 px-1">
-                            <p class="font-roca text-lg font-bold text-dark-chocolate">Vanilla</p>
-                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-2 h-10 overflow-hidden">Classic nostalgia in a bite</p>
+                            <p class="font-roca text-lg font-bold text-dark-chocolate">Vanilla (10x)</p>
+                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Classic nostalgia in a bite</p>
                             <div class="mt-auto">
                                 <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
                                 <div class="mt-3 flex items-center">
@@ -212,8 +212,8 @@
                         <div class="relative w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl mb-4 shadow-sm overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI ");'>
                         </div>
                         <div class="flex flex-col flex-1 px-1">
-                            <p class="font-roca text-lg font-bold text-dark-chocolate">Chocolate</p>
-                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-2 h-10 overflow-hidden">Melting stress into comfort</p>
+                            <p class="font-roca text-lg font-bold text-dark-chocolate">Chocolate (10x)</p>
+                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Melting stress into comfort</p>
                             <div class="mt-auto">
                                 <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
                                 <div class="mt-3 flex items-center">
@@ -304,22 +304,26 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initSession, getCart, setCart } from "./firebase.js";
+
         // Product catalog with categories
         const products = {
             vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000, category: 'classics', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-3sZuNZ0QdzsW-tpH_fCQRhECch6sIy5r6A53Mz9d5GcZqbejtxvAM7tpdje6ZqiCrZjT-KFU7wriliD2eX1aNbpFm2Kw1knlFPgGycB_9veYcqxRhvVRgfZoHPl0ZKLOImi_QdcHIlic2qUm7oOMiiX4y2lktKim97R8XGJcXELOp-6opkamS92O1m83Kr54GXO_iUZu7Gfq5rOA4hC9V6Ho-sZWMJR8RpteK9afC1-CqvW-Y_Za2oCyPnqHOvz58puJiaf44cY ' },
             chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000, category: 'classics', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI ' },
             pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000, category: 'seasonal', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYPIicpfGyw9rPQiV4aiwqTzQzp-WALZgrVBf_oMB9RIqkQ24Ye9V9VNwwt0YgKhqd7aqTz52OLyF84j6Y7YSlAkazmZ9yjvMe2nyQ9OgjpJBbn5WcK-vRtqdVjnKs4Ekn-yJkBaLbrF9BNK2rJgPKPKcJa3HPRwOkOS3swsJpCb530s-iI_tP97sgfUWLrd3E4PAg8uzSMBqlw26WktnVPDZ4p9R6maQlMth1rlIr4LKgucIdDhqUKIdeejQvUzWLR_525Y2b_8E ' }
         };
-        
-        // Cart state
-        let cart = JSON.parse(localStorage.getItem('chouxlab_cart')) || {};
+
+        // Cart state (Firestore)
+        let cart = {};
         let currentFilter = 'all';
-        
+
         function saveCart() {
-            localStorage.setItem('chouxlab_cart', JSON.stringify(cart));
+            // write to Firestore
+            setCart(cart);
             updateDisplay();
         }
+
         
         function navigateTo(screenName) {
             if (screenName === 'menu') {
@@ -431,9 +435,11 @@
             if (show) {
                 addBtn.classList.add('hidden');
                 stepper.classList.remove('hidden');
-                if (!cart[item]) cart[item] = 0;
-                cart[item] = 1;
-                qtyEl.textContent = '1';
+                const existingQty = cart[item];
+                const newQty = (typeof existingQty === 'number' && existingQty >= 1) ? existingQty : 1;
+
+                cart[item] = newQty;
+                qtyEl.textContent = String(newQty);
                 saveCart();
             } else {
                 addBtn.classList.remove('hidden');
@@ -469,19 +475,23 @@
                 badge.classList.add('hidden');
             }
         }
-        
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            syncCartUI();
-        });
 
-        // Re-sync when coming back to page (handles back button navigation)
-        document.addEventListener('visibilitychange', () => {
-            if (!document.hidden) {
-                cart = JSON.parse(localStorage.getItem('chouxlab_cart')) || {};
-                syncCartUI();
-            }
-        });
+        async function initMenuUI() {
+            await initSession();
+            cart = await getCart();
+            syncCartUI();
+        }
+
+        // Runs when page loads normally
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", initMenuUI);
+        } else {
+            initMenuUI(); // DOM already loaded
+        }
+
+        // Runs when coming back via back button
+        window.addEventListener("pageshow", initMenuUI);
+
 
         function syncCartUI() {
             // Reset all items to default (+ button visible)
@@ -514,6 +524,11 @@
             
             updateDisplay();
         }
+
+        window.navigateTo = navigateTo;
+        window.setFilter = setFilter;
+        window.toggleItemQty = toggleItemQty;
+        window.updateItemQty = updateItemQty;
     </script>
 </body>
 </html>

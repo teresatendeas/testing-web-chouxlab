@@ -218,7 +218,7 @@
                     <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('shipping')">
                         <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
                     </button>
-                    <h1 class="text-3xl font-roca font-semibold tracking-tight">Payment</h1>
+                    <h1 class="text-2xl font-roca font-bold tracking-tight text-dark-chocolate">Payment</h1>
                     <div class="w-8"></div>
                 </div>
                 <div class="flex items-center justify-center gap-12 pb-6">
@@ -239,31 +239,40 @@
             
             <main class="screen-content overflow-y-auto no-scrollbar px-6">
                 <div class="py-4">
-                    <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-soft-cocoa mb-6">Select Method</h3>
+                    <h3 class="font-cooper text-sm uppercase tracking-wider font-bold text-dark-chocolate mb-2">Select Method</h3>
                     <div class="space-y-4">
-                        <label class="relative block group cursor-pointer">
-                            <input checked class="peer hidden" name="payment_method" type="radio"/>
-                            <div class="flex items-center justify-between p-5 rounded-2xl border border-mocha bg-warm-beige transition-all duration-300 peer-checked:border-dark-chocolate peer-checked:bg-warm-beige">
+                        <label class="relative block cursor-pointer">
+                            <input class="peer sr-only" name="payment_method" type="radio" value="bank_transfer"/>
+
+                            <div id="payment-method-card"
+                                class="flex items-center justify-between p-5 rounded-2xl border border-mocha bg-warm-beige transition-all duration-300
+                                        peer-checked:border-dark-chocolate
+                                        peer-checked:[&_.pm-dot]:scale-100">
+
                                 <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
-                                        <span class="material-symbols-outlined text-mocha text-2xl">account_balance</span>
-                                    </div>
-                                    <div>
-                                        <p class="font-roca text-lg font-semibold text-dark-chocolate">Bank Transfer</p>
-                                        <p class="font-cooper text-xs text-soft-cocoa italic">Virtual Account (BCA, Mandiri, BNI)</p>
-                                    </div>
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                                    <span class="material-symbols-outlined text-mocha text-2xl">account_balance</span>
                                 </div>
-                                <div class="w-4 h-4 rounded-full border-2 border-mocha flex items-center justify-center peer-checked:border-dark-chocolate">
-                                    <div class="w-2 h-2 rounded-full bg-mocha peer-checked:bg-dark-chocolate"></div>
+                                <div>
+                                    <p class="font-roca text-lg font-semibold text-dark-chocolate">Bank Transfer</p>
+                                    <p class="font-cooper text-xs text-soft-cocoa italic">Virtual Account (BCA)</p>
                                 </div>
+                                </div>
+
+                                <div class="relative w-4 h-4 rounded-full border-2 border-mocha flex items-center justify-center transition-colors
+                                            peer-checked:border-dark-chocolate">
+                                <span class="pm-dot absolute inset-0.5 rounded-full bg-dark-chocolate scale-0 transition-transform"></span>
+                                </div>
+
                             </div>
                         </label>
+
                     </div>
                     
                     <div class="mt-12">
-                        <h3 class="text-[10px] uppercase tracking-[0.3em] font-medium text-soft-cocoa mb-6">Payment Confirmation</h3>
+                        <h3 class="font-cooper text-sm uppercase tracking-wider font-bold text-dark-chocolate mb-2">Payment Confirmation</h3>
                         <div class="space-y-4">
-                            <p class="font-cooper text-sm text-soft-cocoa italic leading-relaxed text-center px-4">
+                            <p class="font-cooper text-md text-soft-cocoa italic leading-relaxed text-center px-5">
                                 Please upload your payment receipt for immediate processing.
                             </p>
                             <div class="relative group cursor-pointer" onclick="document.getElementById('receipt-upload').click()">
@@ -296,11 +305,11 @@
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6 px-1">
                         <span class="text-soft-cocoa text-sm font-light">Order Total</span>
-                        <span class="font-roca text-xl font-semibold">Rp 210.000</span>
+                        <span id="payment-total" class="font-roca text-xl font-semibold">Rp 0</span>
                     </div>
-                    <button onclick="placeOrder()" class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-transform active:scale-[0.98]">
+                    <button id="place-order-btn" disabled class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-semibold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-transform active:scale-[0.98] opacity-40 cursor-not-allowed">
                         <span class="material-symbols-outlined text-lg">lock</span>
-                        Place Order Rp 210.000
+                        <span id="place-order-text">Place Order</span>
                     </button>
                     <div class="flex items-center justify-center gap-2 mt-4 opacity-40">
                         <span class="material-symbols-outlined text-[14px]">verified_user</span>
@@ -332,94 +341,191 @@
         </div>
     </div>
 
-    <script>
-        // Check auth status on load
-        document.addEventListener('DOMContentLoaded', () => {
-            const authStatus = localStorage.getItem('chouxlab_auth');
-            if (!authStatus) {
-                document.getElementById('auth-modal').classList.remove('hidden');
-            }
-        });
-        
-        // Auth Modal Functions
-        function showLoginForm() {
-            document.getElementById('auth-choice').classList.add('hidden');
-            document.getElementById('login-form-view').classList.remove('hidden');
-            document.getElementById('guest-view').classList.add('hidden');
-        }
-        
-        function showAuthChoice() {
-            document.getElementById('auth-choice').classList.remove('hidden');
-            document.getElementById('login-form-view').classList.add('hidden');
-            document.getElementById('guest-view').classList.add('hidden');
-        }
-        
-        function continueAsGuest() {
-            document.getElementById('auth-choice').classList.add('hidden');
-            document.getElementById('guest-view').classList.remove('hidden');
-        }
-        
-        function proceedAsGuest() {
-            localStorage.setItem('chouxlab_auth', 'guest');
-            closeAuthModal();
-        }
-        
-        function handleLogin() {
-            const phone = document.getElementById('login-phone').value;
-            const password = document.getElementById('login-password').value;
-            
-            if (!phone || !password) {
-                alert('Please enter both phone number and password');
-                return;
-            }
-            
-            // Simulate login success
-            localStorage.setItem('chouxlab_auth', 'user');
-            localStorage.setItem('chouxlab_user_phone', phone);
-            closeAuthModal();
-        }
-        
-        function closeAuthModal() {
-            document.getElementById('auth-modal').classList.add('hidden');
-        }
-        
-        // Navigation
+    <script type="module">
+        import { initSession, getCart, createOrder, loadShippingDraftFromDB } from "./firebase.js";
+
+        // Must match your menu/cart products
+        const products = {
+            vanilla: { id: "vanilla", name: "Vanilla", price: 65000 },
+            chocolate: { id: "chocolate", name: "Chocolate", price: 65000 },
+            pistachio: { id: "pistachio", name: "Pistachio & Rose", price: 85000 },
+        };
+
+        let cart = {};
+        let receiptFileName = null;
+
         function navigateTo(screenName) {
-            if (screenName === 'menu') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = screenName + '.html';
-            }
+            if (screenName === "menu") window.location.href = "index.html";
+            else window.location.href = screenName + ".html";
         }
-        
-        function handleReceiptUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById('receipt-image');
-                    const icon = document.getElementById('receipt-icon');
-                    const text = document.getElementById('receipt-text');
-                    
-                    img.src = e.target.result;
-                    img.classList.remove('hidden');
-                    icon.classList.add('hidden');
-                    text.textContent = 'Receipt Uploaded';
+
+        let shippingDraft = null;
+
+        function deliveryCostFromDraft(draft) {
+            if (!draft?.deliveryMethod) return 0;
+            return draft.deliveryMethod === "gosend" ? 15000 : 0;
+        }
+
+        function calcTotals(itemsObj, draft) {
+            let subtotal = 0;
+            let itemCount = 0;
+
+            for (const [id, qty] of Object.entries(itemsObj || {})) {
+                if (products[id] && qty > 0) {
+                subtotal += products[id].price * qty;
+                itemCount += qty;
                 }
-                reader.readAsDataURL(file);
+            }
+
+            const packagingFee = itemCount * 1500;
+            const deliveryCost = deliveryCostFromDraft(draft);
+
+            return {
+                subtotal,
+                itemCount,
+                packagingFee,
+                deliveryCost,
+                total: subtotal + packagingFee + deliveryCost,
+            };
+        }
+
+        function renderTotals() {
+            const t = calcTotals(cart, shippingDraft);
+
+            const totalEl = document.getElementById("payment-total");
+            if (totalEl) totalEl.textContent = `Rp ${t.total.toLocaleString("id-ID")}`;
+
+            const placeOrderText = document.getElementById("place-order-text");
+            if (placeOrderText) placeOrderText.textContent = `Place Order Rp ${t.total.toLocaleString("id-ID")}`;
+        }
+
+        function validatePaymentMethod() {
+            const selected = document.querySelector('input[name="payment_method"]:checked');
+            const btn = document.getElementById("place-order-btn");
+            const card = document.getElementById("payment-method-card");
+            const hint = document.getElementById("pm-hint");
+
+            if (!btn) return;
+
+            if (selected) {
+                btn.disabled = false;
+                btn.classList.remove("opacity-40", "cursor-not-allowed");
+
+                if (card) {
+                card.classList.remove("border-red-300", "bg-red-50/40");
+                card.classList.add("border-dark-chocolate");
+                }
+                if (hint) hint.classList.add("hidden");
+            } else {
+                btn.disabled = true;
+                btn.classList.add("opacity-40", "cursor-not-allowed");
+
+                if (card) {
+                card.classList.add("border-red-300", "bg-red-50/40");
+                card.classList.remove("border-dark-chocolate");
+                }
+                if (hint) hint.classList.remove("hidden");
             }
         }
-        
-        function placeOrder() {
-            const btn = event.target;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">refresh</span> Processing';
-            
-            setTimeout(() => {
-                navigateTo('success');
-                btn.innerHTML = originalText;
-            }, 1500);
+
+        function handleReceiptUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            receiptFileName = file.name;
+
+            // Keep your existing preview UI behavior
+            const reader = new FileReader();
+            reader.onload = function (e) {
+            const img = document.getElementById("receipt-image");
+            const icon = document.getElementById("receipt-icon");
+            const text = document.getElementById("receipt-text");
+
+            if (img) {
+                img.src = e.target.result;
+                img.classList.remove("hidden");
+            }
+            if (icon) icon.classList.add("hidden");
+            if (text) text.textContent = "Receipt attached";
+            };
+            reader.readAsDataURL(file);
         }
+        
+        function getSelectedPayment() {
+            const radio = document.querySelector('input[name="payment_method"]:checked');
+            return radio ? radio.value : null;
+        }
+
+        async function placeOrder(ev) {
+            const btn = ev?.currentTarget;
+            if (!btn) return;
+
+            btn.disabled = true;
+            const oldHTML = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">refresh</span> Processing';
+
+            try {
+                await initSession();
+                cart = await getCart();
+
+                const t = calcTotals(cart, shippingDraft);
+
+                if (!t.itemCount) {
+                alert("Your cart is empty.");
+                btn.disabled = false;
+                btn.innerHTML = oldHTML;
+                return;
+                }
+
+                const selectedPayment = getSelectedPayment();
+                if (!selectedPayment) {
+                alert("Please select payment method.");
+                btn.disabled = false;
+                btn.innerHTML = oldHTML;
+                return;
+                }
+
+                const orderPayload = {
+                items: cart,
+                pricing: t,
+                shipping: shippingDraft || null,
+                paymentMethod: selectedPayment,
+                receipt: receiptFileName ? { fileName: receiptFileName } : null,
+                createdFrom: "payment.html"
+                };
+
+                await createOrder(orderPayload);
+
+                navigateTo("success");
+
+            } catch (err) {
+                console.error(err);
+                alert("Failed to place order.");
+                btn.disabled = false;
+                btn.innerHTML = oldHTML;
+            }
+        }
+
+
+        // Make functions available for inline onclick="" (critical)
+        window.navigateTo = navigateTo;
+        window.handleReceiptUpload = handleReceiptUpload;
+        window.placeOrder = placeOrder;
+
+        document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
+            radio.addEventListener("change", validatePaymentMethod);
+        });
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            await initSession();
+            cart = await getCart();
+            shippingDraft = await loadShippingDraftFromDB();
+            renderTotals();
+
+            validatePaymentMethod(); // must always run
+            document.getElementById("place-order-btn")?.addEventListener("click", placeOrder);
+        });
+
     </script>
 </body>
 </html>
