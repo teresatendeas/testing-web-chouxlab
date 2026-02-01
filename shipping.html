@@ -72,25 +72,11 @@
             min-height: 100dvh;
             background-color: #FDFBF7;
         }
-        /* Default: keep them fixed */
-        #checkout-footer,
-        #bottom-nav {
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        /* When keyboard is open: hide them (best UX for forms) */
-        .keyboard-open #checkout-footer,
         .keyboard-open #bottom-nav {
             transform: translateY(120%);
             opacity: 0;
             pointer-events: none;
         }
-
-        /* Ensure your content can scroll behind fixed bars */
-        .screen-content {
-            padding-bottom: 220px; /* enough space for footer + nav */
-        }
-
         
         .bottom-nav-directory {
             position: fixed;
@@ -416,26 +402,33 @@
                     </div>
                     <textarea id="kitchen-note" class="hidden mt-3 w-full bg-warm-beige/40 rounded-2xl p-4 text-base font-cooper text-dark-chocolate resize-none focus:ring-2 focus:ring-mocha/20 border-0" rows="2" placeholder="Any special instructions..."></textarea>
                 </div>
-            </main>
-            
-            <!-- Footer with Validation -->
-           <footer id="checkout-footer"
-                class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-cream/95 backdrop-blur-xl border-t border-mocha/20 z-40 pb-[88px]">
-                <div class="p-6">
-                    <div class="flex justify-between items-center mb-4 px-1">
+
+                <!-- Checkout section: NOT fixed, part of page flow -->
+                <section class="mt-8 mb-10">
+                    <div class="bg-warm-beige/30 rounded-2xl p-5 border border-mocha/10">
+                        <div class="flex justify-between items-center mb-4">
                         <span class="text-dark-chocolate text-sm font-bold">Est. Total</span>
                         <span class="font-roca text-2xl font-bold text-dark-chocolate" id="shipping-total">Rp 210.000</span>
-                    </div>
-                    <button id="continue-btn" onclick="goToPayment()" disabled class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed shadow-lg disabled:shadow-none">
+                        </div>
+
+                        <button
+                        id="continue-btn"
+                        onclick="goToPayment()"
+                        disabled
+                        class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed shadow-lg disabled:shadow-none"
+                        >
                         Continue to Payment
                         <span class="material-symbols-outlined text-lg">arrow_forward</span>
-                    </button>
-                    <div class="flex items-center justify-center gap-2 mt-3 opacity-60">
+                        </button>
+
+                        <div class="flex items-center justify-center gap-2 mt-3 opacity-60">
                         <span class="material-symbols-outlined text-[14px]">shield_lock</span>
                         <p class="text-[9px] uppercase tracking-[0.2em] font-bold text-dark-chocolate">Secure Checkout Protected</p>
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </section>
+
+            </main>
             
             <nav id="bottom-nav" class="bottom-nav-directory">
                 <div class="flex justify-between items-center max-w-md mx-auto">
