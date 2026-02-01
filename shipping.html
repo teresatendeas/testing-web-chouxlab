@@ -72,6 +72,25 @@
             min-height: 100dvh;
             background-color: #FDFBF7;
         }
+        /* Default: keep them fixed */
+        #checkout-footer,
+        #bottom-nav {
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        /* When keyboard is open: hide them (best UX for forms) */
+        .keyboard-open #checkout-footer,
+        .keyboard-open #bottom-nav {
+            transform: translateY(120%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Ensure your content can scroll behind fixed bars */
+        .screen-content {
+            padding-bottom: 220px; /* enough space for footer + nav */
+        }
+
         
         .bottom-nav-directory {
             position: fixed;
@@ -122,7 +141,7 @@
         }
         
         .screen-content {
-            padding-bottom: 120px;
+            padding-bottom: 24px;
         }
         
         input:focus, textarea:focus {
@@ -400,7 +419,8 @@
             </main>
             
             <!-- Footer with Validation -->
-            <footer class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-cream/95 backdrop-blur-xl border-t border-mocha/20 z-40 pb-[88px]">
+           <footer id="checkout-footer"
+                class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-cream/95 backdrop-blur-xl border-t border-mocha/20 z-40 pb-[88px]">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-4 px-1">
                         <span class="text-dark-chocolate text-sm font-bold">Est. Total</span>
@@ -417,7 +437,7 @@
                 </div>
             </footer>
             
-            <nav class="bottom-nav-directory">
+            <nav id="bottom-nav" class="bottom-nav-directory">
                 <div class="flex justify-between items-center max-w-md mx-auto">
                     <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
                         <span class="material-symbols-outlined nav-icon">home</span>
@@ -891,6 +911,41 @@
             }
             window.location.href = "payment.html";
         }
+
+        function setupKeyboardAvoidance() {
+            const root = document.documentElement;
+
+            const getHeights = () => {
+                const vv = window.visualViewport;
+                const layoutH = window.innerHeight;
+                const visualH = vv ? vv.height : layoutH;
+                return { layoutH, visualH };
+            };
+
+            const update = () => {
+                const { layoutH, visualH } = getHeights();
+
+                // If visual viewport shrinks a lot, keyboard is likely open
+                const keyboardOpen = (layoutH - visualH) > 120;
+
+                root.classList.toggle("keyboard-open", keyboardOpen);
+            };
+
+            // visualViewport is the most reliable on mobile
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener("resize", update);
+                window.visualViewport.addEventListener("scroll", update);
+            }
+
+            window.addEventListener("resize", update);
+            window.addEventListener("orientationchange", update);
+
+            // initial
+            update();
+        }
+
+            document.addEventListener("DOMContentLoaded", setupKeyboardAvoidance);
+
         
         // Initialize validation
         validateForm();
