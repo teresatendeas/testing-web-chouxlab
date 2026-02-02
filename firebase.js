@@ -32,6 +32,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+export function getCurrentUser() {
+  return auth.currentUser;
+}
 const db = getFirestore(app);
 
 let uid = null;
@@ -128,7 +131,4 @@ export async function loadShippingDraftFromDB() {
   const ref = doc(db, "users", uid, "drafts", "shipping");
   const snap = await getDoc(ref);
   return snap.exists() ? snap.data() : null;
-}
-export function getCurrentUser() {
-  return auth.currentUser;
 }
