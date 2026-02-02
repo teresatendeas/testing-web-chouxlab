@@ -33,7 +33,7 @@ import {
 
 // Paste from Firebase Console > Project settings > Web app
 const firebaseConfig = {
-  apiKey: "AIzaSyCTBt4C--X3O9XvweyNqQtvR3QcmSZA7c",
+  apiKey: "AIzaSyCTBt4C--X3oO9XvweyNqQtvR3QcmSZA7c",
   authDomain: "chouxlab-ops.firebaseapp.com",
   projectId: "chouxlab-ops",
   storageBucket: "chouxlab-ops.firebasestorage.app",
