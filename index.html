@@ -1,534 +1,562 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>ChouxLab - Menu</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "mocha": "#3D2B1F",
-                        "dark-chocolate": "#2A1D15",
-                        "dark-brown": "#32211D",
-                        "cream": "#FDFBF7",
-                        "cream-bg": "#FCF9F2",
-                        "warm-beige": "#F5F0E8",
-                        "soft-cocoa": "#8B7E74",
-                        "accent-tan": "#C7B7A3",
-                        "tan-light": "#f2e4cf",
-                        "nude": "#E7C0A5",
-                        "beige": "#EBC2A4",
-                        "tan": "#D1B28C",
-                        "warm-grey": "#8E7366",
-                        "primary": "#36211c",
-                        "background-light": "#fffcf5",
-                        "background-dark": "#1a1210",
-                    },
-                    fontFamily: {
-                        "roca": ["Crimson Pro", "serif"],
-                        "cooper": ["Fraunces", "serif"],
-                        "display": ["Fraunces", "serif"],
-                        "accent": ["Alice", "serif"],
-                        "body": ["Work Sans", "sans-serif"],
-                        "sans": ["Inter", "sans-serif"],
-                    },
-                },
-            },
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                @apply bg-cream text-dark-chocolate antialiased;
-                font-family: 'Fraunces', serif;
-                min-height: 100dvh;
-                overflow-x: hidden;
-            }
-        }
-        
-        .font-roca { font-family: 'Crimson Pro', serif; }
-        .font-cooper { font-family: 'Fraunces', serif; }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .fill-1 {
-            font-variation-settings: 'FILL' 1;
-        }
-        
-        .screen {
-            min-height: 100dvh;
-            background-color: #FDFBF7;
-        }
-        
-        .bottom-nav-directory {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: rgba(253, 251, 247, 0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(199, 183, 163, 0.2);
-            padding: 12px 24px 28px 24px;
-            max-width: 430px;
-            margin: 0 auto;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.2s ease;
-        }
-        
-        .nav-item:active {
-            opacity: 0.6;
-            transform: scale(0.95);
-        }
-        
-        .nav-icon {
-            font-size: 24px;
-            line-height: 1;
-        }
-        
-        .nav-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-family: 'Fraunces', serif;
-        }
-        
-        .nav-item.active .nav-icon {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .nav-item.active .nav-label {
-            font-weight: 700;
-        }
-        
-        .screen-content {
-            padding-bottom: 88px;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-        
-        .filter-active {
-            background-color: #32211D !important;
-            color: #FCF9F2 !important;
-            border-color: transparent !important;
-        }
-    </style>
-</head>
-<body class="bg-cream-bg">
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+  <title>ChouxLab - Menu</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 
-    <div id="screen-menu" class="screen active">
-        <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream-bg flex flex-col">
-            <header class="sticky top-0 z-50 bg-cream-bg/90 backdrop-blur-md">
-                <div class="flex items-center px-6 py-5 justify-between">
-                    <div class="flex size-10 items-center justify-start" onclick="navigateTo('home')">
-                        <span class="material-symbols-outlined cursor-pointer text-mocha">arrow_back_ios</span>
-                    </div>
-                    <h1 class="text-dark-brown text-2xl font-roca font-bold leading-tight flex-1 text-center">ChouxLab Menu</h1>
-                    <div class="flex w-10 items-center justify-end">
-                        <button class="flex items-center justify-center text-dark-brown relative" onclick="navigateTo('cart')">
-                            <span class="material-symbols-outlined" style="font-size: 24px;">shopping_cart</span>
-                            <span id="cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-mocha text-[10px] text-white font-bold hidden">0</span>
-                        </button>
-                    </div>
-                </div>
-            </header>
-            
-            <main class="screen-content max-w-screen-md mx-auto w-full">
-                <!-- Filter Tabs -->
-                <div class="flex gap-3 px-6 py-3 overflow-x-auto no-scrollbar" id="filter-container">
-                    <button onclick="setFilter('all')" class="filter-btn filter-active flex h-11 shrink-0 items-center justify-center px-6 rounded-full bg-dark-brown text-cream-bg border border-transparent transition-all" data-filter="all">
-                        <p class="text-sm font-bold tracking-wide">All</p>
-                    </button>
-                    <button onclick="setFilter('classics')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="classics">
-                        <p class="text-sm font-bold tracking-wide">Classics</p>
-                    </button>
-                    <button onclick="setFilter('seasonal')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="seasonal">
-                        <p class="text-sm font-bold tracking-wide">Seasonal</p>
-                    </button>
-                    <button onclick="setFilter('gift')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="gift">
-                        <p class="text-sm font-bold tracking-wide">Gift Boxes</p>
-                    </button>
-                </div>
-                
-                <div class="px-6 pt-4 pb-6" id="signature-header">
-                    <h2 class="text-3xl font-roca text-dark-brown font-bold">Signature Choux</h2>
-                    <p class="text-base text-dark-chocolate mt-2 font-cooper font-medium">Box of 10 • Light, crisp, and filled to order.</p>
-                </div>
-                
-                <div class="grid grid-cols-2 gap-x-6 gap-y-12 px-6" id="classics-grid">
-                    <!-- Vanilla Item -->
-                    <div class="product-item flex flex-col" data-category="classics" data-id="vanilla" data-price="65000">
-                        <div class="relative w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl mb-4 shadow-sm overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-3sZuNZ0QdzsW-tpH_fCQRhECch6sIy5r6A53Mz9d5GcZqbejtxvAM7tpdje6ZqiCrZjT-KFU7wriliD2eX1aNbpFm2Kw1knlFPgGycB_9veYcqxRhvVRgfZoHPl0ZKLOImi_QdcHIlic2qUm7oOMiiX4y2lktKim97R8XGJcXELOp-6opkamS92O1m83Kr54GXO_iUZu7Gfq5rOA4hC9V6Ho-sZWMJR8RpteK9afC1-CqvW-Y_Za2oCyPnqHOvz58puJiaf44cY ");'>
-                            <div class="absolute inset-0 bg-dark-brown/5"></div>
-                        </div>
-                        <div class="flex flex-col flex-1 px-1">
-                            <p class="font-roca text-lg font-bold text-dark-chocolate">Vanilla (10x)</p>
-                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Classic nostalgia in a bite</p>
-                            <div class="mt-auto">
-                                <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
-                                <div class="mt-3 flex items-center">
-                                    <button id="vanilla-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('vanilla', true)">
-                                        <span class="material-symbols-outlined text-[20px]">add</span>
-                                    </button>
-                                    <div id="vanilla-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
-                                        <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('vanilla', -1)">
-                                            <span class="material-symbols-outlined text-[16px]">remove</span>
-                                        </button>
-                                        <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-vanilla">1</span>
-                                        <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('vanilla', 1)">
-                                            <span class="material-symbols-outlined text-[16px]">add</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Chocolate Item -->
-                    <div class="product-item flex flex-col" data-category="classics" data-id="chocolate" data-price="65000">
-                        <div class="relative w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl mb-4 shadow-sm overflow-hidden" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI ");'>
-                        </div>
-                        <div class="flex flex-col flex-1 px-1">
-                            <p class="font-roca text-lg font-bold text-dark-chocolate">Chocolate (10x)</p>
-                            <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Melting stress into comfort</p>
-                            <div class="mt-auto">
-                                <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
-                                <div class="mt-3 flex items-center">
-                                    <button id="chocolate-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('chocolate', true)">
-                                        <span class="material-symbols-outlined text-[20px]">add</span>
-                                    </button>
-                                    <div id="chocolate-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
-                                        <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('chocolate', -1)">
-                                            <span class="material-symbols-outlined text-[16px]">remove</span>
-                                        </button>
-                                        <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-chocolate">1</span>
-                                        <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('chocolate', 1)">
-                                            <span class="material-symbols-outlined text-[16px]">add</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Limited Edition / Seasonal -->
-                <div class="px-6 py-16 product-item" data-category="seasonal" data-id="pistachio" data-price="85000" id="seasonal-section">
-                    <h2 class="text-2xl font-roca text-dark-brown mb-6 font-bold">Limited Edition</h2>
-                    <div class="bg-white/50 border border-nude/30 rounded-3xl p-6 flex flex-col gap-6">
-                        <div class="flex gap-4">
-                            <div class="flex-1">
-                                <p class="font-roca text-lg font-bold text-dark-chocolate">Pistachio & Rose</p>
-                                <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-2">Sicilian pistachio paste & gentle rose chantilly</p>
-                            </div>
-                            <div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-2xl shrink-0 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYPIicpfGyw9rPQiV4aiwqTzQzp-WALZgrVBf_oMB9RIqkQ24Ye9V9VNwwt0YgKhqd7aqTz52OLyF84j6Y7YSlAkazmZ9yjvMe2nyQ9OgjpJBbn5WcK-vRtqdVjnKs4Ekn-yJkBaLbrF9BNK2rJgPKPKcJa3HPRwOkOS3swsJpCb530s-iI_tP97sgfUWLrd3E4PAg8uzSMBqlw26WktnVPDZ4p9R6maQlMth1rlIr4LKgucIdDhqUKIdeejQvUzWLR_525Y2b_8E ");'>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between">
-                            <p class="text-dark-brown text-lg font-cooper font-bold">Rp 85.000</p>
-                            <div class="flex items-center">
-                                <button id="pistachio-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('pistachio', true)">
-                                    <span class="material-symbols-outlined text-[20px]">add</span>
-                                </button>
-                                <div id="pistachio-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
-                                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('pistachio', -1)">
-                                        <span class="material-symbols-outlined text-[16px]">remove</span>
-                                    </button>
-                                    <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-pistachio">1</span>
-                                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('pistachio', 1)">
-                                        <span class="material-symbols-outlined text-[16px]">add</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-            
-            <div id="menu-footer" class="fixed bottom-[88px] left-0 right-0 z-40 px-4 hidden max-w-[430px] mx-auto">
-                <div onclick="navigateTo('cart')" class="w-full bg-dark-chocolate rounded-full py-5 px-6 shadow-xl border border-white/5 cursor-pointer active:scale-[0.98] transition-transform flex items-center justify-between">
-                    <div class="flex flex-col">
-                        <p class="text-white/60 text-[10px] uppercase tracking-[0.2em] font-medium leading-none mb-1">Total</p>
-                        <p class="text-cream-bg text-lg font-cooper font-bold" id="menu-total">Rp 0</p>
-                    </div>
-                    <div class="flex items-center gap-2 text-cream-bg font-bold text-sm tracking-widest uppercase">
-                        Order Now
-                        <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
-                    </div>
-                </div>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "mocha": "#3D2B1F",
+            "dark-chocolate": "#2A1D15",
+            "dark-brown": "#32211D",
+            "cream": "#FDFBF7",
+            "cream-bg": "#FCF9F2",
+            "warm-beige": "#F5F0E8",
+            "soft-cocoa": "#8B7E74",
+            "accent-tan": "#C7B7A3",
+            "tan-light": "#f2e4cf",
+            "nude": "#E7C0A5",
+            "beige": "#EBC2A4",
+            "tan": "#D1B28C",
+            "warm-grey": "#8E7366",
+            "primary": "#36211c",
+            "background-light": "#fffcf5",
+            "background-dark": "#1a1210",
+          },
+          fontFamily: {
+            "roca": ["Crimson Pro", "serif"],
+            "cooper": ["Fraunces", "serif"],
+            "display": ["Fraunces", "serif"],
+            "accent": ["Alice", "serif"],
+            "body": ["Work Sans", "sans-serif"],
+            "sans": ["Inter", "sans-serif"],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-cream text-dark-chocolate antialiased;
+        font-family: 'Fraunces', serif;
+        min-height: 100dvh;
+        overflow-x: hidden;
+      }
+    }
+
+    .font-roca { font-family: 'Crimson Pro', serif; }
+    .font-cooper { font-family: 'Fraunces', serif; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .fill-1 { font-variation-settings: 'FILL' 1; }
+
+    .screen {
+      min-height: 100dvh;
+      background-color: #FDFBF7;
+    }
+
+    .bottom-nav-directory {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background-color: rgba(253, 251, 247, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(199, 183, 163, 0.2);
+      padding: 12px 24px 28px 24px;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:active {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+
+    .nav-icon {
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Fraunces', serif;
+    }
+
+    .nav-item.active .nav-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .nav-item.active .nav-label { font-weight: 700; }
+
+    .screen-content { padding-bottom: 88px; }
+
+    input:focus, textarea:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .filter-active {
+      background-color: #32211D !important;
+      color: #FCF9F2 !important;
+      border-color: transparent !important;
+    }
+  </style>
+</head>
+
+<body class="bg-cream-bg">
+  <div id="screen-menu" class="screen active">
+    <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream-bg flex flex-col">
+
+      <header class="sticky top-0 z-50 bg-cream-bg/90 backdrop-blur-md">
+        <div class="flex items-center px-6 py-5 justify-between">
+          <div class="flex size-10 items-center justify-start" onclick="navigateTo('home')">
+            <span class="material-symbols-outlined cursor-pointer text-mocha">arrow_back_ios</span>
+          </div>
+
+          <h1 class="text-dark-brown text-2xl font-roca font-bold leading-tight flex-1 text-center">ChouxLab Menu</h1>
+
+          <div class="flex w-10 items-center justify-end">
+            <button class="flex items-center justify-center text-dark-brown relative" onclick="navigateTo('cart')">
+              <span class="material-symbols-outlined" style="font-size: 24px;">shopping_cart</span>
+              <span id="cart-badge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-mocha text-[10px] text-white font-bold hidden">0</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="screen-content max-w-screen-md mx-auto w-full">
+        <!-- Filter Tabs -->
+        <div class="flex gap-3 px-6 py-3 overflow-x-auto no-scrollbar" id="filter-container">
+          <button onclick="setFilter('all')" class="filter-btn filter-active flex h-11 shrink-0 items-center justify-center px-6 rounded-full bg-dark-brown text-cream-bg border border-transparent transition-all" data-filter="all">
+            <p class="text-sm font-bold tracking-wide">All</p>
+          </button>
+          <button onclick="setFilter('classics')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="classics">
+            <p class="text-sm font-bold tracking-wide">Classics</p>
+          </button>
+          <button onclick="setFilter('seasonal')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="seasonal">
+            <p class="text-sm font-bold tracking-wide">Seasonal</p>
+          </button>
+          <button onclick="setFilter('gift')" class="filter-btn flex h-11 shrink-0 items-center justify-center px-6 rounded-full border border-dark-brown/10 bg-white/40 text-dark-brown transition-all" data-filter="gift">
+            <p class="text-sm font-bold tracking-wide">Gift Boxes</p>
+          </button>
+        </div>
+
+        <div class="px-6 pt-4 pb-6" id="signature-header">
+          <h2 class="text-3xl font-roca text-dark-brown font-bold">Signature Choux</h2>
+          <p class="text-base text-dark-chocolate mt-2 font-cooper font-medium">Box of 10 • Light, crisp, and filled to order.</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-x-6 gap-y-12 px-6" id="classics-grid">
+          <!-- Vanilla Item -->
+          <div class="product-item flex flex-col" data-category="classics" data-id="vanilla" data-price="65000">
+            <div class="relative w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl mb-4 shadow-sm overflow-hidden"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC-3sZuNZ0QdzsW-tpH_fCQRhECch6sIy5r6A53Mz9d5GcZqbejtxvAM7tpdje6ZqiCrZjT-KFU7wriliD2eX1aNbpFm2Kw1knlFPgGycB_9veYcqxRhvVRgfZoHPl0ZKLOImi_QdcHIlic2qUm7oOMiiX4y2lktKim97R8XGJcXELOp-6opkamS92O1m83Kr54GXO_iUZu7Gfq5rOA4hC9V6Ho-sZWMJR8RpteK9afC1-CqvW-Y_Za2oCyPnqHOvz58puJiaf44cY ");'>
+              <div class="absolute inset-0 bg-dark-brown/5"></div>
             </div>
 
-            <nav class="bottom-nav-directory bg-cream-bg/95 border-dark-brown/5">
-                <div class="flex justify-between items-center max-w-md mx-auto">
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
-                        <span class="material-symbols-outlined nav-icon">home</span>
-                        <span class="nav-label">Home</span>
+            <div class="flex flex-col flex-1 px-1">
+              <p class="font-roca text-lg font-bold text-dark-chocolate">Vanilla (10x)</p>
+              <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Classic nostalgia in a bite</p>
+              <div class="mt-auto">
+                <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
+
+                <div class="mt-3 flex items-center">
+                  <button id="vanilla-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('vanilla', true)">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                  </button>
+
+                  <div id="vanilla-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
+                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('vanilla', -1)">
+                      <span class="material-symbols-outlined text-[16px]">remove</span>
                     </button>
-                    <button class="nav-item active text-dark-brown" onclick="navigateTo('menu')">
-                        <span class="material-symbols-outlined nav-icon fill-1">restaurant_menu</span>
-                        <span class="nav-label">Menu</span>
+                    <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-vanilla">1</span>
+                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('vanilla', 1)">
+                      <span class="material-symbols-outlined text-[16px]">add</span>
                     </button>
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
-                        <span class="material-symbols-outlined nav-icon">shopping_bag</span>
-                        <span class="nav-label">Cart</span>
-                    </button>
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
-                        <span class="material-symbols-outlined nav-icon">person</span>
-                        <span class="nav-label">Profile</span>
-                    </button>
+                  </div>
                 </div>
-            </nav>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Chocolate Item -->
+          <div class="product-item flex flex-col" data-category="classics" data-id="chocolate" data-price="65000">
+            <div class="relative w-full aspect-[4/5] bg-center bg-no-repeat bg-cover rounded-2xl mb-4 shadow-sm overflow-hidden"
+              style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI ");'>
+            </div>
+
+            <div class="flex flex-col flex-1 px-1">
+              <p class="font-roca text-lg font-bold text-dark-chocolate">Chocolate (10x)</p>
+              <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-1 mb-1 h-10 overflow-hidden">Melting stress into comfort</p>
+              <div class="mt-auto">
+                <p class="text-dark-brown text-lg font-cooper font-bold">Rp 65.000</p>
+
+                <div class="mt-3 flex items-center">
+                  <button id="chocolate-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('chocolate', true)">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                  </button>
+
+                  <div id="chocolate-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
+                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('chocolate', -1)">
+                      <span class="material-symbols-outlined text-[16px]">remove</span>
+                    </button>
+                    <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-chocolate">1</span>
+                    <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('chocolate', 1)">
+                      <span class="material-symbols-outlined text-[16px]">add</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Seasonal -->
+        <div class="px-6 py-16 product-item" data-category="seasonal" data-id="pistachio" data-price="85000" id="seasonal-section">
+          <h2 class="text-2xl font-roca text-dark-brown mb-6 font-bold">Limited Edition</h2>
+          <div class="bg-white/50 border border-nude/30 rounded-3xl p-6 flex flex-col gap-6">
+            <div class="flex gap-4">
+              <div class="flex-1">
+                <p class="font-roca text-lg font-bold text-dark-chocolate">Pistachio & Rose</p>
+                <p class="text-dark-chocolate/70 text-sm font-cooper leading-relaxed mt-2">Sicilian pistachio paste & gentle rose chantilly</p>
+              </div>
+              <div class="w-24 h-24 bg-center bg-no-repeat bg-cover rounded-2xl shrink-0 shadow-sm"
+                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAYPIicpfGyw9rPQiV4aiwqTzQzp-WALZgrVBf_oMB9RIqkQ24Ye9V9VNwwt0YgKhqd7aqTz52OLyF84j6Y7YSlAkazmZ9yjvMe2nyQ9OgjpJBbn5WcK-vRtqdVjnKs4Ekn-yJkBaLbrF9BNK2rJgPKPKcJa3HPRwOkOS3swsJpCb530s-iI_tP97sgfUWLrd3E4PAg8uzSMBqlw26WktnVPDZ4p9R6maQlMth1rlIr4LKgucIdDhqUKIdeejQvUzWLR_525Y2b_8E ");'>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <p class="text-dark-brown text-lg font-cooper font-bold">Rp 85.000</p>
+              <div class="flex items-center">
+                <button id="pistachio-add-btn" class="flex size-9 items-center justify-center rounded-full bg-mocha text-cream-bg hover:brightness-110 transition-all shadow-sm" onclick="toggleItemQty('pistachio', true)">
+                  <span class="material-symbols-outlined text-[20px]">add</span>
+                </button>
+                <div id="pistachio-stepper" class="hidden flex items-center bg-mocha/5 rounded-full p-1 border border-mocha/10">
+                  <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('pistachio', -1)">
+                    <span class="material-symbols-outlined text-[16px]">remove</span>
+                  </button>
+                  <span class="px-3 text-sm font-cooper font-bold text-dark-chocolate w-10 text-center" id="qty-pistachio">1</span>
+                  <button class="flex size-7 items-center justify-center rounded-full text-dark-chocolate hover:bg-mocha/10 transition-colors" onclick="updateItemQty('pistachio', 1)">
+                    <span class="material-symbols-outlined text-[16px]">add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+
+      <!-- Footer CTA -->
+      <div id="menu-footer" class="fixed bottom-[88px] left-0 right-0 z-40 px-4 hidden max-w-[430px] mx-auto">
+        <div onclick="navigateTo('cart')" class="w-full bg-dark-chocolate rounded-full py-5 px-6 shadow-xl border border-white/5 cursor-pointer active:scale-[0.98] transition-transform flex items-center justify-between">
+          <div class="flex flex-col">
+            <p class="text-white/60 text-[10px] uppercase tracking-[0.2em] font-medium leading-none mb-1">Total</p>
+            <p class="text-cream-bg text-lg font-cooper font-bold" id="menu-total">Rp 0</p>
+          </div>
+          <div class="flex items-center gap-2 text-cream-bg font-bold text-sm tracking-widest uppercase">
+            Order Now
+            <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="bottom-nav-directory bg-cream-bg/95 border-dark-brown/5">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+            <span class="material-symbols-outlined nav-icon">home</span>
+            <span class="nav-label">Home</span>
+          </button>
+          <button class="nav-item active text-dark-brown" onclick="navigateTo('menu')">
+            <span class="material-symbols-outlined nav-icon fill-1">restaurant_menu</span>
+            <span class="nav-label">Menu</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+            <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+            <span class="nav-label">Cart</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+            <span class="material-symbols-outlined nav-icon">person</span>
+            <span class="nav-label">Profile</span>
+          </button>
+        </div>
+      </nav>
+
     </div>
+  </div>
 
-    <script type="module">
-        import { initSession, getCart, setCart } from "./firebase.js";
+  <script type="module">
+    import { initSession, getCart, setCart } from "./firebase.js";
 
-        // Product catalog with categories
-        const products = {
-            vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000, category: 'classics', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC-3sZuNZ0QdzsW-tpH_fCQRhECch6sIy5r6A53Mz9d5GcZqbejtxvAM7tpdje6ZqiCrZjT-KFU7wriliD2eX1aNbpFm2Kw1knlFPgGycB_9veYcqxRhvVRgfZoHPl0ZKLOImi_QdcHIlic2qUm7oOMiiX4y2lktKim97R8XGJcXELOp-6opkamS92O1m83Kr54GXO_iUZu7Gfq5rOA4hC9V6Ho-sZWMJR8RpteK9afC1-CqvW-Y_Za2oCyPnqHOvz58puJiaf44cY ' },
-            chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000, category: 'classics', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBd6B4bIq35nUTh2pw4BnTnZh8Ny5jE5c1mFoqnv6QU834a3IvZ-ZJCWZ62LxoTMMpKYrOLhl3J5vAd7HMicEciUNSnN9er36uRLZKzCi-qBE8XOOd9SJ9ZlvtN3aJ9rXtQFmTxSG8SoL0RFTY2zQTq7Cj4v3cNSh6_xWkbCn_IbEP1oe1mZbMpkAuyD8VrOZNRIzKMy_pksI2ZsnYYxRkMjdqyPwpSdLQjQVbJSc4o-wV_qkhhzgAIXmRxPdGMB0-39D5W-XwkgyI ' },
-            pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000, category: 'seasonal', image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAYPIicpfGyw9rPQiV4aiwqTzQzp-WALZgrVBf_oMB9RIqkQ24Ye9V9VNwwt0YgKhqd7aqTz52OLyF84j6Y7YSlAkazmZ9yjvMe2nyQ9OgjpJBbn5WcK-vRtqdVjnKs4Ekn-yJkBaLbrF9BNK2rJgPKPKcJa3HPRwOkOS3swsJpCb530s-iI_tP97sgfUWLrd3E4PAg8uzSMBqlw26WktnVPDZ4p9R6maQlMth1rlIr4LKgucIdDhqUKIdeejQvUzWLR_525Y2b_8E ' }
-        };
+    const products = {
+      vanilla: { id: "vanilla", name: "Vanilla", price: 65000, category: "classics" },
+      chocolate: { id: "chocolate", name: "Chocolate", price: 65000, category: "classics" },
+      pistachio: { id: "pistachio", name: "Pistachio & Rose", price: 85000, category: "seasonal" },
+    };
 
-        // Cart state (Firestore)
-        let cart = {};
-        let currentFilter = 'all';
+    let cart = {};
+    let currentFilter = "all";
 
-        function saveCart() {
-            // write to Firestore
-            setCart(cart);
-            updateDisplay();
-        }
+    // prevents UI reload while a save is in-flight
+    let isSaving = false;
+    let initRunning = false;
 
-        
-        function navigateTo(screenName) {
-            if (screenName === 'menu') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = screenName + '.html';
-            }
-        }
-        
-        function setFilter(filter) {
-            currentFilter = filter;
-            
-            // Update button styles
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                if (btn.dataset.filter === filter) {
-                    btn.classList.add('filter-active');
-                    btn.classList.remove('bg-white/40', 'text-dark-brown', 'border-dark-brown/10');
-                } else {
-                    btn.classList.remove('filter-active');
-                    btn.classList.add('bg-white/40', 'text-dark-brown', 'border-dark-brown/10');
-                }
-            });
-            
-            // Show/hide content based on filter
-            const classicsGrid = document.getElementById('classics-grid');
-            const seasonalSection = document.getElementById('seasonal-section');
-            const signatureHeader = document.getElementById('signature-header');
-            
-            if (filter === 'all') {
-                classicsGrid.style.display = 'grid';
-                seasonalSection.style.display = 'block';
-                signatureHeader.style.display = 'block';
-            } else if (filter === 'classics') {
-                classicsGrid.style.display = 'grid';
-                seasonalSection.style.display = 'none';
-                signatureHeader.style.display = 'block';
-            } else if (filter === 'seasonal') {
-                classicsGrid.style.display = 'none';
-                seasonalSection.style.display = 'block';
-                signatureHeader.style.display = 'none';
-            } else if (filter === 'gift') {
-                // No gift boxes implemented yet
-                classicsGrid.style.display = 'none';
-                seasonalSection.style.display = 'none';
-                signatureHeader.style.display = 'none';
-                
-                // Show empty state if not exists
-                if (!document.getElementById('empty-state')) {
-                    const emptyState = document.createElement('div');
-                    emptyState.id = 'empty-state';
-                    emptyState.className = 'px-6 py-20 text-center';
-                    emptyState.innerHTML = `
-                        <span class="material-symbols-outlined text-6xl text-soft-cocoa/30 mb-4">card_giftcard</span>
-                        <h3 class="font-roca text-xl text-dark-chocolate font-bold mb-2">Gift Boxes Coming Soon</h3>
-                        <p class="text-soft-cocoa font-cooper text-sm">Curated selections for special occasions</p>
-                    `;
-                    document.querySelector('main').appendChild(emptyState);
-                } else {
-                    document.getElementById('empty-state').style.display = 'block';
-                }
-                return;
-            }
-            
-            // Hide empty state if exists
-            const emptyState = document.getElementById('empty-state');
-            if (emptyState) emptyState.style.display = 'none';
-        }
-        
-        function calculateTotal() {
-            let total = 0;
-            let itemCount = 0;
-            
-            for (const [itemId, qty] of Object.entries(cart)) {
-                if (products[itemId] && qty > 0) {
-                    total += products[itemId].price * qty;
-                    itemCount += qty;
-                }
-            }
-            
-            return { total, itemCount };
-        }
-        
-        function updateDisplay() {
-            const { total, itemCount } = calculateTotal();
-            
-            // Update footer total
-            const totalEl = document.getElementById('menu-total');
-            if (totalEl) {
-                totalEl.textContent = `Rp ${total.toLocaleString('id-ID')}`;
-            }
-            
-            // Update badge
-            updateCartBadge(itemCount);
-            
-            // Show/hide footer
-            const footer = document.getElementById('menu-footer');
-            if (itemCount > 0) {
-                footer.classList.remove('hidden');
-            } else {
-                footer.classList.add('hidden');
-            }
-        }
-        
-        function toggleItemQty(item, show) {
-            const addBtn = document.getElementById(`${item}-add-btn`);
-            const stepper = document.getElementById(`${item}-stepper`);
-            const qtyEl = document.getElementById(`qty-${item}`);
-            
-            if (show) {
-                addBtn.classList.add('hidden');
-                stepper.classList.remove('hidden');
-                const existingQty = cart[item];
-                const newQty = (typeof existingQty === 'number' && existingQty >= 1) ? existingQty : 1;
+    function navigateTo(screenName) {
+      if (screenName === "menu") window.location.href = "index.html";
+      else window.location.href = screenName + ".html";
+    }
 
-                cart[item] = newQty;
-                qtyEl.textContent = String(newQty);
-                saveCart();
-            } else {
-                addBtn.classList.remove('hidden');
-                stepper.classList.add('hidden');
-                delete cart[item];
-                qtyEl.textContent = '1';
-                saveCart();
-            }
-        }
-        
-        function updateItemQty(item, change) {
-            const qtyEl = document.getElementById(`qty-${item}`);
-            let currentQty = cart[item] || 0;
-            let newQty = currentQty + change;
-            
-            if (newQty < 1) {
-                toggleItemQty(item, false);
-            } else {
-                cart[item] = newQty;
-                qtyEl.textContent = newQty;
-                saveCart();
-            }
-        }
-        
-        function updateCartBadge(count) {
-            const badge = document.getElementById('cart-badge');
-            if (!badge) return;
-            
-            if (count > 0) {
-                badge.textContent = count;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
+    function setFilter(filter) {
+      currentFilter = filter;
 
-        async function initMenuUI() {
-            await initSession();
-            cart = await getCart();
-            syncCartUI();
-        }
-
-        // Runs when page loads normally
-        if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", initMenuUI);
+      document.querySelectorAll(".filter-btn").forEach((btn) => {
+        if (btn.dataset.filter === filter) {
+          btn.classList.add("filter-active");
+          btn.classList.remove("bg-white/40", "text-dark-brown", "border-dark-brown/10");
         } else {
-            initMenuUI(); // DOM already loaded
+          btn.classList.remove("filter-active");
+          btn.classList.add("bg-white/40", "text-dark-brown", "border-dark-brown/10");
+        }
+      });
+
+      const classicsGrid = document.getElementById("classics-grid");
+      const seasonalSection = document.getElementById("seasonal-section");
+      const signatureHeader = document.getElementById("signature-header");
+
+      if (filter === "all") {
+        classicsGrid.style.display = "grid";
+        seasonalSection.style.display = "block";
+        signatureHeader.style.display = "block";
+      } else if (filter === "classics") {
+        classicsGrid.style.display = "grid";
+        seasonalSection.style.display = "none";
+        signatureHeader.style.display = "block";
+      } else if (filter === "seasonal") {
+        classicsGrid.style.display = "none";
+        seasonalSection.style.display = "block";
+        signatureHeader.style.display = "none";
+      } else if (filter === "gift") {
+        classicsGrid.style.display = "none";
+        seasonalSection.style.display = "none";
+        signatureHeader.style.display = "none";
+
+        if (!document.getElementById("empty-state")) {
+          const emptyState = document.createElement("div");
+          emptyState.id = "empty-state";
+          emptyState.className = "px-6 py-20 text-center";
+          emptyState.innerHTML = `
+            <span class="material-symbols-outlined text-6xl text-soft-cocoa/30 mb-4">card_giftcard</span>
+            <h3 class="font-roca text-xl text-dark-chocolate font-bold mb-2">Gift Boxes Coming Soon</h3>
+            <p class="text-soft-cocoa font-cooper text-sm">Curated selections for special occasions</p>
+          `;
+          document.querySelector("main").appendChild(emptyState);
+        } else {
+          document.getElementById("empty-state").style.display = "block";
+        }
+        return;
+      }
+
+      const emptyState = document.getElementById("empty-state");
+      if (emptyState) emptyState.style.display = "none";
+    }
+
+    function calculateTotal() {
+      let total = 0;
+      let itemCount = 0;
+
+      for (const [itemId, qty] of Object.entries(cart || {})) {
+        const n = Number(qty);
+        if (products[itemId] && Number.isFinite(n) && n > 0) {
+          total += products[itemId].price * n;
+          itemCount += n;
+        }
+      }
+      return { total, itemCount };
+    }
+
+    function updateCartBadge(count) {
+      const badge = document.getElementById("cart-badge");
+      if (!badge) return;
+
+      if (count > 0) {
+        badge.textContent = String(count);
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+    }
+
+    function updateDisplay() {
+      const { total, itemCount } = calculateTotal();
+
+      const totalEl = document.getElementById("menu-total");
+      if (totalEl) totalEl.textContent = `Rp ${total.toLocaleString("id-ID")}`;
+
+      updateCartBadge(itemCount);
+
+      const footer = document.getElementById("menu-footer");
+      if (itemCount > 0) footer.classList.remove("hidden");
+      else footer.classList.add("hidden");
+    }
+
+    function syncCartUI() {
+      ["vanilla", "chocolate", "pistachio"].forEach((itemId) => {
+        const addBtn = document.getElementById(`${itemId}-add-btn`);
+        const stepper = document.getElementById(`${itemId}-stepper`);
+        const qtyEl = document.getElementById(`qty-${itemId}`);
+
+        if (addBtn && stepper && qtyEl) {
+          addBtn.classList.remove("hidden");
+          stepper.classList.add("hidden");
+          qtyEl.textContent = "1";
+        }
+      });
+
+      for (const [itemId, qty] of Object.entries(cart || {})) {
+        const n = Number(qty);
+        if (products[itemId] && Number.isFinite(n) && n > 0) {
+          const addBtn = document.getElementById(`${itemId}-add-btn`);
+          const stepper = document.getElementById(`${itemId}-stepper`);
+          const qtyEl = document.getElementById(`qty-${itemId}`);
+
+          if (addBtn && stepper && qtyEl) {
+            addBtn.classList.add("hidden");
+            stepper.classList.remove("hidden");
+            qtyEl.textContent = String(n);
+          }
+        }
+      }
+
+      updateDisplay();
+    }
+
+    async function saveCart() {
+      // ✅ wait firestore write so UI won’t reload old cart
+      isSaving = true;
+      try {
+        await setCart(cart);
+      } finally {
+        isSaving = false;
+      }
+      updateDisplay();
+    }
+
+    function toggleItemQty(itemId, show) {
+      const addBtn = document.getElementById(`${itemId}-add-btn`);
+      const stepper = document.getElementById(`${itemId}-stepper`);
+      const qtyEl = document.getElementById(`qty-${itemId}`);
+
+      if (!addBtn || !stepper || !qtyEl) return;
+
+      if (show) {
+        addBtn.classList.add("hidden");
+        stepper.classList.remove("hidden");
+
+        const existing = Number(cart[itemId] || 0);
+        const newQty = existing >= 1 ? existing : 1;
+
+        cart[itemId] = newQty;
+        qtyEl.textContent = String(newQty);
+        saveCart();
+      } else {
+        addBtn.classList.remove("hidden");
+        stepper.classList.add("hidden");
+
+        // ✅ IMPORTANT: remove key completely
+        delete cart[itemId];
+
+        qtyEl.textContent = "1";
+        saveCart();
+      }
+    }
+
+    function updateItemQty(itemId, delta) {
+      const qtyEl = document.getElementById(`qty-${itemId}`);
+      if (!qtyEl) return;
+
+      const current = Number(cart[itemId] || 0);
+      const next = current + Number(delta);
+
+      if (next < 1) {
+        toggleItemQty(itemId, false);
+        return;
+      }
+
+      cart[itemId] = next;
+      qtyEl.textContent = String(next);
+      saveCart();
+    }
+
+    async function initMenuUI() {
+      if (initRunning) return;
+      initRunning = true;
+
+      try {
+        await initSession();
+
+        // if we are saving, do not pull old snapshot and overwrite the UI
+        if (!isSaving) {
+          cart = await getCart();
         }
 
-        // Runs when coming back via back button
-        window.addEventListener("pageshow", initMenuUI);
+        syncCartUI();
+      } catch (e) {
+        console.error("initMenuUI error:", e);
+      } finally {
+        initRunning = false;
+      }
+    }
 
+    // load
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initMenuUI);
+    } else {
+      initMenuUI();
+    }
 
-        function syncCartUI() {
-            // Reset all items to default (+ button visible)
-            ['vanilla', 'chocolate', 'pistachio'].forEach(itemId => {
-                const addBtn = document.getElementById(`${itemId}-add-btn`);
-                const stepper = document.getElementById(`${itemId}-stepper`);
-                const qtyEl = document.getElementById(`qty-${itemId}`);
-                
-                if (addBtn && stepper && qtyEl) {
-                    addBtn.classList.remove('hidden');
-                    stepper.classList.add('hidden');
-                    qtyEl.textContent = '1';
-                }
-            });
-            
-            // Restore items that are in cart (show stepper with correct qty)
-            for (const [itemId, qty] of Object.entries(cart)) {
-                if (qty > 0 && products[itemId]) {
-                    const addBtn = document.getElementById(`${itemId}-add-btn`);
-                    const stepper = document.getElementById(`${itemId}-stepper`);
-                    const qtyEl = document.getElementById(`qty-${itemId}`);
-                    
-                    if (addBtn && stepper && qtyEl) {
-                        addBtn.classList.add('hidden');
-                        stepper.classList.remove('hidden');
-                        qtyEl.textContent = qty;
-                    }
-                }
-            }
-            
-            updateDisplay();
-        }
+    // when returning from other pages
+    window.addEventListener("pageshow", () => {
+      // prevent fight between pageshow reload and in-flight save
+      if (!isSaving) initMenuUI();
+    });
 
-        window.navigateTo = navigateTo;
-        window.setFilter = setFilter;
-        window.toggleItemQty = toggleItemQty;
-        window.updateItemQty = updateItemQty;
-    </script>
+    // expose for inline onclick
+    window.navigateTo = navigateTo;
+    window.setFilter = setFilter;
+    window.toggleItemQty = toggleItemQty;
+    window.updateItemQty = updateItemQty;
+  </script>
 </body>
 </html>
