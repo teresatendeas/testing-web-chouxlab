@@ -38,7 +38,7 @@ const firebaseConfig = {
   projectId: "chouxlab-ops",
   storageBucket: "chouxlab-ops.firebasestorage.app",
   messagingSenderId: "317568827205",
-  appId: "1:317568827205:web:bde602b3d7c3b18e4a882c",
+  appId: "1:317568827205:web:bde602b3d7c3b18e4a882c"
 };
 
 const app = initializeApp(firebaseConfig);
