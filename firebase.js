@@ -1,10 +1,18 @@
 // firebase.js (ES Module)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+
 import {
   getAuth,
   onAuthStateChanged,
-  signInAnonymously
+  signInAnonymously,
+  signOut,
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
 import {
   getFirestore,
   doc,
@@ -18,17 +26,17 @@ import {
   where,
   orderBy,
   limit,
-  getDocs
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
 // Paste from Firebase Console > Project settings > Web app
 const firebaseConfig = {
-  apiKey: "AIzaSyCTBt4C--X3oO9XvweyNqQtvR3QcmSZA7c",
+  apiKey: "AIzaSyCTBt4C--X3O9XvweyNqQtvR3QcmSZA7c",
   authDomain: "chouxlab-ops.firebaseapp.com",
   projectId: "chouxlab-ops",
   storageBucket: "chouxlab-ops.firebasestorage.app",
   messagingSenderId: "317568827205",
-  appId: "1:317568827205:web:bde602b3d7c3b18e4a882c"
+  appId: "1:317568827205:web:bde602b3d7c3b18e4a882c",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -37,6 +45,10 @@ const db = getFirestore(app);
 
 let uid = null;
 
+/**
+ * Keep Anonymous session for guest flow.
+ * If user logs in later, we migrate anon data to the new uid.
+ */
 export async function initSession() {
   return new Promise((resolve, reject) => {
     const unsub = onAuthStateChanged(auth, async (user) => {
@@ -55,8 +67,69 @@ export async function initSession() {
   });
 }
 
-export async function getCart() {
+export function getCurrentUser() {
+  return auth.currentUser;
+}
+
+export function onUserChanged(cb) {
+  return onAuthStateChanged(auth, (user) => {
+    uid = user ? user.uid : null;
+    cb(user);
+  });
+}
+
+export async function signOutUser() {
+  await signOut(auth);
+  uid = null;
+}
+
+async function ensureAuthed() {
   if (!uid) await initSession();
+  return auth.currentUser;
+}
+
+/**
+ * Profile document: users/{uid}
+ */
+export async function ensureUserProfile(extra = {}) {
+  const user = await ensureAuthed();
+  if (!user) return null;
+
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+
+  const base = {
+    uid: user.uid,
+    email: user.email || null,
+    displayName: user.displayName || null,
+    photoURL: user.photoURL || null,
+    phone: extra.phone || null,
+    updatedAt: serverTimestamp(),
+  };
+
+  if (!snap.exists()) {
+    await setDoc(ref, { ...base, createdAt: serverTimestamp(), points: 0, totalOrders: 0 }, { merge: true });
+  } else {
+    await setDoc(ref, base, { merge: true });
+  }
+
+  const updated = await getDoc(ref);
+  return updated.exists() ? updated.data() : null;
+}
+
+export async function getMyProfile() {
+  const user = await ensureAuthed();
+  if (!user) return null;
+  const ref = doc(db, "users", user.uid);
+  const snap = await getDoc(ref);
+  return snap.exists() ? snap.data() : null;
+}
+
+/**
+ * Guest cart stored at carts/{uid}
+ */
+export async function getCart() {
+  await ensureAuthed();
   const ref = doc(db, "carts", uid);
   const snap = await getDoc(ref);
   if (!snap.exists()) return {};
@@ -64,52 +137,155 @@ export async function getCart() {
 }
 
 export async function setCart(itemsObj) {
-  if (!uid) await initSession();
+  await ensureAuthed();
   const ref = doc(db, "carts", uid);
   await setDoc(ref, { items: itemsObj, updatedAt: serverTimestamp() }, { merge: true });
 }
 
 export async function clearCart() {
-  if (!uid) await initSession();
+  await ensureAuthed();
   await deleteDoc(doc(db, "carts", uid));
 }
 
+/**
+ * Shipping draft stored at users/{uid}/drafts/shipping
+ */
+export async function saveShippingDraftToDB(shippingData) {
+  const user = await ensureAuthed();
+  const ref = doc(db, "users", user.uid, "drafts", "shipping");
+  await setDoc(ref, { ...shippingData, updatedAt: serverTimestamp() }, { merge: true });
+}
+
+export async function loadShippingDraftFromDB() {
+  const user = await ensureAuthed();
+  const ref = doc(db, "users", user.uid, "drafts", "shipping");
+  const snap = await getDoc(ref);
+  return snap.exists() ? snap.data() : null;
+}
+
+/**
+ * Orders stored at orders (NOT user_orders)
+ */
 export async function createOrder(orderPayload) {
-  if (!uid) await initSession();
-  const ref = await addDoc(collection(db, "user_orders"), {
-    uid,
+  const user = await ensureAuthed();
+  const ref = await addDoc(collection(db, "orders"), {
+    uid: user.uid,
     status: "pending",
     createdAt: serverTimestamp(),
     ...orderPayload,
   });
+
+  // optional counter update
+  try {
+    const profileRef = doc(db, "users", user.uid);
+    const profSnap = await getDoc(profileRef);
+    const prev = profSnap.exists() ? profSnap.data() : {};
+    const totalOrders = (prev.totalOrders || 0) + 1;
+    await setDoc(profileRef, { totalOrders, updatedAt: serverTimestamp() }, { merge: true });
+  } catch {}
+
   return ref.id;
 }
 
 export async function listMyOrders(max = 20) {
-  if (!uid) await initSession();
-  const q = query(
+  const user = await ensureAuthed();
+  const qy = query(
     collection(db, "orders"),
-    where("uid", "==", uid),
+    where("uid", "==", user.uid),
     orderBy("createdAt", "desc"),
     limit(max)
   );
-  const snap = await getDocs(q);
-  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const snap = await getDocs(qy);
+  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
-export async function saveShippingDraftToDB(shippingData) {
-  const user = auth.currentUser || (await initSession());
-  const ref = doc(db, "users", user.uid, "drafts", "shipping");
-  await setDoc(
-    ref,
-    { ...shippingData, updatedAt: serverTimestamp() },
-    { merge: true }
-  );
+/**
+ * === AUTH (Email/Password + Google) ===
+ * Migrates anon data if needed.
+ */
+async function migrateAnonDataIfNeeded(anonUid, newUid) {
+  if (!anonUid || !newUid || anonUid === newUid) return;
+
+  // 1) migrate cart
+  try {
+    const anonCartRef = doc(db, "carts", anonUid);
+    const anonCartSnap = await getDoc(anonCartRef);
+
+    if (anonCartSnap.exists()) {
+      const newCartRef = doc(db, "carts", newUid);
+      const newCartSnap = await getDoc(newCartRef);
+
+      if (!newCartSnap.exists()) {
+        await setDoc(newCartRef, { ...anonCartSnap.data(), migratedFrom: anonUid, updatedAt: serverTimestamp() }, { merge: true });
+      }
+
+      await deleteDoc(anonCartRef);
+    }
+  } catch {}
+
+  // 2) migrate shipping draft
+  try {
+    const anonDraftRef = doc(db, "users", anonUid, "drafts", "shipping");
+    const anonDraftSnap = await getDoc(anonDraftRef);
+
+    if (anonDraftSnap.exists()) {
+      const newDraftRef = doc(db, "users", newUid, "drafts", "shipping");
+      const newDraftSnap = await getDoc(newDraftRef);
+
+      if (!newDraftSnap.exists()) {
+        await setDoc(newDraftRef, { ...anonDraftSnap.data(), migratedFrom: anonUid, updatedAt: serverTimestamp() }, { merge: true });
+      }
+
+      await deleteDoc(anonDraftRef);
+    }
+  } catch {}
 }
 
-export async function loadShippingDraftFromDB() {
-  const user = auth.currentUser || (await initSession());
-  const ref = doc(db, "users", user.uid, "drafts", "shipping");
-  const snap = await getDoc(ref);
-  return snap.exists() ? snap.data() : null;
+export async function loginWithGoogle() {
+  // capture anon uid if any
+  const before = auth.currentUser;
+  const anonUid = before?.isAnonymous ? before.uid : null;
+
+  const provider = new GoogleAuthProvider();
+  const cred = await signInWithPopup(auth, provider);
+
+  uid = cred.user.uid;
+
+  await migrateAnonDataIfNeeded(anonUid, uid);
+  await ensureUserProfile();
+
+  return cred.user;
+}
+
+export async function registerWithEmail({ name, email, password, phone }) {
+  const before = auth.currentUser;
+  const anonUid = before?.isAnonymous ? before.uid : null;
+
+  const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+  // set display name
+  if (name) {
+    await updateProfile(cred.user, { displayName: name });
+  }
+
+  uid = cred.user.uid;
+
+  await migrateAnonDataIfNeeded(anonUid, uid);
+  await ensureUserProfile({ phone });
+
+  return cred.user;
+}
+
+export async function loginWithEmail({ email, password }) {
+  const before = auth.currentUser;
+  const anonUid = before?.isAnonymous ? before.uid : null;
+
+  const cred = await signInWithEmailAndPassword(auth, email, password);
+
+  uid = cred.user.uid;
+
+  await migrateAnonDataIfNeeded(anonUid, uid);
+  await ensureUserProfile();
+
+  return cred.user;
 }

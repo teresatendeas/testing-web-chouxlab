@@ -1,962 +1,1179 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
-    <title>ChouxLab - Shipping</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "mocha": "#3D2B1F",
-                        "dark-chocolate": "#2A1D15",
-                        "dark-brown": "#32211D",
-                        "cream": "#FDFBF7",
-                        "cream-bg": "#FCF9F2",
-                        "warm-beige": "#F5F0E8",
-                        "soft-cocoa": "#8B7E74",
-                        "accent-tan": "#C7B7A3",
-                        "tan-light": "#f2e4cf",
-                        "nude": "#E7C0A5",
-                        "beige": "#EBC2A4",
-                        "tan": "#D1B28C",
-                        "warm-grey": "#8E7366",
-                        "primary": "#36211c",
-                        "background-light": "#fffcf5",
-                        "background-dark": "#1a1210",
-                    },
-                    fontFamily: {
-                        "roca": ["Crimson Pro", "serif"],
-                        "cooper": ["Fraunces", "serif"],
-                        "display": ["Fraunces", "serif"],
-                        "accent": ["Alice", "serif"],
-                        "body": ["Work Sans", "sans-serif"],
-                        "sans": ["Inter", "sans-serif"],
-                    },
-                },
-            },
-        }
-    </script>
-    
-    <style type="text/tailwindcss">
-        @layer base {
-            body {
-                @apply bg-cream text-dark-chocolate antialiased;
-                font-family: 'Fraunces', serif;
-                min-height: 100dvh;
-                overflow-x: hidden;
-            }
-        }
-        
-        .font-roca { font-family: 'Crimson Pro', serif; }
-        .font-cooper { font-family: 'Fraunces', serif; }
-        
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .fill-1 {
-            font-variation-settings: 'FILL' 1;
-        }
-        
-        .screen {
-            min-height: 100dvh;
-            background-color: #FDFBF7;
-        }
-        .keyboard-open #bottom-nav {
-            transform: translateY(120%);
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .bottom-nav-directory {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 50;
-            background-color: rgba(253, 251, 247, 0.95);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid rgba(199, 183, 163, 0.2);
-            padding: 12px 24px 28px 24px;
-            max-width: 430px;
-            margin: 0 auto;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            transition: all 0.2s ease;
-        }
-        
-        .nav-item:active {
-            opacity: 0.6;
-            transform: scale(0.95);
-        }
-        
-        .nav-icon {
-            font-size: 24px;
-            line-height: 1;
-        }
-        
-        .nav-label {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-family: 'Fraunces', serif;
-        }
-        
-        .nav-item.active .nav-icon {
-            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-        }
-        
-        .nav-item.active .nav-label {
-            font-weight: 700;
-        }
-        
-        .screen-content {
-            padding-bottom: 24px;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none !important;
-            box-shadow: none !important;
-        }
-        
-        /* Custom date input styling */
-        input[type="date"], input[type="time"] {
-            background-color: transparent;
-            color: #2A1D15;
-            font-family: 'Crimson Pro', serif;
-        }
-        
-        .map-placeholder {
-            background: linear-gradient(135deg, #F5F0E8 0%, #EBC2A4 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .map-grid {
-            background-image: 
-                linear-gradient(rgba(54, 33, 28, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(54, 33, 28, 0.05) 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-    </style>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+  <title>ChouxLab - Shipping</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <!-- Leaflet (OpenStreetMap) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "mocha": "#3D2B1F",
+            "dark-chocolate": "#2A1D15",
+            "dark-brown": "#32211D",
+            "cream": "#FDFBF7",
+            "cream-bg": "#FCF9F2",
+            "warm-beige": "#F5F0E8",
+            "soft-cocoa": "#8B7E74",
+            "accent-tan": "#C7B7A3",
+            "tan-light": "#f2e4cf",
+            "nude": "#E7C0A5",
+            "beige": "#EBC2A4",
+            "tan": "#D1B28C",
+            "warm-grey": "#8E7366",
+            "primary": "#36211c",
+            "background-light": "#fffcf5",
+            "background-dark": "#1a1210",
+          },
+          fontFamily: {
+            "roca": ["Crimson Pro", "serif"],
+            "cooper": ["Fraunces", "serif"],
+            "display": ["Fraunces", "serif"],
+            "accent": ["Alice", "serif"],
+            "body": ["Work Sans", "sans-serif"],
+            "sans": ["Inter", "sans-serif"],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-cream text-dark-chocolate antialiased;
+        font-family: 'Fraunces', serif;
+        min-height: 100dvh;
+        overflow-x: hidden;
+      }
+    }
+
+    .font-roca { font-family: 'Crimson Pro', serif; }
+    .font-cooper { font-family: 'Fraunces', serif; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .fill-1 { font-variation-settings: 'FILL' 1; }
+
+    .screen {
+      min-height: 100dvh;
+      background-color: #FDFBF7;
+    }
+
+    .keyboard-open #bottom-nav {
+      transform: translateY(120%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .bottom-nav-directory {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background-color: rgba(253, 251, 247, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(199, 183, 163, 0.2);
+      padding: 12px 24px 28px 24px;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+
+    .nav-item:active {
+      opacity: 0.6;
+      transform: scale(0.95);
+    }
+
+    .nav-icon { font-size: 24px; line-height: 1; }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Fraunces', serif;
+    }
+
+    .nav-item.active .nav-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .nav-item.active .nav-label { font-weight: 700; }
+
+    .screen-content { padding-bottom: 24px; }
+
+    input:focus, textarea:focus {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    input[type="date"], input[type="time"] {
+      background-color: transparent;
+      color: #2A1D15;
+      font-family: 'Crimson Pro', serif;
+    }
+
+    .map-placeholder {
+      background: linear-gradient(135deg, #F5F0E8 0%, #EBC2A4 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-grid {
+      background-image:
+        linear-gradient(rgba(54, 33, 28, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(54, 33, 28, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Leaflet tweaks to match your UI */
+    .leaflet-control-attribution { display: none !important; }
+    .leaflet-container { background: #f5f0e8; }
+  </style>
 </head>
+
 <body class="bg-cream-bg">
-    <div id="screen-shipping" class="screen active">
-        <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
-            <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-accent-tan/10">
-                <div class="flex items-center px-6 py-6 justify-between">
-                    <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('cart')">
-                        <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
-                    </button>
-                    <h1 class="text-2xl font-roca font-bold tracking-tight text-dark-chocolate">Shipping</h1>
-                    <div class="w-8"></div>
-                </div>
-                <div class="flex items-center justify-center gap-12 pb-4">
-                    <div class="flex flex-col items-center gap-2 opacity-40">
-                        <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
-                        <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Cart</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2">
-                        <div class="h-2 w-2 rounded-full bg-dark-chocolate"></div>
-                        <span class="text-[10px] uppercase tracking-widest font-bold text-dark-chocolate">Ship</span>
-                    </div>
-                    <div class="flex flex-col items-center gap-2 opacity-40">
-                        <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
-                        <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Pay</span>
-                    </div>
-                </div>
-            </header>
-            
-            <main class="screen-content overflow-y-auto no-scrollbar px-6 pt-6">
-                <!-- Delivery Details Section -->
-                <div class="mb-10">
-                    <h3 class="text-[19px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-4 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-md">person</span>
-                        Delivery Details
-                    </h3>
-                    
-                    <form class="space-y-6" id="shipping-form">
-                        <div class="space-y-5">
-                            <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
-                                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">Your Name <span class="text-mocha">*</span></label>
-                                <input id="sender-name" class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0" placeholder="e.g. Budi" type="text" oninput="syncRecipientIfSame(); validateForm()"/>
-                            </div>
-                            <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
-                                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">
-                                    Your Phone Number <span class="text-mocha">*</span>
-                                </label>
-                                <div class="flex items-center gap-3">
-                                    <span class="font-roca text-lg text-dark-chocolate">+62</span>
-
-                                    <input
-                                    id="sender-phone"
-                                    class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
-                                    placeholder="81234567890"
-                                    type="text"
-                                    inputmode="numeric"
-                                    pattern="[0-9]*"
-                                    autocomplete="tel-national"
-                                    maxlength="12"
-                                    oninput="handleIDPhoneInput('sender-phone'); syncRecipientIfSame(); validateForm();"
-                                    />
-
-                                </div>
-                                <p id="sender-phone-error" class="hidden text-xs font-cooper text-mocha font-semibold mt-1">
-                                    Nomor tidak valid. Contoh: +62 81234567890
-                                </p>
-                                <input type="hidden" id="sender-phone-e164" />
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-center gap-3 pt-2 bg-warm-beige/30 p-4 rounded-xl">
-                            <input type="checkbox" id="same-as-recipient" class="rounded border-mocha text-dark-chocolate focus:ring-0 focus:ring-offset-0 h-5 w-5 cursor-pointer" onchange="toggleRecipientFields(); validateForm();">
-                            <label class="font-cooper text-sm text-dark-chocolate font-semibold select-none cursor-pointer" for="same-as-recipient">I am the recipient</label>
-                        </div>
-                        <div id="recipient-fields" class="space-y-5 transition-all duration-300 pt-4">
-                            <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
-                                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">Recipient Name <span class="text-mocha">*</span></label>
-                                <input id="recipient-name" class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0" placeholder="e.g. Teman Budi" type="text" oninput="validateForm()"/>
-                            </div>
-                            <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
-                                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">
-                                    Recipient Phone <span class="text-mocha">*</span>
-                                </label>
-                                <div class="flex items-center gap-3">
-                                    <span class="font-roca text-lg text-dark-chocolate">+62</span>
-                                    <input
-                                    id="recipient-phone"
-                                    class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
-                                    placeholder="81234567890"
-                                    type="text"
-                                    inputmode="numeric"
-                                    pattern="[0-9]*"
-                                    autocomplete="tel-national"
-                                    maxlength="12"
-                                    oninput="handleIDPhoneInput('recipient-phone'); validateForm();"
-                                    />
-                                </div>
-                                <p id="recipient-phone-error" class="hidden text-xs font-cooper text-mocha font-semibold mt-1">
-                                    Nomor tidak valid. Contoh: +62 81234567890
-                                </p>
-                                <input type="hidden" id="recipient-phone-e164" />
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-
-                <!-- Schedule Section -->
-                <div class="mb-10">
-                    <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm">schedule</span>
-                        Delivery Schedule <span class="text-mocha">*</span>
-                    </h3>
-                    
-                    <div class="space-y-4">
-                        <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
-                            <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Delivery Date</label>
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-mocha">calendar_today</span>
-                                <input type="date" id="delivery-date" class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer" onchange="validateForm()"/>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
-                            <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Preferred Time Sent</label>
-                            <div class="flex items-center gap-3">
-                                <span class="material-symbols-outlined text-mocha">schedule</span>
-                                <select id="delivery-hour" class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer" onchange="updateTime()">
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12" selected>12</option>
-                                    <option value="13">13</option>
-                                    <option value="14">14</option>
-                                    <option value="15">15</option>
-                                    <option value="16">16</option>
-                                    <option value="17">17</option>
-                                    <option value="18">18</option>
-                                </select>
-                                <span class="font-roca text-xl font-bold">:</span>
-                                <select id="delivery-minute" class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer" onchange="updateTime()">
-                                    <option value="00">00</option>
-                                    <option value="15">15</option>
-                                    <option value="30">30</option>
-                                    <option value="45">45</option>
-                                </select>
-                            </div>
-                            <!-- Hidden input to store combined value -->
-                            <input type="hidden" id="delivery-time" value="12:00">
-                        </div>
-                        
-                        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                            <button onclick="setQuickTime('09:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Morning (9AM)</button>
-                            <button onclick="setQuickTime('12:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Noon (12PM)</button>
-                            <button onclick="setQuickTime('15:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Afternoon (3PM)</button>
-                            <button onclick="setQuickTime('18:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Evening (6PM)</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Maps Section -->
-                <div class="mb-10">
-                    <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
-                        <span class="material-symbols-outlined text-sm">location_on</span>
-                        Delivery Location <span class="text-mocha">*</span>
-                    </h3>
-                    
-                    <!-- Map Selection UI -->
-                    <div id="map-selection" class="space-y-4">
-                        <div class="relative h-48 rounded-2xl map-placeholder map-grid border-2 border-mocha/20 overflow-hidden cursor-pointer" onclick="openMapModal()">
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <div class="bg-cream/90 px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
-                                    <span class="material-symbols-outlined text-dark-chocolate">add_location</span>
-                                    <span class="font-bold text-dark-chocolate text-sm uppercase tracking-wider">Select on Map</span>
-                                </div>
-                            </div>
-                            <!-- Decorative map pins -->
-                            <div class="absolute top-8 left-12 text-mocha opacity-40">
-                                <span class="material-symbols-outlined text-2xl fill-1">location_on</span>
-                            </div>
-                            <div class="absolute bottom-12 right-16 text-dark-chocolate opacity-30">
-                                <span class="material-symbols-outlined text-3xl fill-1">location_on</span>
-                            </div>
-                            <div class="absolute top-16 right-24 text-soft-cocoa opacity-40">
-                                <span class="material-symbols-outlined text-xl fill-1">location_on</span>
-                            </div>
-                        </div>
-                        
-                        <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
-                            <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Detailed Address <span class="text-mocha">*</span></label>
-                            <textarea id="detailed-address" class="w-full bg-transparent border-none p-0 font-roca text-base text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0 resize-none min-h-[60px]" placeholder="Street name, building, floor or unit number..." rows="2" oninput="validateForm()"></textarea>
-                        </div>
-
-                        <!-- Selected Location Display (hidden initially) -->
-                        <div id="selected-location-display" class="hidden bg-mocha/5 rounded-xl p-4 border border-mocha/10">
-                            <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-dark-chocolate fill-1">location_on</span>
-                                <div>
-                                    <p class="font-bold text-dark-chocolate text-sm">Selected Location</p>
-                                    <p id="location-coords" class="text-xs text-soft-cocoa font-cooper mt-1">-6.2088, 106.8456 (Jakarta)</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Delivery Method -->
-                <div class="mb-10">
-                    <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6">Delivery Method</h3>
-                    <div class="space-y-4">
-                        <label class="relative block cursor-pointer">
-                            <input class="hidden peer" name="delivery" type="radio" value="gosend" onchange="calculateShippingTotal(); validateForm();"/>
-                            <div class="block p-5 rounded-2xl border-2 border-mocha/20 bg-warm-beige/20 peer-checked:bg-warm-beige peer-checked:border-dark-chocolate transition-all duration-300">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <p class="font-roca text-lg font-bold text-dark-chocolate">GoSend</p>
-                                        <p class="font-cooper text-sm text-soft-cocoa mt-1 font-semibold">Fast local delivery</p>
-                                    </div>
-                                    <p class="font-roca text-lg font-bold text-dark-chocolate">Rp 15.000</p>
-                                </div>
-                            </div>
-                        </label>
-
-                        <label class="relative block cursor-pointer">
-                            <input class="hidden peer" name="delivery" type="radio" value="other" onchange="calculateShippingTotal(); validateForm();"/>
-                            <div class="block p-5 rounded-2xl border-2 border-mocha/20 bg-warm-beige/20 peer-checked:bg-warm-beige peer-checked:border-dark-chocolate transition-all duration-300">
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <p class="font-roca text-lg font-bold text-dark-chocolate flex items-center gap-2">
-                                            Other methods
-                                            <span class="material-symbols-outlined text-base">more_horiz</span>
-                                        </p>
-                                        <p class="font-cooper text-sm text-soft-cocoa mt-1 font-semibold">Self-pickup or custom courier</p>
-                                    </div>
-                                    <p class="font-roca text-lg font-bold text-dark-chocolate">Rp 0</p>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="mt-10 mb-32">
-                    <div class="flex items-center gap-2 text-dark-chocolate cursor-pointer font-bold" onclick="toggleNoteField()">
-                        <span class="material-symbols-outlined text-[20px]">edit_note</span>
-                        <span class="text-xs uppercase tracking-widest">Add a note for the kitchen</span>
-                    </div>
-                    <textarea id="kitchen-note" class="hidden mt-3 w-full bg-warm-beige/40 rounded-2xl p-4 text-base font-cooper text-dark-chocolate resize-none focus:ring-2 focus:ring-mocha/20 border-0" rows="2" placeholder="Any special instructions..."></textarea>
-                </div>
-
-                <!-- Checkout section: NOT fixed, part of page flow -->
-                <section class="mt-8 mb-10">
-                    <div class="bg-warm-beige/30 rounded-2xl p-5 border border-mocha/10">
-                        <div class="flex justify-between items-center mb-4">
-                        <span class="text-dark-chocolate text-sm font-bold">Est. Total</span>
-                        <span class="font-roca text-2xl font-bold text-dark-chocolate" id="shipping-total">Rp 210.000</span>
-                        </div>
-
-                        <button
-                        id="continue-btn"
-                        onclick="goToPayment()"
-                        disabled
-                        class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed shadow-lg disabled:shadow-none"
-                        >
-                        Continue to Payment
-                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
-                        </button>
-
-                        <div class="flex items-center justify-center gap-2 mt-3 opacity-60">
-                        <span class="material-symbols-outlined text-[14px]">shield_lock</span>
-                        <p class="text-[9px] uppercase tracking-[0.2em] font-bold text-dark-chocolate">Secure Checkout Protected</p>
-                        </div>
-                    </div>
-                </section>
-
-            </main>
-            
-            <nav id="bottom-nav" class="bottom-nav-directory">
-                <div class="flex justify-between items-center max-w-md mx-auto">
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
-                        <span class="material-symbols-outlined nav-icon">home</span>
-                        <span class="nav-label">Home</span>
-                    </button>
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
-                        <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
-                        <span class="nav-label">Menu</span>
-                    </button>
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
-                        <span class="material-symbols-outlined nav-icon">shopping_bag</span>
-                        <span class="nav-label">Cart</span>
-                    </button>
-                    <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
-                        <span class="material-symbols-outlined nav-icon">person</span>
-                        <span class="nav-label">Profile</span>
-                    </button>
-                </div>
-            </nav>
+  <div id="screen-shipping" class="screen active">
+    <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
+      <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-accent-tan/10">
+        <div class="flex items-center px-6 py-6 justify-between">
+          <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('cart')">
+            <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+          </button>
+          <h1 class="text-2xl font-roca font-bold tracking-tight text-dark-chocolate">Shipping</h1>
+          <div class="w-8"></div>
         </div>
-    </div>
-
-    <!-- Map Modal -->
-    <div id="map-modal" class="fixed inset-0 z-[100] hidden bg-dark-chocolate/80 backdrop-blur-sm flex items-end sm:items-center justify-center">
-        <div class="w-full max-w-[430px] bg-cream rounded-t-[32px] sm:rounded-[32px] h-[80vh] sm:h-[600px] flex flex-col shadow-2xl overflow-hidden">
-            <div class="p-6 border-b border-mocha/10 flex items-center justify-between bg-cream">
-                <h3 class="font-roca text-xl font-bold text-dark-chocolate">Select Location</h3>
-                <button onclick="closeMapModal()" class="p-2 rounded-full hover:bg-warm-beige transition-colors">
-                    <span class="material-symbols-outlined text-dark-chocolate">close</span>
-                </button>
-            </div>
-            <div class="flex-1 relative map-placeholder map-grid overflow-hidden">
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="text-center">
-                        <span class="material-symbols-outlined text-6xl text-mocha/30 fill-1">location_on</span>
-                        <p class="mt-4 font-cooper text-dark-chocolate font-bold">Map Interface</p>
-                        <p class="text-sm text-soft-cocoa mt-1">Tap anywhere to select location</p>
-                    </div>
-                </div>
-                <!-- Simulated map selection -->
-                <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-cream to-transparent">
-                    <button onclick="confirmLocation()" class="w-full bg-dark-chocolate text-cream py-4 rounded-full font-bold text-sm tracking-widest uppercase shadow-lg active:scale-[0.98] transition-transform">
-                        Confirm This Location
-                    </button>
-                </div>
-            </div>
+        <div class="flex items-center justify-center gap-12 pb-4">
+          <div class="flex flex-col items-center gap-2 opacity-40">
+            <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
+            <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Cart</span>
+          </div>
+          <div class="flex flex-col items-center gap-2">
+            <div class="h-2 w-2 rounded-full bg-dark-chocolate"></div>
+            <span class="text-[10px] uppercase tracking-widest font-bold text-dark-chocolate">Ship</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 opacity-40">
+            <div class="h-2 w-2 rounded-full bg-soft-cocoa"></div>
+            <span class="text-[10px] uppercase tracking-widest font-semibold text-soft-cocoa">Pay</span>
+          </div>
         </div>
+      </header>
+
+      <main class="screen-content overflow-y-auto no-scrollbar px-6 pt-6">
+        <!-- Delivery Details Section -->
+        <div class="mb-10">
+          <h3 class="text-[19px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-md">person</span>
+            Delivery Details
+          </h3>
+
+          <form class="space-y-6" id="shipping-form">
+            <div class="space-y-5">
+              <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
+                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">Your Name <span class="text-mocha">*</span></label>
+                <input id="sender-name"
+                       class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
+                       placeholder="e.g. Budi"
+                       type="text"
+                       oninput="syncRecipientIfSame(); validateForm()"/>
+              </div>
+
+              <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
+                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">
+                  Your Phone Number <span class="text-mocha">*</span>
+                </label>
+                <div class="flex items-center gap-3">
+                  <span class="font-roca text-lg text-dark-chocolate">+62</span>
+                  <input id="sender-phone"
+                         class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
+                         placeholder="81234567890"
+                         type="text"
+                         inputmode="numeric"
+                         pattern="[0-9]*"
+                         autocomplete="tel-national"
+                         maxlength="12"
+                         oninput="handleIDPhoneInput('sender-phone'); syncRecipientIfSame(); validateForm();"/>
+                </div>
+                <p id="sender-phone-error" class="hidden text-xs font-cooper text-mocha font-semibold mt-1">
+                  Nomor tidak valid. Contoh: +62 81234567890
+                </p>
+                <input type="hidden" id="sender-phone-e164" />
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 pt-2 bg-warm-beige/30 p-4 rounded-xl">
+              <input type="checkbox" id="same-as-recipient"
+                     class="rounded border-mocha text-dark-chocolate focus:ring-0 focus:ring-offset-0 h-5 w-5 cursor-pointer"
+                     onchange="toggleRecipientFields(); validateForm();">
+              <label class="font-cooper text-sm text-dark-chocolate font-semibold select-none cursor-pointer"
+                     for="same-as-recipient">I am the recipient</label>
+            </div>
+
+            <div id="recipient-fields" class="space-y-5 transition-all duration-300 pt-4">
+              <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
+                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">Recipient Name <span class="text-mocha">*</span></label>
+                <input id="recipient-name"
+                       class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
+                       placeholder="e.g. Teman Budi"
+                       type="text"
+                       oninput="validateForm()"/>
+              </div>
+
+              <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
+                <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">
+                  Recipient Phone <span class="text-mocha">*</span>
+                </label>
+                <div class="flex items-center gap-3">
+                  <span class="font-roca text-lg text-dark-chocolate">+62</span>
+                  <input id="recipient-phone"
+                         class="w-full bg-transparent border-none p-0 font-roca text-lg text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0"
+                         placeholder="81234567890"
+                         type="text"
+                         inputmode="numeric"
+                         pattern="[0-9]*"
+                         autocomplete="tel-national"
+                         maxlength="12"
+                         oninput="handleIDPhoneInput('recipient-phone'); validateForm();"/>
+                </div>
+                <p id="recipient-phone-error" class="hidden text-xs font-cooper text-mocha font-semibold mt-1">
+                  Nomor tidak valid. Contoh: +62 81234567890
+                </p>
+                <input type="hidden" id="recipient-phone-e164" />
+              </div>
+            </div>
+
+            <!-- Hidden fields for map selection -->
+            <input type="hidden" id="ship-lat" />
+            <input type="hidden" id="ship-lng" />
+            <input type="hidden" id="ship-address" />
+            <input type="hidden" id="ship-distance-km" />
+            <input type="hidden" id="ship-gosend-fee" />
+          </form>
+        </div>
+
+        <!-- Schedule Section -->
+        <div class="mb-10">
+          <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">schedule</span>
+            Delivery Schedule <span class="text-mocha">*</span>
+          </h3>
+
+          <div class="space-y-4">
+            <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
+              <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Delivery Date</label>
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-mocha">calendar_today</span>
+                <input type="date" id="delivery-date"
+                       class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer"
+                       onchange="validateForm()"/>
+              </div>
+            </div>
+
+            <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
+              <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Preferred Time Sent</label>
+              <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-mocha">schedule</span>
+                <select id="delivery-hour"
+                        class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer"
+                        onchange="updateTime()">
+                  <option value="09">09</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12" selected>12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                </select>
+                <span class="font-roca text-xl font-bold">:</span>
+                <select id="delivery-minute"
+                        class="flex-1 bg-transparent border-none p-0 font-roca text-lg font-bold text-dark-chocolate focus:ring-0 cursor-pointer"
+                        onchange="updateTime()">
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+              </div>
+              <input type="hidden" id="delivery-time" value="12:00">
+            </div>
+
+            <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+              <button onclick="setQuickTime('09:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Morning (9AM)</button>
+              <button onclick="setQuickTime('12:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Noon (12PM)</button>
+              <button onclick="setQuickTime('15:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Afternoon (3PM)</button>
+              <button onclick="setQuickTime('18:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Evening (6PM)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maps Section -->
+        <div class="mb-10">
+          <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">location_on</span>
+            Delivery Location <span class="text-mocha">*</span>
+          </h3>
+
+          <div id="map-selection" class="space-y-4">
+            <div class="relative h-48 rounded-2xl map-placeholder map-grid border-2 border-mocha/20 overflow-hidden cursor-pointer" onclick="openMapModal()">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="bg-cream/90 px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
+                  <span class="material-symbols-outlined text-dark-chocolate">add_location</span>
+                  <span class="font-bold text-dark-chocolate text-sm uppercase tracking-wider">Select on Map</span>
+                </div>
+              </div>
+              <div class="absolute top-8 left-12 text-mocha opacity-40">
+                <span class="material-symbols-outlined text-2xl fill-1">location_on</span>
+              </div>
+              <div class="absolute bottom-12 right-16 text-dark-chocolate opacity-30">
+                <span class="material-symbols-outlined text-3xl fill-1">location_on</span>
+              </div>
+              <div class="absolute top-16 right-24 text-soft-cocoa opacity-40">
+                <span class="material-symbols-outlined text-xl fill-1">location_on</span>
+              </div>
+            </div>
+
+            <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
+              <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Detailed Address <span class="text-mocha">*</span></label>
+              <textarea id="detailed-address"
+                        class="w-full bg-transparent border-none p-0 font-roca text-base text-dark-chocolate placeholder:text-soft-cocoa/60 focus:ring-0 resize-none min-h-[60px]"
+                        placeholder="Street name, building, floor or unit number..."
+                        rows="2"
+                        oninput="validateForm()"></textarea>
+            </div>
+
+            <!-- Selected Location Display -->
+            <div id="selected-location-display" class="hidden bg-mocha/5 rounded-xl p-4 border border-mocha/10">
+              <div class="flex items-start gap-3">
+                <span class="material-symbols-outlined text-dark-chocolate fill-1">location_on</span>
+                <div class="flex-1">
+                  <p class="font-bold text-dark-chocolate text-sm">Selected Location</p>
+                  <p id="location-address" class="text-xs text-soft-cocoa font-cooper mt-1">-</p>
+                  <p id="location-coords" class="text-xs text-soft-cocoa font-cooper mt-1">-</p>
+                  <p id="location-estimate" class="text-xs text-soft-cocoa font-cooper mt-1">-</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery Method -->
+        <div class="mb-10">
+          <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6">Delivery Method</h3>
+          <div class="space-y-4">
+            <label class="relative block cursor-pointer">
+              <input class="hidden peer" name="delivery" type="radio" value="gosend" onchange="calculateShippingTotal(); validateForm();"/>
+              <div class="block p-5 rounded-2xl border-2 border-mocha/20 bg-warm-beige/20 peer-checked:bg-warm-beige peer-checked:border-dark-chocolate transition-all duration-300">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="font-roca text-lg font-bold text-dark-chocolate">GoSend</p>
+                    <p class="font-cooper text-sm text-soft-cocoa mt-1 font-semibold">Fast local delivery</p>
+                  </div>
+                  <!-- Dynamic price -->
+                  <p class="font-roca text-lg font-bold text-dark-chocolate" id="gosend-price">Rp 15.000</p>
+                </div>
+                <p class="mt-3 text-[11px] font-cooper text-soft-cocoa">
+                  Estimate updates after you pick a location.
+                </p>
+              </div>
+            </label>
+
+            <label class="relative block cursor-pointer">
+              <input class="hidden peer" name="delivery" type="radio" value="other" onchange="calculateShippingTotal(); validateForm();"/>
+              <div class="block p-5 rounded-2xl border-2 border-mocha/20 bg-warm-beige/20 peer-checked:bg-warm-beige peer-checked:border-dark-chocolate transition-all duration-300">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <p class="font-roca text-lg font-bold text-dark-chocolate flex items-center gap-2">
+                      Other methods
+                      <span class="material-symbols-outlined text-base">more_horiz</span>
+                    </p>
+                    <p class="font-cooper text-sm text-soft-cocoa mt-1 font-semibold">Self-pickup or custom courier</p>
+                  </div>
+                  <p class="font-roca text-lg font-bold text-dark-chocolate">Rp 0</p>
+                </div>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="mt-10 mb-32">
+          <div class="flex items-center gap-2 text-dark-chocolate cursor-pointer font-bold" onclick="toggleNoteField()">
+            <span class="material-symbols-outlined text-[20px]">edit_note</span>
+            <span class="text-xs uppercase tracking-widest">Add a note for the kitchen</span>
+          </div>
+          <textarea id="kitchen-note"
+                    class="hidden mt-3 w-full bg-warm-beige/40 rounded-2xl p-4 text-base font-cooper text-dark-chocolate resize-none focus:ring-2 focus:ring-mocha/20 border-0"
+                    rows="2"
+                    placeholder="Any special instructions..."></textarea>
+        </div>
+
+        <!-- Checkout section -->
+        <section class="mt-8 mb-10">
+          <div class="bg-warm-beige/30 rounded-2xl p-5 border border-mocha/10">
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-dark-chocolate text-sm font-bold">Est. Total</span>
+              <span class="font-roca text-2xl font-bold text-dark-chocolate" id="shipping-total">Rp 0</span>
+            </div>
+
+            <button id="continue-btn"
+                    onclick="goToPayment()"
+                    disabled
+                    class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed shadow-lg disabled:shadow-none">
+              Continue to Payment
+              <span class="material-symbols-outlined text-lg">arrow_forward</span>
+            </button>
+
+            <div class="flex items-center justify-center gap-2 mt-3 opacity-60">
+              <span class="material-symbols-outlined text-[14px]">shield_lock</span>
+              <p class="text-[9px] uppercase tracking-[0.2em] font-bold text-dark-chocolate">Secure Checkout Protected</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <nav id="bottom-nav" class="bottom-nav-directory">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+            <span class="material-symbols-outlined nav-icon">home</span>
+            <span class="nav-label">Home</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+            <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+            <span class="nav-label">Menu</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+            <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+            <span class="nav-label">Cart</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+            <span class="material-symbols-outlined nav-icon">person</span>
+            <span class="nav-label">Profile</span>
+          </button>
+        </div>
+      </nav>
     </div>
+  </div>
 
-    <script type="module">
-        import { initSession, getCart, saveShippingDraftToDB, loadShippingDraftFromDB } from "./firebase.js";
-        
-        let locationSelected = false;
-        
-        function getTomorrowISO() {
-        const d = new Date();
-        d.setDate(d.getDate() + 1);
-        return d.toISOString().split("T")[0]; // YYYY-MM-DD
+  <!-- Map Modal -->
+  <div id="map-modal" class="fixed inset-0 z-[100] hidden bg-dark-chocolate/80 backdrop-blur-sm flex items-end sm:items-center justify-center">
+    <div class="w-full max-w-[430px] bg-cream rounded-t-[32px] sm:rounded-[32px] h-[80vh] sm:h-[600px] flex flex-col shadow-2xl overflow-hidden">
+      <div class="p-6 border-b border-mocha/10 flex items-center justify-between bg-cream">
+        <h3 class="font-roca text-xl font-bold text-dark-chocolate">Select Location</h3>
+        <button onclick="closeMapModal()" class="p-2 rounded-full hover:bg-warm-beige transition-colors">
+          <span class="material-symbols-outlined text-dark-chocolate">close</span>
+        </button>
+      </div>
+
+      <div class="flex-1 relative overflow-hidden">
+        <!-- Search -->
+        <div class="absolute top-0 left-0 right-0 z-10 p-4">
+          <input id="map-search"
+                 class="w-full bg-cream/95 rounded-2xl px-4 py-3 font-cooper text-sm text-dark-chocolate border border-mocha/10"
+                 placeholder="Search address. Example: Alam Sutera, Tangerang"
+                 type="text"/>
+          <p class="mt-2 text-[11px] font-cooper text-soft-cocoa">
+            Drag the pin to fine tune.
+          </p>
+        </div>
+
+        <!-- Map -->
+        <div id="leaflet-map" style="height: 100%; width: 100%;"></div>
+
+        <!-- Bottom info + action -->
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-cream to-transparent">
+          <div class="mb-3 text-xs font-cooper text-dark-chocolate">
+            <div id="picked-address" class="font-semibold">No location selected</div>
+            <div class="opacity-70">
+              Distance: <span id="picked-distance">-</span> km · Est. GoSend: <span id="picked-fee">-</span>
+            </div>
+          </div>
+
+          <button onclick="confirmLocation()"
+                  class="w-full bg-dark-chocolate text-cream py-4 rounded-full font-bold text-sm tracking-widest uppercase shadow-lg active:scale-[0.98] transition-transform">
+            Confirm This Location
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initSession, getCart, saveShippingDraftToDB, loadShippingDraftFromDB } from "./firebase.js";
+
+    // =========================
+    // 1) MAP + GO-SEND ESTIMATE
+    // =========================
+    // TODO: Replace with your real shop location (ChouxLab).
+    // Example shown for Alam Sutera area-ish. Update it.
+    const STORE = {
+      name: "ChouxLab",
+      lat: -6.2229,
+      lng: 106.6506,
+    };
+
+    let map = null;
+    let marker = null;
+
+    let locationSelected = false;
+
+    const picked = {
+      lat: null,
+      lng: null,
+      address: "",
+      distanceKm: null,
+      fee: null,
+    };
+
+    function formatRupiah(n) {
+      if (n === null || n === undefined) return "-";
+      return "Rp " + Math.round(n).toLocaleString("id-ID");
+    }
+
+    // Based on your screenshot text (estimate only)
+    // Instant: base 20k covers first 8km, next 2.5k/km, 20-40km 3k/km, >40km keep 3k/km, max 75km
+    function estimateGoSendInstant(distanceKm) {
+      if (distanceKm == null) return null;
+      if (distanceKm <= 0) return 0;
+      if (distanceKm > 75) return null;
+
+      let total = 20000;
+      if (distanceKm <= 8) return total;
+
+      const part1 = Math.min(distanceKm, 20) - 8;    // 8 -> 20
+      total += part1 * 2500;
+
+      if (distanceKm > 20) {
+        const part2 = Math.min(distanceKm, 40) - 20; // 20 -> 40
+        total += part2 * 3000;
+      }
+
+      if (distanceKm > 40) {
+        total += (distanceKm - 40) * 3000;
+      }
+
+      return total;
+    }
+
+    async function osrmDistanceKm(fromLat, fromLng, toLat, toLng) {
+      const url =
+        `https://router.project-osrm.org/route/v1/driving/` +
+        `${fromLng},${fromLat};${toLng},${toLat}?overview=false`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      if (!data?.routes?.[0]?.distance) return null;
+      return data.routes[0].distance / 1000;
+    }
+
+    async function reverseGeocodeOSM(lat, lng) {
+      const url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`;
+      const res = await fetch(url, { headers: { "Accept": "application/json" } });
+      const data = await res.json();
+      return data?.display_name || "";
+    }
+
+    async function searchOSM(q) {
+      const url = `https://nominatim.openstreetmap.org/search?format=jsonv2&q=${encodeURIComponent(q)}&limit=1`;
+      const res = await fetch(url, { headers: { "Accept": "application/json" } });
+      const data = await res.json();
+      if (!data?.[0]) return null;
+      return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) };
+    }
+
+    function updateModalUI() {
+      document.getElementById("picked-address").textContent = picked.address || "Pinned location selected";
+      document.getElementById("picked-distance").textContent = picked.distanceKm ? picked.distanceKm.toFixed(1) : "-";
+      document.getElementById("picked-fee").textContent = picked.fee == null ? "-" : formatRupiah(picked.fee);
+    }
+
+    function updateShippingUIAfterConfirm() {
+      const display = document.getElementById("selected-location-display");
+      display.classList.remove("hidden");
+
+      document.getElementById("location-address").textContent = picked.address || "-";
+      document.getElementById("location-coords").textContent =
+        (picked.lat && picked.lng) ? `${picked.lat.toFixed(5)}, ${picked.lng.toFixed(5)}` : "-";
+
+      const dist = picked.distanceKm ? `${picked.distanceKm.toFixed(1)} km` : "-";
+      const fee = picked.fee == null ? "-" : formatRupiah(picked.fee);
+      document.getElementById("location-estimate").textContent = `Distance: ${dist} · Est. GoSend: ${fee}`;
+
+      // Update GoSend card price
+      const gosendPriceEl = document.getElementById("gosend-price");
+      if (gosendPriceEl) {
+        gosendPriceEl.textContent = (picked.fee == null) ? "Rp 15.000" : formatRupiah(picked.fee);
+      }
+    }
+
+    async function setPickedLocation(lat, lng) {
+      picked.lat = lat;
+      picked.lng = lng;
+
+      picked.address = await reverseGeocodeOSM(lat, lng);
+      picked.distanceKm = await osrmDistanceKm(STORE.lat, STORE.lng, lat, lng);
+      picked.fee = estimateGoSendInstant(picked.distanceKm);
+
+      updateModalUI();
+    }
+
+    function initLeafletMapIfNeeded() {
+      if (map) return;
+
+      map = L.map("leaflet-map", { zoomControl: false }).setView([STORE.lat, STORE.lng], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+      }).addTo(map);
+
+      marker = L.marker([STORE.lat, STORE.lng], { draggable: true }).addTo(map);
+
+      marker.on("dragend", async () => {
+        const p = marker.getLatLng();
+        await setPickedLocation(p.lat, p.lng);
+      });
+
+      const searchInput = document.getElementById("map-search");
+      let timer = null;
+
+      searchInput.addEventListener("input", () => {
+        clearTimeout(timer);
+        timer = setTimeout(async () => {
+          const q = searchInput.value.trim();
+          if (q.length < 4) return;
+
+          const hit = await searchOSM(q);
+          if (!hit) return;
+
+          marker.setLatLng([hit.lat, hit.lng]);
+          map.setView([hit.lat, hit.lng], 16);
+          await setPickedLocation(hit.lat, hit.lng);
+        }, 500);
+      });
+    }
+
+    // =========================
+    // 2) DATE/TIME DEFAULTS
+    // =========================
+    function getTomorrowISO() {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      return d.toISOString().split("T")[0];
+    }
+
+    const tomorrowISO = getTomorrowISO();
+    const dateInput = document.getElementById("delivery-date");
+    dateInput.min = tomorrowISO;
+    if (!dateInput.value) dateInput.value = tomorrowISO;
+
+    const t = document.getElementById("delivery-time");
+    if (t && !t.value) t.value = "12:00";
+
+    // =========================
+    // 3) NAV + FORM HELPERS
+    // =========================
+    function navigateTo(screenName) {
+      if (screenName === 'menu') window.location.href = 'index.html';
+      else window.location.href = screenName + '.html';
+    }
+
+    function toggleRecipientFields() {
+      const checkbox = document.getElementById("same-as-recipient");
+      const fields = document.getElementById("recipient-fields");
+
+      const senderNameEl = document.getElementById("sender-name");
+      const senderPhoneEl = document.getElementById("sender-phone");
+
+      const recipientNameEl = document.getElementById("recipient-name");
+      const recipientPhoneEl = document.getElementById("recipient-phone");
+
+      if (!checkbox || !fields || !senderNameEl || !senderPhoneEl || !recipientNameEl || !recipientPhoneEl) return;
+
+      if (checkbox.checked) {
+        recipientNameEl.value = senderNameEl.value.trim();
+        recipientPhoneEl.value = senderPhoneEl.value.trim();
+        handleIDPhoneInput("recipient-phone");
+
+        fields.style.opacity = "0.4";
+        fields.style.filter = "grayscale(1)";
+        fields.style.pointerEvents = "none";
+
+        recipientNameEl.setAttribute("disabled", "disabled");
+        recipientPhoneEl.setAttribute("disabled", "disabled");
+      } else {
+        fields.style.opacity = "1";
+        fields.style.filter = "none";
+        fields.style.pointerEvents = "all";
+
+        recipientNameEl.removeAttribute("disabled");
+        recipientPhoneEl.removeAttribute("disabled");
+
+        recipientNameEl.value = "";
+        recipientPhoneEl.value = "";
+        handleIDPhoneInput("recipient-phone");
+      }
+
+      validateForm();
+    }
+
+    function syncRecipientIfSame() {
+      const checkbox = document.getElementById("same-as-recipient");
+      if (!checkbox?.checked) return;
+
+      document.getElementById("recipient-name").value = document.getElementById("sender-name").value.trim();
+      document.getElementById("recipient-phone").value = document.getElementById("sender-phone").value.trim();
+      handleIDPhoneInput("recipient-phone");
+    }
+
+    function handleIDPhoneInput(inputId) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+
+      let v = input.value.replace(/\D/g, "");
+      if (v.startsWith("0")) v = v.replace(/^0+/, "");
+      v = v.slice(0, 12);
+      input.value = v;
+
+      const e164El = document.getElementById(`${inputId}-e164`);
+      if (e164El) e164El.value = v ? `+62${v}` : "";
+
+      const err = document.getElementById(`${inputId}-error`);
+      const ok = isValidIDPhoneDigits(v);
+      if (err) err.classList.toggle("hidden", v === "" || ok);
+    }
+
+    function isValidIDPhoneDigits(nationalDigits) {
+      if (!/^\d+$/.test(nationalDigits)) return false;
+      if (!nationalDigits.startsWith("8")) return false;
+      const len = nationalDigits.length;
+      return len >= 9 && len <= 12;
+    }
+
+    function toggleNoteField() {
+      const note = document.getElementById('kitchen-note');
+      note.classList.toggle('hidden');
+      if (!note.classList.contains('hidden')) note.focus();
+    }
+
+    function updateTime() {
+      const hour = document.getElementById('delivery-hour').value;
+      const minute = document.getElementById('delivery-minute').value;
+      document.getElementById('delivery-time').value = `${hour}:${minute}`;
+      validateForm();
+    }
+
+    function setQuickTime(time) {
+      const [hours, minutes] = time.split(':');
+      document.getElementById('delivery-hour').value = hours;
+      document.getElementById('delivery-minute').value = minutes;
+      updateTime();
+    }
+
+    // =========================
+    // 4) MAP MODAL OPEN/CLOSE
+    // =========================
+    function openMapModal() {
+      document.getElementById('map-modal').classList.remove('hidden');
+
+      setTimeout(async () => {
+        initLeafletMapIfNeeded();
+        map.invalidateSize();
+
+        // If we already have a picked location, show it
+        if (picked.lat && picked.lng) {
+          marker.setLatLng([picked.lat, picked.lng]);
+          map.setView([picked.lat, picked.lng], 16);
+          updateModalUI();
+          return;
         }
 
-        const tomorrowISO = getTomorrowISO();
-        const dateInput = document.getElementById("delivery-date");
+        // Otherwise, start at store
+        marker.setLatLng([STORE.lat, STORE.lng]);
+        map.setView([STORE.lat, STORE.lng], 13);
+        updateModalUI();
+      }, 60);
+    }
 
-        dateInput.min = tomorrowISO;
-        if (!dateInput.value) dateInput.value = tomorrowISO;
+    function closeMapModal() {
+      document.getElementById('map-modal').classList.add('hidden');
+    }
 
-        const t = document.getElementById("delivery-time");
-        if (t && !t.value) t.value = "12:00";
-        
-        function navigateTo(screenName) {
-            if (screenName === 'menu') {
-                window.location.href = 'index.html';
-            } else {
-                window.location.href = screenName + '.html';
-            }
+    function confirmLocation() {
+      if (!picked.lat || !picked.lng) return;
+
+      locationSelected = true;
+
+      // Write to hidden fields
+      document.getElementById("ship-lat").value = String(picked.lat);
+      document.getElementById("ship-lng").value = String(picked.lng);
+      document.getElementById("ship-address").value = picked.address || "";
+      document.getElementById("ship-distance-km").value = picked.distanceKm != null ? String(picked.distanceKm) : "";
+      document.getElementById("ship-gosend-fee").value = picked.fee != null ? String(picked.fee) : "";
+
+      updateShippingUIAfterConfirm();
+      closeMapModal();
+
+      calculateShippingTotal();
+      validateForm();
+
+      // Save right away
+      saveShippingDraft();
+      scheduleDBSave();
+    }
+
+    // =========================
+    // 5) CART + TOTALS
+    // =========================
+    const products = {
+      vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000 },
+      chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000 },
+      pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000 }
+    };
+
+    await initSession();
+    let cartCounts = await getCart();
+
+    function getDeliveryCost() {
+      const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
+      if (!selectedDelivery) return 0;
+
+      if (selectedDelivery.value === "gosend") {
+        const feeStr = document.getElementById("ship-gosend-fee").value;
+        const fee = Number(feeStr || "15000");
+        return Number.isFinite(fee) && fee > 0 ? fee : 15000;
+      }
+      return 0;
+    }
+
+    function calculateShippingTotal() {
+      let subtotal = 0;
+      let itemCount = 0;
+
+      for (const [productId, qty] of Object.entries(cartCounts)) {
+        if (qty > 0 && products[productId]) {
+          subtotal += products[productId].price * qty;
+          itemCount += qty;
         }
-        
-        function toggleRecipientFields() {
-            const checkbox = document.getElementById("same-as-recipient");
-            const fields = document.getElementById("recipient-fields");
+      }
 
-            const senderNameEl = document.getElementById("sender-name");
-            const senderPhoneEl = document.getElementById("sender-phone");
+      const packagingFee = itemCount * 1500;
+      const deliveryCost = getDeliveryCost();
 
-            const recipientNameEl = document.getElementById("recipient-name");
-            const recipientPhoneEl = document.getElementById("recipient-phone");
+      const total = subtotal + packagingFee + deliveryCost;
+      document.getElementById('shipping-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    }
 
-            if (!checkbox || !fields || !senderNameEl || !senderPhoneEl || !recipientNameEl || !recipientPhoneEl) return;
-
-            if (checkbox.checked) {
-                // Copy values
-                recipientNameEl.value = senderNameEl.value.trim();
-                recipientPhoneEl.value = senderPhoneEl.value.trim();
-
-                // Clean phone formatting (removes leading 0, digits only, etc.)
-                handleIDPhoneInput("recipient-phone");
-
-                // Gray out and disable editing
-                fields.style.opacity = "0.4";
-                fields.style.filter = "grayscale(1)";
-                fields.style.pointerEvents = "none";
-
-                recipientNameEl.setAttribute("disabled", "disabled");
-                recipientPhoneEl.setAttribute("disabled", "disabled");
-            } else {
-                // Enable editing again
-                fields.style.opacity = "1";
-                fields.style.filter = "none";
-                fields.style.pointerEvents = "all";
-
-                recipientNameEl.removeAttribute("disabled");
-                recipientPhoneEl.removeAttribute("disabled");
-
-                // Optional: clear when unchecked
-                recipientNameEl.value = "";
-                recipientPhoneEl.value = "";
-                handleIDPhoneInput("recipient-phone");
-            }
-
-            validateForm();
-        }
-
-        function syncRecipientIfSame() {
-            const checkbox = document.getElementById("same-as-recipient");
-            if (!checkbox?.checked) return;
-
-            document.getElementById("recipient-name").value = document.getElementById("sender-name").value.trim();
-            document.getElementById("recipient-phone").value = document.getElementById("sender-phone").value.trim();
-            handleIDPhoneInput("recipient-phone");
-        }
-
-        function handleIDPhoneInput(inputId) {
-            const input = document.getElementById(inputId);
-            if (!input) return;
-
-            // keep digits only
-            let v = input.value.replace(/\D/g, "");
-
-            // remove leading 0 if user typed it
-            if (v.startsWith("0")) v = v.replace(/^0+/, "");
-
-            // clamp length (Indonesian mobile after +62 usually 9–12 digits)
-            v = v.slice(0, 12);
-
-            input.value = v;
-
-            // write E.164 to hidden field
-            const e164El = document.getElementById(`${inputId}-e164`);
-            if (e164El) e164El.value = v ? `+62${v}` : "";
-
-            // show/hide error
-            const err = document.getElementById(`${inputId}-error`);
-            const ok = isValidIDPhoneDigits(v);
-            if (err) err.classList.toggle("hidden", v === "" || ok);
-        }
-
-        function isValidIDPhoneDigits(nationalDigits) {
-            // nationalDigits is the part AFTER +62 (no leading 0)
-            // Common Indonesian mobile: starts with 8 and total length 9–12 digits after +62
-            // Example: +62 812xxxxxxx (9-12 digits after +62)
-            if (!/^\d+$/.test(nationalDigits)) return false;
-            if (!nationalDigits.startsWith("8")) return false;
-
-            const len = nationalDigits.length;
-            return len >= 9 && len <= 12;
-        }
-
-        
-        function toggleNoteField() {
-            const note = document.getElementById('kitchen-note');
-            note.classList.toggle('hidden');
-            if (!note.classList.contains('hidden')) {
-                note.focus();
-            }
-        }
-        
-        function updateTime() {
-            const hour = document.getElementById('delivery-hour').value;
-            const minute = document.getElementById('delivery-minute').value;
-            document.getElementById('delivery-time').value = `${hour}:${minute}`;
-            validateForm();
-        }
-
-        // Update setQuickTime to work with selects:
-        function setQuickTime(time) {
-            const [hours, minutes] = time.split(':');
-            document.getElementById('delivery-hour').value = hours;
-            document.getElementById('delivery-minute').value = minutes;
-            updateTime();
-        }
-        
-        function openMapModal() {
-            document.getElementById('map-modal').classList.remove('hidden');
-        }
-        
-        function closeMapModal() {
-            document.getElementById('map-modal').classList.add('hidden');
-        }
-        
-        function confirmLocation() {
-            locationSelected = true;
-            document.getElementById('selected-location-display').classList.remove('hidden');
-            closeMapModal();
-            validateForm();
-        }
-
-        // Product catalog (must match menu.html and cart.html)
-        const products = {
-            vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000 },
-            chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000 },
-            pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000 }
-        };
-        // Load cart once for totals
-        await initSession();
-        let cartCounts = await getCart();
-
-        function calculateShippingTotal() {
-            // use cartCounts (already loaded)
-            let subtotal = 0;
-            let itemCount = 0;
-
-            for (const [productId, qty] of Object.entries(cartCounts)) {
-                if (qty > 0 && products[productId]) {
-                    subtotal += products[productId].price * qty;
-                    itemCount += qty;
-                }
-            }
-
-            const packagingFee = itemCount * 1500;
-
-            const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
-            let deliveryCost = 0;
-
-            if (selectedDelivery) {
-            deliveryCost = selectedDelivery.value === "gosend" ? 15000 : 0;
-            }
-
-
-            const total = subtotal + packagingFee + deliveryCost;
-            document.getElementById('shipping-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
-        }
-
-        document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-            radio.addEventListener('change', calculateShippingTotal);
-        });
-
+    document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+      radio.addEventListener('change', () => {
         calculateShippingTotal();
-        
-        function validateForm() {
-            const senderName = document.getElementById("sender-name").value.trim();
-            const senderPhoneDigits = document.getElementById("sender-phone").value.trim();
-
-            const sameAsRecipient = document.getElementById("same-as-recipient").checked;
-
-            const recipientName = document.getElementById("recipient-name").value.trim();
-            const recipientPhoneDigits = document.getElementById("recipient-phone").value.trim();
-
-            const address = document.getElementById("detailed-address").value.trim();
-
-            const deliverySelected = document.querySelector('input[name="delivery"]:checked') !== null;
-
-            const date = document.getElementById("delivery-date").value;
-            const time = document.getElementById("delivery-time").value;
-
-            const minDate = document.getElementById("delivery-date").min;
-            const dateValid = date && date >= minDate;
-
-            const senderPhoneOk = isValidIDPhoneDigits(senderPhoneDigits);
-            const recipientPhoneOk = isValidIDPhoneDigits(recipientPhoneDigits);
-
-            let isValid =
-                !!senderName &&
-                senderPhoneOk &&
-                !!address &&
-                dateValid &&
-                !!time &&
-                deliverySelected;
-
-            if (!sameAsRecipient) {
-                isValid = isValid && !!recipientName && recipientPhoneOk;
-            }
-
-            // Delivery UI feedback
-            document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-                const card = radio.closest("label").querySelector("div");
-                if (!deliverySelected) card.classList.add("border-red-300");
-                else card.classList.remove("border-red-300");
-            });
-
-            const btn = document.getElementById("continue-btn");
-            btn.disabled = !isValid;
-
-            if (isValid) btn.classList.remove("opacity-40", "cursor-not-allowed");
-            else btn.classList.add("opacity-40", "cursor-not-allowed");
-        }
-
-        const SHIPPING_KEY = "chouxlab_shipping_v1";
-
-        function collectShippingData() {
-            return {
-                senderName: document.getElementById("sender-name").value.trim(),
-                senderPhone: document.getElementById("sender-phone").value.trim(),
-                sameAsRecipient: document.getElementById("same-as-recipient").checked,
-
-                recipientName: document.getElementById("recipient-name").value.trim(),
-                recipientPhone: document.getElementById("recipient-phone").value.trim(),
-
-                address: document.getElementById("detailed-address").value.trim(),
-                note: document.getElementById("kitchen-note").value.trim(),
-
-                deliveryDate: document.getElementById("delivery-date").value,
-                deliveryTime: document.getElementById("delivery-time").value,
-                deliveryHour: document.getElementById("delivery-hour").value,
-                deliveryMinute: document.getElementById("delivery-minute").value,
-
-                deliveryMethod: document.querySelector('input[name="delivery"]:checked')?.value || null,
-
-                // if you still keep map later
-                locationSelected: !!locationSelected,
-            };
-        }
-
-        function saveShippingDraft() {
-            try {
-                localStorage.setItem(SHIPPING_KEY, JSON.stringify(collectShippingData()));
-            } catch (e) {
-                console.warn("Failed to save shipping draft", e);
-            }
-        }
-
-        function restoreShippingDraft() {
-            const raw = localStorage.getItem(SHIPPING_KEY);
-            if (!raw) return;
-
-            let d;
-            try {
-                d = JSON.parse(raw);
-            } catch {
-                return;
-            }
-
-            // Restore values
-            document.getElementById("sender-name").value = d.senderName || "";
-            document.getElementById("sender-phone").value = d.senderPhone || "";
-            handleIDPhoneInput("sender-phone");
-
-            document.getElementById("same-as-recipient").checked = !!d.sameAsRecipient;
-
-            document.getElementById("recipient-name").value = d.recipientName || "";
-            document.getElementById("recipient-phone").value = d.recipientPhone || "";
-            handleIDPhoneInput("recipient-phone");
-
-            document.getElementById("detailed-address").value = d.address || "";
-
-            // note field
-            const noteEl = document.getElementById("kitchen-note");
-            if (noteEl) {
-                noteEl.value = d.note || "";
-                if (noteEl.value) noteEl.classList.remove("hidden");
-            }
-
-            // date: keep tomorrow min rule, but restore if valid
-            const dateInput = document.getElementById("delivery-date");
-            if (d.deliveryDate && d.deliveryDate >= dateInput.min) {
-                dateInput.value = d.deliveryDate;
-            }
-
-            // time: restore selects + hidden time
-            if (d.deliveryHour) document.getElementById("delivery-hour").value = d.deliveryHour;
-            if (d.deliveryMinute) document.getElementById("delivery-minute").value = d.deliveryMinute;
-            updateTime(); // sets hidden delivery-time
-
-            // delivery method restore
-            if (d.deliveryMethod) {
-                const radio = document.querySelector(`input[name="delivery"][value="${d.deliveryMethod}"]`);
-                if (radio) radio.checked = true;
-            }
-
-            // restore map flag if you keep it
-            if (typeof d.locationSelected === "boolean") {
-                locationSelected = d.locationSelected;
-            }
-
-            // apply checkbox logic (copies + disables recipient fields)
-            toggleRecipientFields();
-
-            calculateShippingTotal();
-            validateForm();
-        }
-
-        function setupAutoSave() {
-            const ids = [
-                "sender-name",
-                "sender-phone",
-                "recipient-name",
-                "recipient-phone",
-                "detailed-address",
-                "delivery-date",
-                "delivery-hour",
-                "delivery-minute",
-                "same-as-recipient",
-                "kitchen-note",
-            ];
-
-            ids.forEach(id => {
-                const el = document.getElementById(id);
-                if (!el) return;
-
-                const evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
-                el.addEventListener(evt, () => {
-                saveShippingDraft();     // localStorage
-                scheduleDBSave();        // Firestore
-                });
-            });
-
-            document.querySelectorAll('input[name="delivery"]').forEach(r => {
-                r.addEventListener("change", () => {
-                saveShippingDraft();
-                scheduleDBSave();
-                });
-            });
-        }
-
-        let dbSaveTimer = null;
-        function scheduleDBSave() {
-            // debounce so you don’t spam Firestore on every keystroke
-            clearTimeout(dbSaveTimer);
-            dbSaveTimer = setTimeout(async () => {
-                try {
-                await saveShippingDraftToDB(collectShippingData());
-                } catch (e) {
-                console.warn("DB save failed", e);
-                }
-            }, 500);
-        }
-
-        document.addEventListener("DOMContentLoaded", async () => {
-            // IMPORTANT: do NOT force dateInput.value = tomorrow here.
-            // Keep only min = tomorrow, and only set default if empty.
-            const tomorrowISO = getTomorrowISO();
-            const dateInput = document.getElementById("delivery-date");
-            dateInput.min = tomorrowISO;
-            if (!dateInput.value) dateInput.value = tomorrowISO;
-
-            await initSession();
-
-            // 1) Try DB
-            try {
-                const dbDraft = await loadShippingDraftFromDB();
-                if (dbDraft) {
-                // put DB draft into localStorage too (optional)
-                localStorage.setItem(SHIPPING_KEY, JSON.stringify(dbDraft));
-                }
-            } catch (e) {
-                console.warn("DB load failed, fallback to localStorage", e);
-            }
-
-            // 2) Restore from localStorage (now contains DB draft if any)
-            restoreShippingDraft();
-
-            setupAutoSave();
-        });
-
-        async function goToPayment() {
-            saveShippingDraft(); // localStorage
-            try {
-                await saveShippingDraftToDB(collectShippingData());
-            } catch (e) {
-                console.warn("DB save failed on continue", e);
-                // still allow navigation
-            }
-            window.location.href = "payment.html";
-        }
-
-        function setupKeyboardAvoidance() {
-            const root = document.documentElement;
-
-            const getHeights = () => {
-                const vv = window.visualViewport;
-                const layoutH = window.innerHeight;
-                const visualH = vv ? vv.height : layoutH;
-                return { layoutH, visualH };
-            };
-
-            const update = () => {
-                const { layoutH, visualH } = getHeights();
-
-                // If visual viewport shrinks a lot, keyboard is likely open
-                const keyboardOpen = (layoutH - visualH) > 120;
-
-                root.classList.toggle("keyboard-open", keyboardOpen);
-            };
-
-            // visualViewport is the most reliable on mobile
-            if (window.visualViewport) {
-                window.visualViewport.addEventListener("resize", update);
-                window.visualViewport.addEventListener("scroll", update);
-            }
-
-            window.addEventListener("resize", update);
-            window.addEventListener("orientationchange", update);
-
-            // initial
-            update();
-        }
-
-            document.addEventListener("DOMContentLoaded", setupKeyboardAvoidance);
-
-        
-        // Initialize validation
         validateForm();
+      });
+    });
 
-        window.navigateTo = navigateTo;
-        window.validateForm = validateForm;
-        window.toggleRecipientFields = toggleRecipientFields;
-        window.setQuickTime = setQuickTime;
-        window.updateTime = updateTime;
-        window.openMapModal = openMapModal;
-        window.closeMapModal = closeMapModal;
-        window.confirmLocation = confirmLocation;
-        window.toggleNoteField = toggleNoteField;
-        window.handleIDPhoneInput = handleIDPhoneInput;
-        window.calculateShippingTotal = calculateShippingTotal
-        window.syncRecipientIfSame = syncRecipientIfSame;
-        window.goToPayment = goToPayment;
+    // =========================
+    // 6) VALIDATION
+    // =========================
+    function validateForm() {
+      const senderName = document.getElementById("sender-name").value.trim();
+      const senderPhoneDigits = document.getElementById("sender-phone").value.trim();
 
-    </script>
+      const sameAsRecipient = document.getElementById("same-as-recipient").checked;
+
+      const recipientName = document.getElementById("recipient-name").value.trim();
+      const recipientPhoneDigits = document.getElementById("recipient-phone").value.trim();
+
+      const address = document.getElementById("detailed-address").value.trim();
+
+      const deliverySelected = document.querySelector('input[name="delivery"]:checked') !== null;
+
+      const date = document.getElementById("delivery-date").value;
+      const time = document.getElementById("delivery-time").value;
+
+      const minDate = document.getElementById("delivery-date").min;
+      const dateValid = date && date >= minDate;
+
+      const senderPhoneOk = isValidIDPhoneDigits(senderPhoneDigits);
+      const recipientPhoneOk = isValidIDPhoneDigits(recipientPhoneDigits);
+
+      // Require map location pinned
+      const mapOk = !!document.getElementById("ship-lat").value && !!document.getElementById("ship-lng").value;
+
+      let isValid =
+        !!senderName &&
+        senderPhoneOk &&
+        !!address &&
+        dateValid &&
+        !!time &&
+        deliverySelected &&
+        mapOk;
+
+      if (!sameAsRecipient) {
+        isValid = isValid && !!recipientName && recipientPhoneOk;
+      }
+
+      const btn = document.getElementById("continue-btn");
+      btn.disabled = !isValid;
+
+      if (isValid) btn.classList.remove("opacity-40", "cursor-not-allowed");
+      else btn.classList.add("opacity-40", "cursor-not-allowed");
+    }
+
+    // =========================
+    // 7) DRAFT SAVE/RESTORE
+    // =========================
+    const SHIPPING_KEY = "chouxlab_shipping_v1";
+
+    function collectShippingData() {
+      return {
+        senderName: document.getElementById("sender-name").value.trim(),
+        senderPhone: document.getElementById("sender-phone").value.trim(),
+        sameAsRecipient: document.getElementById("same-as-recipient").checked,
+
+        recipientName: document.getElementById("recipient-name").value.trim(),
+        recipientPhone: document.getElementById("recipient-phone").value.trim(),
+
+        address: document.getElementById("detailed-address").value.trim(),
+        note: document.getElementById("kitchen-note").value.trim(),
+
+        deliveryDate: document.getElementById("delivery-date").value,
+        deliveryTime: document.getElementById("delivery-time").value,
+        deliveryHour: document.getElementById("delivery-hour").value,
+        deliveryMinute: document.getElementById("delivery-minute").value,
+
+        deliveryMethod: document.querySelector('input[name="delivery"]:checked')?.value || null,
+
+        // Map fields
+        shipLat: document.getElementById("ship-lat").value ? Number(document.getElementById("ship-lat").value) : null,
+        shipLng: document.getElementById("ship-lng").value ? Number(document.getElementById("ship-lng").value) : null,
+        shipAddress: document.getElementById("ship-address").value || "",
+        shipDistanceKm: document.getElementById("ship-distance-km").value ? Number(document.getElementById("ship-distance-km").value) : null,
+        gosendFee: document.getElementById("ship-gosend-fee").value ? Number(document.getElementById("ship-gosend-fee").value) : null,
+
+        locationSelected: !!locationSelected,
+      };
+    }
+
+    function saveShippingDraft() {
+      try {
+        localStorage.setItem(SHIPPING_KEY, JSON.stringify(collectShippingData()));
+      } catch (e) {
+        console.warn("Failed to save shipping draft", e);
+      }
+    }
+
+    function restoreShippingDraft() {
+      const raw = localStorage.getItem(SHIPPING_KEY);
+      if (!raw) return;
+
+      let d;
+      try { d = JSON.parse(raw); } catch { return; }
+
+      document.getElementById("sender-name").value = d.senderName || "";
+      document.getElementById("sender-phone").value = d.senderPhone || "";
+      handleIDPhoneInput("sender-phone");
+
+      document.getElementById("same-as-recipient").checked = !!d.sameAsRecipient;
+
+      document.getElementById("recipient-name").value = d.recipientName || "";
+      document.getElementById("recipient-phone").value = d.recipientPhone || "";
+      handleIDPhoneInput("recipient-phone");
+
+      document.getElementById("detailed-address").value = d.address || "";
+
+      const noteEl = document.getElementById("kitchen-note");
+      if (noteEl) {
+        noteEl.value = d.note || "";
+        if (noteEl.value) noteEl.classList.remove("hidden");
+      }
+
+      const dateInput = document.getElementById("delivery-date");
+      if (d.deliveryDate && d.deliveryDate >= dateInput.min) dateInput.value = d.deliveryDate;
+
+      if (d.deliveryHour) document.getElementById("delivery-hour").value = d.deliveryHour;
+      if (d.deliveryMinute) document.getElementById("delivery-minute").value = d.deliveryMinute;
+      updateTime();
+
+      if (d.deliveryMethod) {
+        const radio = document.querySelector(`input[name="delivery"][value="${d.deliveryMethod}"]`);
+        if (radio) radio.checked = true;
+      }
+
+      // Restore map
+      if (d.shipLat && d.shipLng) {
+        document.getElementById("ship-lat").value = String(d.shipLat);
+        document.getElementById("ship-lng").value = String(d.shipLng);
+        document.getElementById("ship-address").value = d.shipAddress || "";
+        document.getElementById("ship-distance-km").value = (d.shipDistanceKm != null) ? String(d.shipDistanceKm) : "";
+        document.getElementById("ship-gosend-fee").value = (d.gosendFee != null) ? String(d.gosendFee) : "";
+
+        picked.lat = d.shipLat;
+        picked.lng = d.shipLng;
+        picked.address = d.shipAddress || "";
+        picked.distanceKm = d.shipDistanceKm ?? null;
+        picked.fee = d.gosendFee ?? null;
+
+        locationSelected = true;
+        updateShippingUIAfterConfirm();
+      } else {
+        locationSelected = false;
+      }
+
+      toggleRecipientFields();
+      calculateShippingTotal();
+      validateForm();
+    }
+
+    function setupAutoSave() {
+      const ids = [
+        "sender-name",
+        "sender-phone",
+        "recipient-name",
+        "recipient-phone",
+        "detailed-address",
+        "delivery-date",
+        "delivery-hour",
+        "delivery-minute",
+        "same-as-recipient",
+        "kitchen-note",
+      ];
+
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        const evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
+        el.addEventListener(evt, () => {
+          saveShippingDraft();
+          scheduleDBSave();
+        });
+      });
+
+      document.querySelectorAll('input[name="delivery"]').forEach(r => {
+        r.addEventListener("change", () => {
+          saveShippingDraft();
+          scheduleDBSave();
+        });
+      });
+    }
+
+    let dbSaveTimer = null;
+    function scheduleDBSave() {
+      clearTimeout(dbSaveTimer);
+      dbSaveTimer = setTimeout(async () => {
+        try {
+          await saveShippingDraftToDB(collectShippingData());
+        } catch (e) {
+          console.warn("DB save failed", e);
+        }
+      }, 500);
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      const tomorrowISO = getTomorrowISO();
+      const dateInput = document.getElementById("delivery-date");
+      dateInput.min = tomorrowISO;
+      if (!dateInput.value) dateInput.value = tomorrowISO;
+
+      await initSession();
+
+      try {
+        const dbDraft = await loadShippingDraftFromDB();
+        if (dbDraft) localStorage.setItem(SHIPPING_KEY, JSON.stringify(dbDraft));
+      } catch (e) {
+        console.warn("DB load failed, fallback to localStorage", e);
+      }
+
+      restoreShippingDraft();
+      setupAutoSave();
+
+      // Initial totals
+      calculateShippingTotal();
+      validateForm();
+    });
+
+    async function goToPayment() {
+      saveShippingDraft();
+      try {
+        await saveShippingDraftToDB(collectShippingData());
+      } catch (e) {
+        console.warn("DB save failed on continue", e);
+      }
+      window.location.href = "payment.html";
+    }
+
+    // =========================
+    // 8) KEYBOARD AVOIDANCE
+    // =========================
+    function setupKeyboardAvoidance() {
+      const root = document.documentElement;
+
+      const getHeights = () => {
+        const vv = window.visualViewport;
+        const layoutH = window.innerHeight;
+        const visualH = vv ? vv.height : layoutH;
+        return { layoutH, visualH };
+      };
+
+      const update = () => {
+        const { layoutH, visualH } = getHeights();
+        const keyboardOpen = (layoutH - visualH) > 120;
+        root.classList.toggle("keyboard-open", keyboardOpen);
+      };
+
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", update);
+        window.visualViewport.addEventListener("scroll", update);
+      }
+
+      window.addEventListener("resize", update);
+      window.addEventListener("orientationchange", update);
+      update();
+    }
+
+    document.addEventListener("DOMContentLoaded", setupKeyboardAvoidance);
+
+    // =========================
+    // 9) EXPOSE GLOBALS
+    // =========================
+    window.navigateTo = navigateTo;
+    window.validateForm = validateForm;
+    window.toggleRecipientFields = toggleRecipientFields;
+    window.setQuickTime = setQuickTime;
+    window.updateTime = updateTime;
+    window.openMapModal = openMapModal;
+    window.closeMapModal = closeMapModal;
+    window.confirmLocation = confirmLocation;
+    window.toggleNoteField = toggleNoteField;
+    window.handleIDPhoneInput = handleIDPhoneInput;
+    window.calculateShippingTotal = calculateShippingTotal;
+    window.syncRecipientIfSame = syncRecipientIfSame;
+    window.goToPayment = goToPayment;
+  </script>
 </body>
 </html>

@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+  <title>ChouxLab - Login</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Fraunces:opsz,wght@9..144,300;400;600&family=Inter:wght@300;400;500&family=Work+Sans:wght@300;400;500;700&family=DM+Serif+Display&family=Playfair+Display:wght@400;600;700&family=Alice&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "mocha": "#3D2B1F",
+            "dark-chocolate": "#2A1D15",
+            "dark-brown": "#32211D",
+            "cream": "#FDFBF7",
+            "cream-bg": "#FCF9F2",
+            "warm-beige": "#F5F0E8",
+            "soft-cocoa": "#8B7E74",
+            "accent-tan": "#C7B7A3",
+            "tan-light": "#f2e4cf",
+            "nude": "#E7C0A5",
+            "beige": "#EBC2A4",
+            "tan": "#D1B28C",
+            "warm-grey": "#8E7366",
+            "primary": "#36211c",
+            "background-light": "#fffcf5",
+            "background-dark": "#1a1210",
+          },
+          fontFamily: {
+            "roca": ["Crimson Pro", "serif"],
+            "cooper": ["Fraunces", "serif"],
+            "display": ["Fraunces", "serif"],
+            "accent": ["Alice", "serif"],
+            "body": ["Work Sans", "sans-serif"],
+            "sans": ["Inter", "sans-serif"],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style type="text/tailwindcss">
+    @layer base {
+      body {
+        @apply bg-cream text-dark-chocolate antialiased;
+        font-family: 'Fraunces', serif;
+        min-height: 100dvh;
+        overflow-x: hidden;
+      }
+    }
+
+    .font-roca { font-family: 'Crimson Pro', serif; }
+    .font-cooper { font-family: 'Fraunces', serif; }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .fill-1 { font-variation-settings: 'FILL' 1; }
+
+    .screen { min-height: 100dvh; background-color: #FDFBF7; }
+
+    .bottom-nav-directory {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background-color: rgba(253, 251, 247, 0.95);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(199, 183, 163, 0.2);
+      padding: 12px 24px 28px 24px;
+      max-width: 430px;
+      margin: 0 auto;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s ease;
+    }
+    .nav-item:active { opacity: 0.6; transform: scale(0.95); }
+    .nav-icon { font-size: 24px; line-height: 1; }
+    .nav-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: 'Fraunces', serif;
+    }
+
+    .screen-content { padding-bottom: 88px; }
+
+    input:focus, textarea:focus { outline: none !important; box-shadow: none !important; }
+
+    .custom-input {
+      background-color: transparent;
+      border: 1px solid rgba(54, 33, 28, 0.15);
+      border-radius: 16px;
+      padding: 16px 20px;
+      font-family: 'Fraunces', serif;
+      color: #2A1D15;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+    .custom-input:focus {
+      border-color: #36211c;
+      background-color: rgba(54, 33, 28, 0.02);
+    }
+    .custom-input::placeholder { color: rgba(54, 33, 28, 0.4); }
+
+    .hero-gradient {
+      background: linear-gradient(to bottom, rgba(253, 251, 247, 0.1) 0%, rgba(253, 251, 247, 0.95) 70%, #FDFBF7 100%);
+    }
+  </style>
+</head>
+
+<body class="bg-cream-bg">
+  <div id="screen-login" class="screen active">
+    <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
+
+      <!-- Hero -->
+      <div class="relative h-[45vh] min-h-[320px] overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat"
+             style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCjEenLSrgdX1BsY8Kz4Sko70o42DYl1fTGpdflOejpQ0kT2yFOrutfXhR77DdjNV2NYaUxYq1aJHbsuXx9tfFBQWh2tiB3iq-2CxXtuOmQaeliCtoQ982QQJmMyB9JN7IiRr4d0uR2qA63GlH85KVi-oep0Qxo54zAbuPjLWVaM0wOQ6heNfylWmz3FJi-hWOoGNX1IUL5bGqAFv_comVs6zePxB-8qmAelGq22P07bFEDAmZshuIhvU4Zy4d_ZF1Qnqgn0VAFH8M ");'></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <div class="absolute top-0 left-0 right-0 z-10 p-4">
+          <button class="flex items-center justify-center text-dark-chocolate bg-cream/80 backdrop-blur-sm rounded-full w-10 h-10 shadow-sm"
+                  onclick="navigateTo('home')">
+            <span class="material-symbols-outlined text-xl">arrow_back_ios</span>
+          </button>
+        </div>
+
+        <div class="absolute bottom-6 left-0 right-0 text-center px-6">
+          <h1 class="text-4xl font-roca text-primary mb-2 tracking-tight">ChouxLab</h1>
+          <p class="text-sm text-mocha font-cooper tracking-wide">Welcome to the Lab</p>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <main class="flex-1 px-6 pt-8 pb-8">
+        <div class="max-w-sm mx-auto">
+
+          <!-- Alert -->
+          <div id="alert" class="hidden mb-5 rounded-2xl border border-mocha/15 bg-warm-beige/30 px-4 py-3">
+            <p id="alert-text" class="text-sm font-cooper text-mocha"></p>
+          </div>
+
+          <!-- Tabs -->
+          <div class="flex border-b border-mocha/10 mb-8">
+            <button id="tab-login" class="flex-1 pb-4 text-center border-b-2 border-primary text-primary transition-all"
+                    type="button" onclick="switchTab('login')">
+              <span class="text-sm font-bold uppercase tracking-widest">Sign In</span>
+            </button>
+            <button id="tab-register" class="flex-1 pb-4 text-center border-b-2 border-transparent text-mocha transition-all"
+                    type="button" onclick="switchTab('register')">
+              <span class="text-sm font-bold uppercase tracking-widest">Create Account</span>
+            </button>
+          </div>
+
+          <!-- Login Form -->
+          <form id="login-form" class="space-y-5">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-mocha mb-2">Email</label>
+              <input id="login-email" type="email" class="custom-input text-base" placeholder="you@example.com" required />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-mocha mb-2">Password</label>
+              <div class="relative">
+                <input type="password" id="login-password" class="custom-input text-base pr-12" placeholder="Enter your password" required />
+                <button type="button"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-mocha hover:text-primary transition-colors"
+                        onclick="togglePassword('login-password')">
+                  <span class="material-symbols-outlined text-xl" id="login-password-icon">visibility_off</span>
+                </button>
+              </div>
+            </div>
+
+            <button id="login-btn" type="submit"
+                    class="w-full bg-primary text-cream py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-lg active:scale-[0.98] transition-all mt-6">
+              Sign In
+            </button>
+          </form>
+
+          <!-- Register Form -->
+          <form id="register-form" class="space-y-5 hidden">
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-mocha mb-2">Full Name</label>
+              <input id="reg-name" type="text" class="custom-input text-base" placeholder="Your name" required />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-mocha mb-2">Email</label>
+              <input id="reg-email" type="email" class="custom-input text-base" placeholder="you@example.com" required />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-widest text-mocha mb-2">Password</label>
+              <div class="relative">
+                <input type="password" id="register-password" class="custom-input text-base pr-12" placeholder="Create a password" required />
+                <button type="button"
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-mocha hover:text-primary transition-colors"
+                        onclick="togglePassword('register-password')">
+                  <span class="material-symbols-outlined text-xl" id="register-password-icon">visibility_off</span>
+                </button>
+              </div>
+              <p class="text-[11px] font-cooper text-mocha/70 mt-2">Minimum 6 characters.</p>
+            </div>
+
+            <button id="register-btn" type="submit"
+                    class="w-full bg-primary text-cream py-4 rounded-full text-xs font-bold uppercase tracking-[0.2em] shadow-lg active:scale-[0.98] transition-all mt-6">
+              Create Account
+            </button>
+          </form>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-4 my-8">
+            <div class="flex-1 h-px bg-mocha/10"></div>
+            <span class="text-xs text-mocha font-cooper uppercase tracking-widest">Or continue with</span>
+            <div class="flex-1 h-px bg-mocha/10"></div>
+          </div>
+
+          <!-- Social -->
+          <div class="flex gap-4">
+            <button id="google-btn" type="button"
+                    class="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full border border-mocha/15 bg-white hover:bg-mocha/5 transition-colors active:scale-[0.98]">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              </svg>
+              <span class="text-sm font-semibold text-primary">Google</span>
+            </button>
+
+            <button type="button"
+                    class="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-full border border-mocha/15 bg-white hover:bg-mocha/5 transition-colors active:scale-[0.98]"
+                    onclick="showAlert('Facebook sign-in not connected yet.')">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="#1877F2">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+              <span class="text-sm font-semibold text-primary">Facebook</span>
+            </button>
+          </div>
+
+          <!-- Guest -->
+          <div class="text-center mt-8 pt-4 border-t border-mocha/10">
+            <p class="text-sm text-mocha font-cooper mb-3">Don't want to create an account?</p>
+            <button type="button" onclick="navigateTo('menu')"
+                    class="text-primary text-xs font-bold uppercase tracking-[0.2em] border-b-2 border-primary pb-1 hover:opacity-70 transition-opacity">
+              Continue as Guest
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <nav class="bottom-nav-directory">
+        <div class="flex justify-between items-center max-w-md mx-auto">
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+            <span class="material-symbols-outlined nav-icon">home</span>
+            <span class="nav-label">Home</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+            <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
+            <span class="nav-label">Menu</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+            <span class="material-symbols-outlined nav-icon">shopping_bag</span>
+            <span class="nav-label">Cart</span>
+          </button>
+          <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+            <span class="material-symbols-outlined nav-icon">person</span>
+            <span class="nav-label">Profile</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Firebase + App Logic -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      updateProfile,
+      GoogleAuthProvider,
+      signInWithPopup
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+    // === 1) Firebase config ===
+    const firebaseConfig = {
+      apiKey: "AIzaSyCTBt4C--X3oO9XvweyNqQtvR3QcmSZA7c",
+      authDomain: "chouxlab-ops.firebaseapp.com",
+      projectId: "chouxlab-ops",
+      storageBucket: "chouxlab-ops.firebasestorage.app",
+      messagingSenderId: "317568827205",
+      appId: "1:317568827205:web:bde602b3d7c3b18e4a882c"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // === 2) Helpers ===
+    function navigateTo(screenName) {
+      if (screenName === "menu") window.location.href = "index.html";
+      else window.location.href = screenName + ".html";
+    }
+    window.navigateTo = navigateTo;
+
+    function showAlert(msg) {
+      const box = document.getElementById("alert");
+      const text = document.getElementById("alert-text");
+      if (!box || !text) return;
+      text.textContent = msg;
+      box.classList.remove("hidden");
+    }
+    window.showAlert = showAlert;
+
+    function clearAlert() {
+      const box = document.getElementById("alert");
+      if (box) box.classList.add("hidden");
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      if (!btn) return;
+      btn.disabled = !!loading;
+      btn.classList.toggle("opacity-60", !!loading);
+      btn.classList.toggle("cursor-not-allowed", !!loading);
+    }
+
+    async function ensureUserDoc(user, extra = {}) {
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+      if (!snap.exists()) {
+        await setDoc(ref, {
+          uid: user.uid,
+          displayName: user.displayName || extra.displayName || "",
+          email: user.email || "",
+          photoURL: user.photoURL || "",
+          points: 0,
+          tier: "member",
+          createdAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+      } else {
+        await setDoc(ref, {
+          displayName: user.displayName || snap.data()?.displayName || "",
+          email: user.email || snap.data()?.email || "",
+          photoURL: user.photoURL || snap.data()?.photoURL || "",
+          updatedAt: serverTimestamp(),
+          ...extra
+        }, { merge: true });
+      }
+    }
+
+    function goProfile() {
+      window.location.href = "profile.html";
+    }
+
+    // === 3) UI: tabs + password toggle ===
+    function switchTab(tab) {
+      const loginTab = document.getElementById("tab-login");
+      const registerTab = document.getElementById("tab-register");
+      const loginForm = document.getElementById("login-form");
+      const registerForm = document.getElementById("register-form");
+
+      clearAlert();
+
+      if (tab === "login") {
+        loginTab.classList.add("border-primary", "text-primary");
+        loginTab.classList.remove("border-transparent", "text-mocha");
+        registerTab.classList.remove("border-primary", "text-primary");
+        registerTab.classList.add("border-transparent", "text-mocha");
+        loginForm.classList.remove("hidden");
+        registerForm.classList.add("hidden");
+      } else {
+        registerTab.classList.add("border-primary", "text-primary");
+        registerTab.classList.remove("border-transparent", "text-mocha");
+        loginTab.classList.remove("border-primary", "text-primary");
+        loginTab.classList.add("border-transparent", "text-mocha");
+        registerForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+      }
+    }
+    window.switchTab = switchTab;
+
+    function togglePassword(inputId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(inputId + "-icon");
+      if (!input || !icon) return;
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "visibility";
+      } else {
+        input.type = "password";
+        icon.textContent = "visibility_off";
+      }
+    }
+    window.togglePassword = togglePassword;
+
+    // === 4) Auth handlers ===
+    async function loginEmail(e) {
+      e.preventDefault();
+      clearAlert();
+      setLoading("login-btn", true);
+
+      try {
+        const email = document.getElementById("login-email").value.trim();
+        const pass = document.getElementById("login-password").value;
+
+        if (!email || !pass) {
+          showAlert("Please fill email and password.");
+          setLoading("login-btn", false);
+          return;
+        }
+
+        const res = await signInWithEmailAndPassword(auth, email, pass);
+        await ensureUserDoc(res.user);
+        goProfile();
+      } catch (err) {
+        console.error(err);
+        showAlert(err?.message || "Login failed.");
+      } finally {
+        setLoading("login-btn", false);
+      }
+    }
+
+    async function registerEmail(e) {
+      e.preventDefault();
+      clearAlert();
+      setLoading("register-btn", true);
+
+      try {
+        const name = document.getElementById("reg-name").value.trim();
+        const email = document.getElementById("reg-email").value.trim();
+        const pass = document.getElementById("register-password").value;
+
+        if (!name || !email || !pass) {
+          showAlert("Please fill name, email, and password.");
+          setLoading("register-btn", false);
+          return;
+        }
+        if (pass.length < 6) {
+          showAlert("Password must be at least 6 characters.");
+          setLoading("register-btn", false);
+          return;
+        }
+
+        const res = await createUserWithEmailAndPassword(auth, email, pass);
+
+        // Set displayName in Auth profile
+        await updateProfile(res.user, { displayName: name });
+
+        await ensureUserDoc(res.user, { displayName: name });
+        goProfile();
+      } catch (err) {
+        console.error(err);
+        showAlert(err?.message || "Registration failed.");
+      } finally {
+        setLoading("register-btn", false);
+      }
+    }
+
+    async function loginGoogle() {
+      clearAlert();
+      setLoading("google-btn", true);
+
+      try {
+        const provider = new GoogleAuthProvider();
+        const res = await signInWithPopup(auth, provider);
+        await ensureUserDoc(res.user);
+        goProfile();
+      } catch (err) {
+        console.error(err);
+        // Most common: unauthorized domain
+        showAlert(err?.message || "Google sign-in failed.");
+      } finally {
+        setLoading("google-btn", false);
+      }
+    }
+
+    // === 5) Wire events ===
+    document.getElementById("login-form")?.addEventListener("submit", loginEmail);
+    document.getElementById("register-form")?.addEventListener("submit", registerEmail);
+    document.getElementById("google-btn")?.addEventListener("click", loginGoogle);
+
+    // Optional: if already logged in, skip login page
+    onAuthStateChanged(auth, (user) => {
+      if (user && !user.isAnonymous) {
+        goProfile();
+      }
+    });
+  </script>
+</body>
+</html>
