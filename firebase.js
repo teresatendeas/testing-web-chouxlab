@@ -129,3 +129,6 @@ export async function loadShippingDraftFromDB() {
   const snap = await getDoc(ref);
   return snap.exists() ? snap.data() : null;
 }
+export function getCurrentUser() {
+  return auth.currentUser;
+}
