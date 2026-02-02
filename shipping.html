@@ -151,7 +151,7 @@
       background-size: 20px 20px;
     }
 
-    /* Leaflet tweaks to match your UI */
+    /* Leaflet tweaks */
     .leaflet-control-attribution { display: none !important; }
     .leaflet-container { background: #f5f0e8; }
   </style>
@@ -162,7 +162,7 @@
     <div class="relative mx-auto min-h-screen max-w-[430px] bg-cream flex flex-col">
       <header class="sticky top-0 z-50 bg-cream/90 backdrop-blur-md border-b border-accent-tan/10">
         <div class="flex items-center px-6 py-6 justify-between">
-          <button class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('cart')">
+          <button type="button" class="flex items-center justify-center text-dark-chocolate" onclick="navigateTo('cart')">
             <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
           </button>
           <h1 class="text-2xl font-roca font-bold tracking-tight text-dark-chocolate">Shipping</h1>
@@ -185,14 +185,14 @@
       </header>
 
       <main class="screen-content overflow-y-auto no-scrollbar px-6 pt-6">
-        <!-- Delivery Details Section -->
+        <!-- Delivery Details -->
         <div class="mb-10">
           <h3 class="text-[19px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-4 flex items-center gap-2">
             <span class="material-symbols-outlined text-md">person</span>
             Delivery Details
           </h3>
 
-          <form class="space-y-6" id="shipping-form">
+          <form class="space-y-6" id="shipping-form" onsubmit="return false;">
             <div class="space-y-5">
               <div class="space-y-2 border-b-2 border-mocha/20 pb-3">
                 <label class="font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate">Your Name <span class="text-mocha">*</span></label>
@@ -276,7 +276,7 @@
           </form>
         </div>
 
-        <!-- Schedule Section -->
+        <!-- Schedule -->
         <div class="mb-10">
           <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
             <span class="material-symbols-outlined text-sm">schedule</span>
@@ -326,15 +326,15 @@
             </div>
 
             <div class="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-              <button onclick="setQuickTime('09:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Morning (9AM)</button>
-              <button onclick="setQuickTime('12:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Noon (12PM)</button>
-              <button onclick="setQuickTime('15:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Afternoon (3PM)</button>
-              <button onclick="setQuickTime('18:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Evening (6PM)</button>
+              <button type="button" onclick="setQuickTime('09:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Morning (9AM)</button>
+              <button type="button" onclick="setQuickTime('12:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Noon (12PM)</button>
+              <button type="button" onclick="setQuickTime('15:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Afternoon (3PM)</button>
+              <button type="button" onclick="setQuickTime('18:00')" class="px-4 py-2 bg-mocha/10 rounded-full text-sm font-bold text-dark-chocolate whitespace-nowrap hover:bg-mocha/20 transition-colors">Evening (6PM)</button>
             </div>
           </div>
         </div>
 
-        <!-- Maps Section -->
+        <!-- Maps -->
         <div class="mb-10">
           <h3 class="text-[11px] uppercase tracking-[0.25em] font-bold text-dark-chocolate mb-6 flex items-center gap-2">
             <span class="material-symbols-outlined text-sm">location_on</span>
@@ -342,7 +342,9 @@
           </h3>
 
           <div id="map-selection" class="space-y-4">
-            <div class="relative h-48 rounded-2xl map-placeholder map-grid border-2 border-mocha/20 overflow-hidden cursor-pointer" onclick="openMapModal()">
+            <button type="button"
+                    class="relative w-full h-48 rounded-2xl map-placeholder map-grid border-2 border-mocha/20 overflow-hidden cursor-pointer"
+                    onclick="openMapModal()">
               <div class="absolute inset-0 flex items-center justify-center">
                 <div class="bg-cream/90 px-6 py-3 rounded-full shadow-lg flex items-center gap-2">
                   <span class="material-symbols-outlined text-dark-chocolate">add_location</span>
@@ -358,7 +360,7 @@
               <div class="absolute top-16 right-24 text-soft-cocoa opacity-40">
                 <span class="material-symbols-outlined text-xl fill-1">location_on</span>
               </div>
-            </div>
+            </button>
 
             <div class="bg-warm-beige/40 rounded-2xl p-5 border border-mocha/10">
               <label class="block font-cooper text-xs uppercase tracking-wider font-bold text-dark-chocolate mb-2">Detailed Address <span class="text-mocha">*</span></label>
@@ -369,7 +371,6 @@
                         oninput="validateForm()"></textarea>
             </div>
 
-            <!-- Selected Location Display -->
             <div id="selected-location-display" class="hidden bg-mocha/5 rounded-xl p-4 border border-mocha/10">
               <div class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-dark-chocolate fill-1">location_on</span>
@@ -396,7 +397,6 @@
                     <p class="font-roca text-lg font-bold text-dark-chocolate">GoSend</p>
                     <p class="font-cooper text-sm text-soft-cocoa mt-1 font-semibold">Fast local delivery</p>
                   </div>
-                  <!-- Dynamic price -->
                   <p class="font-roca text-lg font-bold text-dark-chocolate" id="gosend-price">Rp 15.000</p>
                 </div>
                 <p class="mt-3 text-[11px] font-cooper text-soft-cocoa">
@@ -424,10 +424,10 @@
         </div>
 
         <div class="mt-10 mb-32">
-          <div class="flex items-center gap-2 text-dark-chocolate cursor-pointer font-bold" onclick="toggleNoteField()">
+          <button type="button" class="flex items-center gap-2 text-dark-chocolate cursor-pointer font-bold" onclick="toggleNoteField()">
             <span class="material-symbols-outlined text-[20px]">edit_note</span>
             <span class="text-xs uppercase tracking-widest">Add a note for the kitchen</span>
-          </div>
+          </button>
           <textarea id="kitchen-note"
                     class="hidden mt-3 w-full bg-warm-beige/40 rounded-2xl p-4 text-base font-cooper text-dark-chocolate resize-none focus:ring-2 focus:ring-mocha/20 border-0"
                     rows="2"
@@ -443,6 +443,7 @@
             </div>
 
             <button id="continue-btn"
+                    type="button"
                     onclick="goToPayment()"
                     disabled
                     class="w-full bg-dark-chocolate text-cream py-5 rounded-full font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-3 transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed shadow-lg disabled:shadow-none">
@@ -460,19 +461,19 @@
 
       <nav id="bottom-nav" class="bottom-nav-directory">
         <div class="flex justify-between items-center max-w-md mx-auto">
-          <button class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
+          <button type="button" class="nav-item text-soft-cocoa" onclick="navigateTo('home')">
             <span class="material-symbols-outlined nav-icon">home</span>
             <span class="nav-label">Home</span>
           </button>
-          <button class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
+          <button type="button" class="nav-item text-soft-cocoa" onclick="navigateTo('menu')">
             <span class="material-symbols-outlined nav-icon">restaurant_menu</span>
             <span class="nav-label">Menu</span>
           </button>
-          <button class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
+          <button type="button" class="nav-item text-soft-cocoa" onclick="navigateTo('cart')">
             <span class="material-symbols-outlined nav-icon">shopping_bag</span>
             <span class="nav-label">Cart</span>
           </button>
-          <button class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
+          <button type="button" class="nav-item text-soft-cocoa" onclick="navigateTo('profile')">
             <span class="material-symbols-outlined nav-icon">person</span>
             <span class="nav-label">Profile</span>
           </button>
@@ -486,13 +487,12 @@
     <div class="w-full max-w-[430px] bg-cream rounded-t-[32px] sm:rounded-[32px] h-[80vh] sm:h-[600px] flex flex-col shadow-2xl overflow-hidden">
       <div class="p-6 border-b border-mocha/10 flex items-center justify-between bg-cream">
         <h3 class="font-roca text-xl font-bold text-dark-chocolate">Select Location</h3>
-        <button onclick="closeMapModal()" class="p-2 rounded-full hover:bg-warm-beige transition-colors">
+        <button type="button" onclick="closeMapModal()" class="p-2 rounded-full hover:bg-warm-beige transition-colors">
           <span class="material-symbols-outlined text-dark-chocolate">close</span>
         </button>
       </div>
 
       <div class="flex-1 relative overflow-hidden">
-        <!-- Search -->
         <div class="absolute top-0 left-0 right-0 z-10 p-4">
           <input id="map-search"
                  class="w-full bg-cream/95 rounded-2xl px-4 py-3 font-cooper text-sm text-dark-chocolate border border-mocha/10"
@@ -503,10 +503,8 @@
           </p>
         </div>
 
-        <!-- Map -->
         <div id="leaflet-map" style="height: 100%; width: 100%;"></div>
 
-        <!-- Bottom info + action -->
         <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-cream to-transparent">
           <div class="mb-3 text-xs font-cooper text-dark-chocolate">
             <div id="picked-address" class="font-semibold">No location selected</div>
@@ -515,7 +513,7 @@
             </div>
           </div>
 
-          <button onclick="confirmLocation()"
+          <button type="button" onclick="confirmLocation()"
                   class="w-full bg-dark-chocolate text-cream py-4 rounded-full font-bold text-sm tracking-widest uppercase shadow-lg active:scale-[0.98] transition-transform">
             Confirm This Location
           </button>
@@ -527,20 +525,30 @@
   <script type="module">
     import { initSession, getCart, saveShippingDraftToDB, loadShippingDraftFromDB } from "./firebase.js";
 
-    // =========================
-    // 1) MAP + GO-SEND ESTIMATE
-    // =========================
-    // TODO: Replace with your real shop location (ChouxLab).
-    // Example shown for Alam Sutera area-ish. Update it.
+    // -------------------------
+    // CONFIG
+    // -------------------------
+    const SHIPPING_KEY = "chouxlab_shipping_v1";
+
+    // Replace with your store location
     const STORE = {
       name: "ChouxLab",
       lat: -6.2229,
       lng: 106.6506,
     };
 
+    // Must match menu/cart products
+    const products = {
+      vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000 },
+      chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000 },
+      pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000 }
+    };
+
+    // -------------------------
+    // STATE
+    // -------------------------
     let map = null;
     let marker = null;
-
     let locationSelected = false;
 
     const picked = {
@@ -551,13 +559,131 @@
       fee: null,
     };
 
+    let cartCounts = {};
+
+    // -------------------------
+    // HELPERS
+    // -------------------------
+    function navigateTo(screenName) {
+      if (screenName === "menu") window.location.href = "index.html";
+      else window.location.href = screenName + ".html";
+    }
+
     function formatRupiah(n) {
       if (n === null || n === undefined) return "-";
       return "Rp " + Math.round(n).toLocaleString("id-ID");
     }
 
-    // Based on your screenshot text (estimate only)
-    // Instant: base 20k covers first 8km, next 2.5k/km, 20-40km 3k/km, >40km keep 3k/km, max 75km
+    function getTomorrowISO() {
+      const d = new Date();
+      d.setDate(d.getDate() + 1);
+      return d.toISOString().split("T")[0];
+    }
+
+    function isValidIDPhoneDigits(nationalDigits) {
+      if (!/^\d+$/.test(nationalDigits)) return false;
+      if (!nationalDigits.startsWith("8")) return false;
+      const len = nationalDigits.length;
+      return len >= 9 && len <= 12;
+    }
+
+    function handleIDPhoneInput(inputId) {
+      const input = document.getElementById(inputId);
+      if (!input) return;
+
+      let v = input.value.replace(/\D/g, "");
+      if (v.startsWith("0")) v = v.replace(/^0+/, "");
+      v = v.slice(0, 12);
+      input.value = v;
+
+      const e164El = document.getElementById(`${inputId}-e164`);
+      if (e164El) e164El.value = v ? `+62${v}` : "";
+
+      const err = document.getElementById(`${inputId}-error`);
+      const ok = isValidIDPhoneDigits(v);
+      if (err) err.classList.toggle("hidden", v === "" || ok);
+    }
+
+    function toggleNoteField() {
+      const note = document.getElementById("kitchen-note");
+      if (!note) return;
+      note.classList.toggle("hidden");
+      if (!note.classList.contains("hidden")) note.focus();
+    }
+
+    function updateTime() {
+      const hour = document.getElementById("delivery-hour").value;
+      const minute = document.getElementById("delivery-minute").value;
+      document.getElementById("delivery-time").value = `${hour}:${minute}`;
+      validateForm();
+    }
+
+    function setQuickTime(time) {
+      const [hours, minutes] = time.split(":");
+      document.getElementById("delivery-hour").value = hours;
+      document.getElementById("delivery-minute").value = minutes;
+      updateTime();
+    }
+
+    function toggleRecipientFields() {
+      const checkbox = document.getElementById("same-as-recipient");
+      const fields = document.getElementById("recipient-fields");
+
+      const senderNameEl = document.getElementById("sender-name");
+      const senderPhoneEl = document.getElementById("sender-phone");
+
+      const recipientNameEl = document.getElementById("recipient-name");
+      const recipientPhoneEl = document.getElementById("recipient-phone");
+
+      if (!checkbox || !fields || !senderNameEl || !senderPhoneEl || !recipientNameEl || !recipientPhoneEl) return;
+
+      if (checkbox.checked) {
+        recipientNameEl.value = senderNameEl.value.trim();
+        recipientPhoneEl.value = senderPhoneEl.value.trim();
+        handleIDPhoneInput("recipient-phone");
+
+        fields.style.opacity = "0.4";
+        fields.style.filter = "grayscale(1)";
+        fields.style.pointerEvents = "none";
+
+        recipientNameEl.setAttribute("disabled", "disabled");
+        recipientPhoneEl.setAttribute("disabled", "disabled");
+      } else {
+        fields.style.opacity = "1";
+        fields.style.filter = "none";
+        fields.style.pointerEvents = "all";
+
+        recipientNameEl.removeAttribute("disabled");
+        recipientPhoneEl.removeAttribute("disabled");
+
+        recipientNameEl.value = "";
+        recipientPhoneEl.value = "";
+        handleIDPhoneInput("recipient-phone");
+      }
+
+      validateForm();
+    }
+
+    // IMPORTANT: this existed in your inline oninput, so it MUST exist always
+    function syncRecipientIfSame() {
+      const checkbox = document.getElementById("same-as-recipient");
+      if (!checkbox?.checked) return;
+
+      const rn = document.getElementById("recipient-name");
+      const rp = document.getElementById("recipient-phone");
+      const sn = document.getElementById("sender-name");
+      const sp = document.getElementById("sender-phone");
+
+      if (!rn || !rp || !sn || !sp) return;
+
+      rn.value = sn.value.trim();
+      rp.value = sp.value.trim();
+      handleIDPhoneInput("recipient-phone");
+    }
+
+    // -------------------------
+    // MAP + ESTIMATE
+    // -------------------------
     function estimateGoSendInstant(distanceKm) {
       if (distanceKm == null) return null;
       if (distanceKm <= 0) return 0;
@@ -566,11 +692,11 @@
       let total = 20000;
       if (distanceKm <= 8) return total;
 
-      const part1 = Math.min(distanceKm, 20) - 8;    // 8 -> 20
+      const part1 = Math.min(distanceKm, 20) - 8;
       total += part1 * 2500;
 
       if (distanceKm > 20) {
-        const part2 = Math.min(distanceKm, 40) - 20; // 20 -> 40
+        const part2 = Math.min(distanceKm, 40) - 20;
         total += part2 * 3000;
       }
 
@@ -625,7 +751,6 @@
       const fee = picked.fee == null ? "-" : formatRupiah(picked.fee);
       document.getElementById("location-estimate").textContent = `Distance: ${dist} · Est. GoSend: ${fee}`;
 
-      // Update GoSend card price
       const gosendPriceEl = document.getElementById("gosend-price");
       if (gosendPriceEl) {
         gosendPriceEl.textContent = (picked.fee == null) ? "Rp 15.000" : formatRupiah(picked.fee);
@@ -678,134 +803,13 @@
       });
     }
 
-    // =========================
-    // 2) DATE/TIME DEFAULTS
-    // =========================
-    function getTomorrowISO() {
-      const d = new Date();
-      d.setDate(d.getDate() + 1);
-      return d.toISOString().split("T")[0];
-    }
-
-    const tomorrowISO = getTomorrowISO();
-    const dateInput = document.getElementById("delivery-date");
-    dateInput.min = tomorrowISO;
-    if (!dateInput.value) dateInput.value = tomorrowISO;
-
-    const t = document.getElementById("delivery-time");
-    if (t && !t.value) t.value = "12:00";
-
-    // =========================
-    // 3) NAV + FORM HELPERS
-    // =========================
-    function navigateTo(screenName) {
-      if (screenName === 'menu') window.location.href = 'index.html';
-      else window.location.href = screenName + '.html';
-    }
-
-    function toggleRecipientFields() {
-      const checkbox = document.getElementById("same-as-recipient");
-      const fields = document.getElementById("recipient-fields");
-
-      const senderNameEl = document.getElementById("sender-name");
-      const senderPhoneEl = document.getElementById("sender-phone");
-
-      const recipientNameEl = document.getElementById("recipient-name");
-      const recipientPhoneEl = document.getElementById("recipient-phone");
-
-      if (!checkbox || !fields || !senderNameEl || !senderPhoneEl || !recipientNameEl || !recipientPhoneEl) return;
-
-      if (checkbox.checked) {
-        recipientNameEl.value = senderNameEl.value.trim();
-        recipientPhoneEl.value = senderPhoneEl.value.trim();
-        handleIDPhoneInput("recipient-phone");
-
-        fields.style.opacity = "0.4";
-        fields.style.filter = "grayscale(1)";
-        fields.style.pointerEvents = "none";
-
-        recipientNameEl.setAttribute("disabled", "disabled");
-        recipientPhoneEl.setAttribute("disabled", "disabled");
-      } else {
-        fields.style.opacity = "1";
-        fields.style.filter = "none";
-        fields.style.pointerEvents = "all";
-
-        recipientNameEl.removeAttribute("disabled");
-        recipientPhoneEl.removeAttribute("disabled");
-
-        recipientNameEl.value = "";
-        recipientPhoneEl.value = "";
-        handleIDPhoneInput("recipient-phone");
-      }
-
-      validateForm();
-    }
-
-    function syncRecipientIfSame() {
-      const checkbox = document.getElementById("same-as-recipient");
-      if (!checkbox?.checked) return;
-
-      document.getElementById("recipient-name").value = document.getElementById("sender-name").value.trim();
-      document.getElementById("recipient-phone").value = document.getElementById("sender-phone").value.trim();
-      handleIDPhoneInput("recipient-phone");
-    }
-
-    function handleIDPhoneInput(inputId) {
-      const input = document.getElementById(inputId);
-      if (!input) return;
-
-      let v = input.value.replace(/\D/g, "");
-      if (v.startsWith("0")) v = v.replace(/^0+/, "");
-      v = v.slice(0, 12);
-      input.value = v;
-
-      const e164El = document.getElementById(`${inputId}-e164`);
-      if (e164El) e164El.value = v ? `+62${v}` : "";
-
-      const err = document.getElementById(`${inputId}-error`);
-      const ok = isValidIDPhoneDigits(v);
-      if (err) err.classList.toggle("hidden", v === "" || ok);
-    }
-
-    function isValidIDPhoneDigits(nationalDigits) {
-      if (!/^\d+$/.test(nationalDigits)) return false;
-      if (!nationalDigits.startsWith("8")) return false;
-      const len = nationalDigits.length;
-      return len >= 9 && len <= 12;
-    }
-
-    function toggleNoteField() {
-      const note = document.getElementById('kitchen-note');
-      note.classList.toggle('hidden');
-      if (!note.classList.contains('hidden')) note.focus();
-    }
-
-    function updateTime() {
-      const hour = document.getElementById('delivery-hour').value;
-      const minute = document.getElementById('delivery-minute').value;
-      document.getElementById('delivery-time').value = `${hour}:${minute}`;
-      validateForm();
-    }
-
-    function setQuickTime(time) {
-      const [hours, minutes] = time.split(':');
-      document.getElementById('delivery-hour').value = hours;
-      document.getElementById('delivery-minute').value = minutes;
-      updateTime();
-    }
-
-    // =========================
-    // 4) MAP MODAL OPEN/CLOSE
-    // =========================
     function openMapModal() {
-      document.getElementById('map-modal').classList.remove('hidden');
+      document.getElementById("map-modal").classList.remove("hidden");
 
       setTimeout(async () => {
         initLeafletMapIfNeeded();
         map.invalidateSize();
 
-        // If we already have a picked location, show it
         if (picked.lat && picked.lng) {
           marker.setLatLng([picked.lat, picked.lng]);
           map.setView([picked.lat, picked.lng], 16);
@@ -813,7 +817,6 @@
           return;
         }
 
-        // Otherwise, start at store
         marker.setLatLng([STORE.lat, STORE.lng]);
         map.setView([STORE.lat, STORE.lng], 13);
         updateModalUI();
@@ -821,7 +824,7 @@
     }
 
     function closeMapModal() {
-      document.getElementById('map-modal').classList.add('hidden');
+      document.getElementById("map-modal").classList.add("hidden");
     }
 
     function confirmLocation() {
@@ -829,7 +832,6 @@
 
       locationSelected = true;
 
-      // Write to hidden fields
       document.getElementById("ship-lat").value = String(picked.lat);
       document.getElementById("ship-lng").value = String(picked.lng);
       document.getElementById("ship-address").value = picked.address || "";
@@ -842,23 +844,13 @@
       calculateShippingTotal();
       validateForm();
 
-      // Save right away
-      saveShippingDraft();
+      saveShippingDraftLocal();
       scheduleDBSave();
     }
 
-    // =========================
-    // 5) CART + TOTALS
-    // =========================
-    const products = {
-      vanilla: { id: 'vanilla', name: 'Vanilla', price: 65000 },
-      chocolate: { id: 'chocolate', name: 'Chocolate', price: 65000 },
-      pistachio: { id: 'pistachio', name: 'Pistachio & Rose', price: 85000 }
-    };
-
-    await initSession();
-    let cartCounts = await getCart();
-
+    // -------------------------
+    // TOTALS
+    // -------------------------
     function getDeliveryCost() {
       const selectedDelivery = document.querySelector('input[name="delivery"]:checked');
       if (!selectedDelivery) return 0;
@@ -875,7 +867,7 @@
       let subtotal = 0;
       let itemCount = 0;
 
-      for (const [productId, qty] of Object.entries(cartCounts)) {
+      for (const [productId, qty] of Object.entries(cartCounts || {})) {
         if (qty > 0 && products[productId]) {
           subtotal += products[productId].price * qty;
           itemCount += qty;
@@ -886,19 +878,12 @@
       const deliveryCost = getDeliveryCost();
 
       const total = subtotal + packagingFee + deliveryCost;
-      document.getElementById('shipping-total').textContent = `Rp ${total.toLocaleString('id-ID')}`;
+      document.getElementById("shipping-total").textContent = `Rp ${total.toLocaleString("id-ID")}`;
     }
 
-    document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        calculateShippingTotal();
-        validateForm();
-      });
-    });
-
-    // =========================
-    // 6) VALIDATION
-    // =========================
+    // -------------------------
+    // VALIDATION
+    // -------------------------
     function validateForm() {
       const senderName = document.getElementById("sender-name").value.trim();
       const senderPhoneDigits = document.getElementById("sender-phone").value.trim();
@@ -921,7 +906,7 @@
       const senderPhoneOk = isValidIDPhoneDigits(senderPhoneDigits);
       const recipientPhoneOk = isValidIDPhoneDigits(recipientPhoneDigits);
 
-      // Require map location pinned
+      // Require map pin
       const mapOk = !!document.getElementById("ship-lat").value && !!document.getElementById("ship-lng").value;
 
       let isValid =
@@ -939,16 +924,11 @@
 
       const btn = document.getElementById("continue-btn");
       btn.disabled = !isValid;
-
-      if (isValid) btn.classList.remove("opacity-40", "cursor-not-allowed");
-      else btn.classList.add("opacity-40", "cursor-not-allowed");
     }
 
-    // =========================
-    // 7) DRAFT SAVE/RESTORE
-    // =========================
-    const SHIPPING_KEY = "chouxlab_shipping_v1";
-
+    // -------------------------
+    // DRAFT SAVE / RESTORE
+    // -------------------------
     function collectShippingData() {
       return {
         senderName: document.getElementById("sender-name").value.trim(),
@@ -968,7 +948,6 @@
 
         deliveryMethod: document.querySelector('input[name="delivery"]:checked')?.value || null,
 
-        // Map fields
         shipLat: document.getElementById("ship-lat").value ? Number(document.getElementById("ship-lat").value) : null,
         shipLng: document.getElementById("ship-lng").value ? Number(document.getElementById("ship-lng").value) : null,
         shipAddress: document.getElementById("ship-address").value || "",
@@ -976,10 +955,11 @@
         gosendFee: document.getElementById("ship-gosend-fee").value ? Number(document.getElementById("ship-gosend-fee").value) : null,
 
         locationSelected: !!locationSelected,
+        updatedAtLocal: Date.now(),
       };
     }
 
-    function saveShippingDraft() {
+    function saveShippingDraftLocal() {
       try {
         localStorage.setItem(SHIPPING_KEY, JSON.stringify(collectShippingData()));
       } catch (e) {
@@ -987,7 +967,7 @@
       }
     }
 
-    function restoreShippingDraft() {
+    function restoreShippingDraftFromLocal() {
       const raw = localStorage.getItem(SHIPPING_KEY);
       if (!raw) return;
 
@@ -1024,7 +1004,6 @@
         if (radio) radio.checked = true;
       }
 
-      // Restore map
       if (d.shipLat && d.shipLng) {
         document.getElementById("ship-lat").value = String(d.shipLat);
         document.getElementById("ship-lng").value = String(d.shipLng);
@@ -1049,6 +1028,18 @@
       validateForm();
     }
 
+    let dbSaveTimer = null;
+    function scheduleDBSave() {
+      clearTimeout(dbSaveTimer);
+      dbSaveTimer = setTimeout(async () => {
+        try {
+          await saveShippingDraftToDB(collectShippingData());
+        } catch (e) {
+          console.warn("DB save failed", e);
+        }
+      }, 500);
+    }
+
     function setupAutoSave() {
       const ids = [
         "sender-name",
@@ -1069,67 +1060,48 @@
 
         const evt = (el.type === "checkbox" || el.tagName === "SELECT") ? "change" : "input";
         el.addEventListener(evt, () => {
-          saveShippingDraft();
+          saveShippingDraftLocal();
           scheduleDBSave();
+          validateForm();
+          calculateShippingTotal();
         });
       });
 
       document.querySelectorAll('input[name="delivery"]').forEach(r => {
         r.addEventListener("change", () => {
-          saveShippingDraft();
+          saveShippingDraftLocal();
           scheduleDBSave();
+          validateForm();
+          calculateShippingTotal();
         });
       });
     }
 
-    let dbSaveTimer = null;
-    function scheduleDBSave() {
-      clearTimeout(dbSaveTimer);
-      dbSaveTimer = setTimeout(async () => {
-        try {
-          await saveShippingDraftToDB(collectShippingData());
-        } catch (e) {
-          console.warn("DB save failed", e);
-        }
-      }, 500);
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      const tomorrowISO = getTomorrowISO();
-      const dateInput = document.getElementById("delivery-date");
-      dateInput.min = tomorrowISO;
-      if (!dateInput.value) dateInput.value = tomorrowISO;
-
-      await initSession();
-
-      try {
-        const dbDraft = await loadShippingDraftFromDB();
-        if (dbDraft) localStorage.setItem(SHIPPING_KEY, JSON.stringify(dbDraft));
-      } catch (e) {
-        console.warn("DB load failed, fallback to localStorage", e);
+    // -------------------------
+    // CONTINUE
+    // -------------------------
+    async function goToPayment() {
+      // extra guard even though button is disabled when invalid
+      validateForm();
+      const btn = document.getElementById("continue-btn");
+      if (btn.disabled) {
+        alert("Please complete all required fields, including map pin.");
+        return;
       }
 
-      restoreShippingDraft();
-      setupAutoSave();
-
-      // Initial totals
-      calculateShippingTotal();
-      validateForm();
-    });
-
-    async function goToPayment() {
-      saveShippingDraft();
+      saveShippingDraftLocal();
       try {
         await saveShippingDraftToDB(collectShippingData());
       } catch (e) {
         console.warn("DB save failed on continue", e);
       }
+
       window.location.href = "payment.html";
     }
 
-    // =========================
-    // 8) KEYBOARD AVOIDANCE
-    // =========================
+    // -------------------------
+    // KEYBOARD AVOIDANCE
+    // -------------------------
     function setupKeyboardAvoidance() {
       const root = document.documentElement;
 
@@ -1156,11 +1128,49 @@
       update();
     }
 
-    document.addEventListener("DOMContentLoaded", setupKeyboardAvoidance);
+    // -------------------------
+    // INIT
+    // -------------------------
+    async function init() {
+      // date defaults
+      const tomorrowISO = getTomorrowISO();
+      const dateInput = document.getElementById("delivery-date");
+      dateInput.min = tomorrowISO;
+      if (!dateInput.value) dateInput.value = tomorrowISO;
 
-    // =========================
-    // 9) EXPOSE GLOBALS
-    // =========================
+      const t = document.getElementById("delivery-time");
+      if (t && !t.value) t.value = "12:00";
+
+      setupKeyboardAvoidance();
+
+      await initSession();
+
+      // cart
+      try {
+        cartCounts = await getCart();
+      } catch (e) {
+        console.warn("getCart failed", e);
+        cartCounts = {};
+      }
+
+      // draft (DB -> local)
+      try {
+        const dbDraft = await loadShippingDraftFromDB();
+        if (dbDraft) localStorage.setItem(SHIPPING_KEY, JSON.stringify(dbDraft));
+      } catch (e) {
+        console.warn("DB load failed, fallback to localStorage", e);
+      }
+
+      restoreShippingDraftFromLocal();
+      setupAutoSave();
+
+      calculateShippingTotal();
+      validateForm();
+    }
+
+    // -------------------------
+    // EXPOSE GLOBALS for inline onclick/oninput
+    // -------------------------
     window.navigateTo = navigateTo;
     window.validateForm = validateForm;
     window.toggleRecipientFields = toggleRecipientFields;
@@ -1174,6 +1184,9 @@
     window.calculateShippingTotal = calculateShippingTotal;
     window.syncRecipientIfSame = syncRecipientIfSame;
     window.goToPayment = goToPayment;
+
+    // start
+    init();
   </script>
 </body>
 </html>
