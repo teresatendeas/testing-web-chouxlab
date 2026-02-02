@@ -66,11 +66,6 @@
 
     .fill-1 { font-variation-settings: 'FILL' 1; }
 
-    .screen {
-      min-height: 100dvh;
-      background-color: #FDFBF7;
-    }
-
     .bottom-nav-directory {
       position: fixed;
       bottom: 0;
@@ -152,8 +147,15 @@
       </div>
     </header>
 
+    <!-- Debug / Error banner (hidden if OK) -->
+    <div id="debug-banner" class="hidden px-6 pt-4">
+      <div class="rounded-2xl border border-red-200 bg-red-50 p-4">
+        <p class="text-xs font-bold tracking-widest uppercase text-red-700 mb-2">Firebase Error</p>
+        <p id="debug-text" class="text-sm text-red-800 font-cooper leading-relaxed"></p>
+      </div>
+    </div>
+
     <main class="flex-1 overflow-y-auto no-scrollbar px-6 pt-6 pb-48" id="cart-items-container">
-      <!-- Populated by JS -->
       <div class="py-16 text-center text-soft-cocoa text-sm font-cooper">Loading…</div>
     </main>
 
@@ -193,7 +195,7 @@
   </div>
 
   <script type="module">
-    import { initSession, getCart, setCart } from "./firebase.js";
+    import { initSession, getCart, setCart, getCurrentUser } from "./firebase.js";
 
     const products = {
       vanilla: {
@@ -217,7 +219,6 @@
     };
 
     let cartCounts = {};
-    let isSaving = false;
     let initRunning = false;
 
     function navigateTo(screenName) {
@@ -225,21 +226,29 @@
       else window.location.href = screenName + ".html";
     }
 
+    function showError(message) {
+      const banner = document.getElementById("debug-banner");
+      const text = document.getElementById("debug-text");
+      if (!banner || !text) return;
+      text.textContent = message;
+      banner.classList.remove("hidden");
+    }
+
+    function hideError() {
+      const banner = document.getElementById("debug-banner");
+      if (!banner) return;
+      banner.classList.add("hidden");
+    }
+
     function safeNumber(v) {
       const n = Number(v);
       return Number.isFinite(n) ? n : 0;
     }
 
-    async function saveCart() {
-      if (isSaving) return;
-      isSaving = true;
-      try {
-        await setCart(cartCounts);
-      } catch (e) {
-        console.error("setCart failed:", e);
-      } finally {
-        isSaving = false;
-      }
+    async function saveCartStrict() {
+      // No "isSaving" guard. We want every click to persist.
+      // Firestore can handle fast writes. If you want debounce later, do it on menu page.
+      await setCart(cartCounts);
     }
 
     function setShippingButtonEnabled(enabled) {
@@ -359,17 +368,24 @@
     }
 
     async function updateCartQty(productId, delta) {
+      hideError();
+
       const current = safeNumber(cartCounts[productId]);
       const next = current + Number(delta);
 
       if (next <= 0) {
-        // ✅ must remove key completely
         delete cartCounts[productId];
       } else {
         cartCounts[productId] = next;
       }
 
-      await saveCart();
+      try {
+        await saveCartStrict();
+      } catch (e) {
+        console.error("setCart failed:", e);
+        showError(String(e?.code || e?.message || e));
+      }
+
       renderCart();
     }
 
@@ -377,12 +393,22 @@
       if (initRunning) return;
       initRunning = true;
 
+      hideError();
+
       try {
         await initSession();
+
+        // quick auth check, useful on GitHub Pages
+        const user = getCurrentUser?.();
+        if (!user) {
+          showError("Auth not ready. Check Firebase Auth: enable Anonymous and add Authorized domains.");
+        }
+
         cartCounts = await getCart();
       } catch (e) {
         console.error("Cart init failed:", e);
         cartCounts = {};
+        showError(String(e?.code || e?.message || e));
       } finally {
         initRunning = false;
       }
@@ -390,19 +416,14 @@
       renderCart();
     }
 
-    // init
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", initCartPage);
     } else {
       initCartPage();
     }
 
-    // when coming back via back button
-    window.addEventListener("pageshow", () => {
-      if (!isSaving) initCartPage();
-    });
+    window.addEventListener("pageshow", initCartPage);
 
-    // expose for inline onclick
     window.navigateTo = navigateTo;
     window.updateCartQty = updateCartQty;
   </script>
